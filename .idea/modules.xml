@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide.iml" filepath="$PROJECT_DIR$/.idea/modules/quide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_main.iml" group="quide" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_test.iml" group="quide" />
+    </modules>
+  </component>
+</project>

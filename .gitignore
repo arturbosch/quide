@@ -1,0 +1,9 @@
+
+.gradle/
+.idea/gradle.xml
+.idea/workspace.xml
+build/
+.idea/compiler.xml
+.idea/libraries/
+.idea/modules/quide_main.iml
+.idea/modules/quide_test.iml
