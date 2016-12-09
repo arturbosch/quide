@@ -1,0 +1,3 @@
+configurations {
+    testCompile.extendsFrom spock
+}
