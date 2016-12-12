@@ -23,11 +23,23 @@ subprojects {
 	}
 
 	apply plugin: 'java'
+	apply plugin: 'maven'
+
+	if (it.name.startsWith("quide")) {
+		apply plugin: 'kotlin'
+	}
 
 	if (it.name == "quide") {
-		apply plugin: 'kotlin'
 		apply plugin: 'application'
 		apply plugin: 'com.github.johnrengelman.shadow'
+	}
+
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				repository(url: uri('../repo'))
+			}
+		}
 	}
 
 	configurations {

@@ -7,3 +7,5 @@ build/
 .idea/libraries/
 .idea/modules/quide_main.iml
 .idea/modules/quide_test.iml
+.idea/modules/quide-specification/
+.idea/uiDesigner.xml

@@ -1,0 +1,9 @@
+configurations {
+	compile.extendsFrom kotlin
+	testCompile.extendsFrom spock
+}
+
+dependencies {
+	compile project(":platform-specification")
+	compile "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.M5"
+}
