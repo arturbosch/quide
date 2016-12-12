@@ -24,7 +24,7 @@ public interface Versionable extends Comparable<Versionable> {
 	List<FileChange> fileChanges();
 
 	@Override
-	default int compareTo(Versionable o) {
-		return Integer.compare(versionNumber(), o.versionNumber());
+	default int compareTo(Versionable other) {
+		return Integer.compare(versionNumber(), other.versionNumber());
 	}
 }

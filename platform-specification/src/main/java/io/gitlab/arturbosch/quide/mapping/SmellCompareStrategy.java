@@ -7,9 +7,9 @@ import io.gitlab.arturbosch.quide.vcs.SourceFile;
 /**
  * @author Artur Bosch
  */
-public interface SmellCompareStrategy {
+public interface SmellCompareStrategy<T extends CodeSmell> {
 
-	boolean matches(CodeSmell first, CodeSmell second);
+	boolean matches(T first, T second);
 
-	CodeSmell patchSmell(CodeSmell smell, SourceFile sourceFile, Patch patch);
+	T patchSmell(T smell, SourceFile sourceFile, Patch patch);
 }

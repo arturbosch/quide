@@ -12,9 +12,9 @@ import io.gitlab.arturbosch.quide.vcs.Versionable;
  *
  * @author Artur Bosch
  */
-public interface SmellMapping {
+public interface SmellMapping<T extends CodeSmell> {
 
-	SmellCompareStrategy compareAlgorithm();
+	SmellCompareStrategy<T> compareAlgorithm();
 
 	DiffTool diffTool();
 
@@ -28,7 +28,7 @@ public interface SmellMapping {
 	 * @param container   the smell container
 	 * @return the same container but with updated version
 	 */
-	default SmellContainer mapFirstVersion(Versionable versionable, SmellContainer container) {
+	default SmellContainer mapFirstVersion(Versionable versionable, SmellContainer<T> container) {
 		Validate.notNull(versionable);
 		Validate.notNull(container);
 		container.all().forEach(codeSmell -> {
@@ -47,15 +47,15 @@ public interface SmellMapping {
 	 * @param after       the smells of this version
 	 * @return a new container with mapped smells
 	 */
-	SmellContainer map(Versionable versionable, SmellContainer before, SmellContainer after);
+	SmellContainer map(Versionable versionable, SmellContainer<T> before, SmellContainer<T> after);
 
-	default CodeSmell updateSmell(CodeSmell smell, FileChange fileChange) {
+	default CodeSmell updateSmell(T smell, FileChange fileChange) {
 		Validate.notNull(smell);
 		Validate.notNull(fileChange);
 		return compareAlgorithm().patchSmell(smell, fileChange.newFile(), fileChange.patch(diffTool()));
 	}
 
-	default void compareSmells(CodeSmell first, CodeSmell second) {
+	default void compareSmells(T first, T second) {
 		Validate.notNull(first);
 		Validate.notNull(second);
 		compareAlgorithm().matches(first, second);

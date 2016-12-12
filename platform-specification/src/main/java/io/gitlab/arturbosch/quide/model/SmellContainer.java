@@ -7,16 +7,16 @@ import java.util.List;
  *
  * @author Artur Bosch
  */
-public interface SmellContainer {
+public interface SmellContainer<T extends CodeSmell> {
 
 	/**
 	 * @return a list of all containing smells
 	 */
-	List<CodeSmell> all();
+	List<T> all();
 
 	/**
 	 * @param path the path used as a filter
 	 * @return a subset of smells for given path
 	 */
-	List<CodeSmell> findBySourcePath(String path);
+	List<T> findBySourcePath(String path);
 }
