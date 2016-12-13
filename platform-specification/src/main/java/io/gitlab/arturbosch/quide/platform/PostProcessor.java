@@ -7,7 +7,7 @@ import io.gitlab.arturbosch.quide.model.SmellContainer;
  */
 public interface PostProcessor {
 	<T extends SmellContainer, U extends UserData> void process(T container, U data);
-	default ControlFlow.InjectionPoint flow() {
+	default ControlFlow.InjectionPoint injectionPoint() {
 		return ControlFlow.InjectionPoint.AfterAnalysis;
 	}
 }

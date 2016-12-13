@@ -52,7 +52,7 @@ public interface ControlFlow {
 
 	default void executePostProcessors(SmellContainer container, InjectionPoint injectionPoint) {
 		postProcessors().stream()
-				.filter(postProcessor -> postProcessor.flow().equals(injectionPoint))
+				.filter(postProcessor -> postProcessor.injectionPoint().equals(injectionPoint))
 				.forEach(postProcessor -> postProcessor.process(container, userData()));
 	}
 
