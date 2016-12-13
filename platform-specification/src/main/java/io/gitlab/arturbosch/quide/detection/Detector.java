@@ -1,13 +1,14 @@
 package io.gitlab.arturbosch.quide.detection;
 
+import io.gitlab.arturbosch.quide.model.CodeSmell;
 import io.gitlab.arturbosch.quide.model.SmellContainer;
-
-import java.util.concurrent.Callable;
+import io.gitlab.arturbosch.quide.platform.UserData;
 
 /**
  * @author Artur Bosch
  */
-public interface Detector extends Tool, Callable<SmellContainer> {
+public interface Detector<T extends CodeSmell> extends Tool {
 
+	SmellContainer<T> run(UserData userData);
 
 }
