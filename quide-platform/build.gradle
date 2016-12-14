@@ -1,0 +1,10 @@
+mainClassName = 'io.gitlab.arturbosch.quide.platform.PlatformKt'
+
+configurations {
+	compile.extendsFrom kotlin
+	testCompile.extendsFrom spock
+}
+
+dependencies {
+	compile project(":quide-specification")
+}

@@ -4,6 +4,6 @@ configurations {
 }
 
 dependencies {
-	compile project(":platform-specification")
+	compile project(":quide-specification")
 	compile "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.M5"
 }

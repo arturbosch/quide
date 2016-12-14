@@ -10,6 +10,12 @@ buildscript {
     }
 }
 
+plugins {
+	id 'com.github.ben-manes.versions' version '0.13.0'
+	id "com.github.johnrengelman.shadow" version "1.2.3"
+//		id "com.github.hierynomus.license" version "0.13.1"
+}
+
 allprojects {
 	group 'io.gitlab.arturbosch'
 	version "$quideVersion"
@@ -25,11 +31,11 @@ subprojects {
 	apply plugin: 'java'
 	apply plugin: 'maven'
 
-	if (it.name.startsWith("quide")) {
+	if (it.name.startsWith("quide") && it.name != "quide-specification") {
 		apply plugin: 'kotlin'
 	}
 
-	if (it.name == "quide") {
+	if (it.name == "quide-platform") {
 		apply plugin: 'application'
 		apply plugin: 'com.github.johnrengelman.shadow'
 	}

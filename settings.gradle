@@ -1,4 +1,4 @@
 rootProject.name = 'quide'
-include 'platform-specification'
-include 'quide-detekt-implementation'
-
+include 'quide-platform'
+include 'quide-specification'
+include 'quide-detekt-plugin'
