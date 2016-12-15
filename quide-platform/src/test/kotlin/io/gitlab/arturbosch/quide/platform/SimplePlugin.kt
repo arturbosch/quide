@@ -13,6 +13,8 @@ import io.gitlab.arturbosch.quide.vcs.Versionable
  */
 class SimplePlugin : Plugin {
 
+	object Storage : UserData()
+
 	private val storage = Storage
 
 	override fun <T : CodeSmell> detector(): Detector<T> {

@@ -22,8 +22,6 @@ object DefaultContainer : SmellContainer<CodeSmell> {
 
 }
 
-object Storage : UserData()
-
 object DefaultSmell : BaseCodeSmell()
 
 object DefaultVersion : Versionable {

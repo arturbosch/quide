@@ -56,6 +56,7 @@ subprojects {
 	dependencies {
 		kotlin "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 		spock "org.spockframework:spock-core:$spockVersion"
+		spock 'org.codehaus.groovy:groovy-all:$groovyVersion'
 	}
 
 	sourceSets {
