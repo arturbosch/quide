@@ -2,6 +2,7 @@ package io.gitlab.arturbosch.quide.mapping;
 
 import io.gitlab.arturbosch.quide.model.CodeSmell;
 import io.gitlab.arturbosch.quide.model.SmellContainer;
+import io.gitlab.arturbosch.quide.platform.Executable;
 import io.gitlab.arturbosch.quide.validation.Validate;
 import io.gitlab.arturbosch.quide.vcs.DiffTool;
 import io.gitlab.arturbosch.quide.vcs.FileChange;
@@ -12,7 +13,7 @@ import io.gitlab.arturbosch.quide.vcs.Versionable;
  *
  * @author Artur Bosch
  */
-public interface SmellMapping<T extends CodeSmell> {
+public interface SmellMapping<T extends CodeSmell> extends Executable {
 
 	SmellCompareStrategy<T> compareAlgorithm();
 

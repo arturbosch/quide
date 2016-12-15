@@ -3,10 +3,8 @@ package io.gitlab.arturbosch.quide.platform;
 import io.gitlab.arturbosch.quide.detection.Detector;
 import io.gitlab.arturbosch.quide.mapping.SmellMapping;
 import io.gitlab.arturbosch.quide.model.CodeSmell;
-import io.gitlab.arturbosch.quide.model.SmellContainer;
-import io.gitlab.arturbosch.quide.vcs.Versionable;
 
-import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,15 +13,13 @@ import java.util.List;
 public interface ControlFlow {
 
 	enum InjectionPoint {
-		AfterAnalysis, AfterMapping
+		BeforeDetection, AfterDetection, AfterAnalysis
 	}
 
 	interface State {
-		List<PreProcessor> preProcessors();
-
 		Detector<CodeSmell> detector();
 
-		List<PostProcessor> postProcessors();
+		List<Processor> processors();
 
 		SmellMapping<CodeSmell> mapping();
 
@@ -32,30 +28,28 @@ public interface ControlFlow {
 
 	State state();
 
-	SmellContainer<CodeSmell> executeDetection(Detector<CodeSmell> detector);
+	default void executeDetection(UserData userData) {
+		detector().execute(userData);
+	}
 
-	SmellContainer<CodeSmell> executeMapping(Versionable versionable, SmellContainer<CodeSmell> lastContainer,
-								  SmellContainer<CodeSmell> currentContainer, SmellMapping<CodeSmell> mapping);
+	default void executeMapping(UserData userData) {
+		mapping().execute(userData);
+	}
 
 	default void execute() {
 		UserData data = userData();
-		executePreProcessors(data);
-		SmellContainer<CodeSmell> container = executeDetection(detector());
-		executePostProcessors(container, InjectionPoint.AfterAnalysis);
-		container = executeMapping(data.currentVersion(), data.lastContainer(), container, mapping());
-		executePostProcessors(container, InjectionPoint.AfterMapping);
+		executeProcessors(data, InjectionPoint.BeforeDetection);
+		executeDetection(data);
+		executeProcessors(data, InjectionPoint.AfterDetection);
+		executeMapping(data);
+		executeProcessors(data, InjectionPoint.AfterAnalysis);
 	}
 
-	default void executePreProcessors(UserData userData) {
-		Versionable version = userData.currentVersion();
-		Path projectPath = userData.projectPath();
-		preProcessors().forEach(preProcessor -> preProcessor.process(version, projectPath, userData));
-	}
-
-	default void executePostProcessors(SmellContainer container, InjectionPoint injectionPoint) {
-		postProcessors().stream()
-				.filter(postProcessor -> postProcessor.injectionPoint().equals(injectionPoint))
-				.forEach(postProcessor -> postProcessor.process(container, userData()));
+	default void executeProcessors(UserData userData, InjectionPoint injectionPoint) {
+		processors().stream()
+				.filter(processor -> processor.injectionPoint().equals(injectionPoint))
+				.sorted(Comparator.comparingInt(Processor::priority))
+				.forEach(processor -> processor.execute(userData));
 	}
 
 	default UserData userData() {
@@ -70,12 +64,8 @@ public interface ControlFlow {
 		return state().mapping();
 	}
 
-	default List<PreProcessor> preProcessors() {
-		return state().preProcessors();
-	}
-
-	default List<PostProcessor> postProcessors() {
-		return state().postProcessors();
+	default List<Processor> processors() {
+		return state().processors();
 	}
 
 }

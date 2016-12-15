@@ -15,31 +15,22 @@ class Plugin : ControlFlow.State {
 
 	private val storage = Storage()
 
-	override fun preProcessors(): MutableList<PreProcessor> {
-		return mutableListOf()
-	}
-
 	override fun detector(): Detector<CodeSmell> {
-		return Detector {
-			object : SmellContainer<CodeSmell> {
-				override fun all(): MutableList<CodeSmell> {
-					throw UnsupportedOperationException("not implemented")
-				}
-
-				override fun findBySourcePath(path: String): MutableList<CodeSmell> {
-					throw UnsupportedOperationException("not implemented")
-				}
-
+		return object : Detector<CodeSmell> {
+			override fun <U : UserData?> execute(data: U) {
 			}
 		}
 	}
 
-	override fun postProcessors(): MutableList<PostProcessor> {
+	override fun processors(): MutableList<Processor> {
 		return mutableListOf()
 	}
 
 	override fun mapping(): SmellMapping<CodeSmell> {
 		return object : SmellMapping<CodeSmell> {
+			override fun <U : UserData?> execute(data: U) {
+			}
+
 			override fun compareAlgorithm(): SmellCompareStrategy<CodeSmell> {
 				throw UnsupportedOperationException("not implemented")
 			}
