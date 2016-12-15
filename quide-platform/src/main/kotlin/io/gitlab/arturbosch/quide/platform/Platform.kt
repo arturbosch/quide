@@ -3,14 +3,14 @@ package io.gitlab.arturbosch.quide.platform
 /**
  * @author Artur Bosch
  */
-fun main(args: Array<String>) {
-	Platform().execute()
-}
+object Platform : ControlFlow {
 
-class Platform : ControlFlow {
+	private val _plugins = lazy {
+		PluginLoader(PluginDetector()).load()
+	}
 
-	override fun state(): ControlFlow.State {
-		return Plugin()
+	override fun plugins(): List<Plugin> {
+		return _plugins.value
 	}
 
 }
