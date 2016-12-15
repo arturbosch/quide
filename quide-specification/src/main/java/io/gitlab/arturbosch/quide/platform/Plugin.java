@@ -8,11 +8,7 @@ import java.util.List;
 /**
  * @author Artur Bosch
  */
-public interface Plugin {
-
-	default String name() {
-		return getClass().getSimpleName();
-	}
+public interface Plugin extends Nameable {
 
 	Detector detector();
 

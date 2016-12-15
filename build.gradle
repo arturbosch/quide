@@ -59,9 +59,12 @@ subprojects {
 	configurations {
 		kotlin
 		spock
+		log
 	}
 
 	dependencies {
+		log "org.apache.logging.log4j:log4j-api:$loggerVersion"
+		log "org.apache.logging.log4j:log4j-core:$loggerVersion"
 		kotlin "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 		spock "org.spockframework:spock-core:$spockVersion"
 		spock 'org.codehaus.groovy:groovy-all:$groovyVersion'

@@ -1,9 +1,9 @@
-package io.gitlab.arturbosch.quide.detection;
+package io.gitlab.arturbosch.quide.platform;
 
 /**
  * @author Artur Bosch
  */
-public interface Tool {
+public interface Nameable {
 
 	default String name() {
 		return getClass().getSimpleName();

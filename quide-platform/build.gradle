@@ -4,6 +4,7 @@ apply plugin: 'groovy'
 
 configurations {
 	compile.extendsFrom kotlin
+	compile.extendsFrom log
 	testCompile.extendsFrom spock
 }
 

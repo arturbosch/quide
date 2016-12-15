@@ -1,10 +1,12 @@
 package io.gitlab.arturbosch.quide.platform
 
-import java.util.logging.Logger
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
+
 
 /**
  * @author Artur Bosch
  */
 inline fun <reified T> loggerFor(): Logger {
-	return Logger.getLogger(T::class.javaClass.simpleName)
+	return LogManager.getLogger(T::class.javaClass.simpleName)
 }
