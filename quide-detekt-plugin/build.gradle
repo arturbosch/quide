@@ -1,5 +1,5 @@
 configurations {
-	compile.extendsFrom kotlin
+	compileOnly.extendsFrom kotlin
 	testCompile.extendsFrom spock
 }
 

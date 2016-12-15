@@ -9,8 +9,7 @@ class PlatformTest extends Specification {
 
 	def "successful platform lifecycle run"() {
 		when:
-		def platform = new Platform()
-		platform.execute()
+		def platform = new Platform(new BasePluginLoader(new TestPluginDetector()))
 		def plugins = platform.plugins()
 
 		then:

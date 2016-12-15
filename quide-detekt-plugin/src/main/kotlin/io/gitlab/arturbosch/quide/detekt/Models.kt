@@ -20,5 +20,4 @@ class DetektSmellContainer(private val smells: List<DetektCodeSmell>) : SmellCon
 	override fun findBySourcePath(path: String): MutableList<DetektCodeSmell> {
 		return smells.filter { it.isLocatedAt(path) }.toMutableList()
 	}
-
 }

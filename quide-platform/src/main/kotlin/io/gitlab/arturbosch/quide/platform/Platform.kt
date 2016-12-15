@@ -3,10 +3,10 @@ package io.gitlab.arturbosch.quide.platform
 /**
  * @author Artur Bosch
  */
-object Platform : ControlFlow {
+class Platform(private val pluginLoader: PluginLoader) : ControlFlow {
 
 	private val _plugins = lazy {
-		PluginLoader(PluginDetector()).load()
+		pluginLoader.load()
 	}
 
 	override fun plugins(): List<Plugin> {

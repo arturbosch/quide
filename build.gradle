@@ -1,13 +1,12 @@
-
 buildscript {
-    ext.kotlin_version = '1.0.5-2'
+	ext.kotlin_version = '1.0.5-2'
 
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	}
 }
 
 plugins {
@@ -31,11 +30,20 @@ subprojects {
 	apply plugin: 'java'
 	apply plugin: 'maven'
 
-	if (it.name.startsWith("quide") && it.name != "quide-specification") {
+	def projectName = it.name
+	if (projectName.startsWith("quide") && projectName != "quide-specification") {
 		apply plugin: 'kotlin'
+
+		if (projectName.contains("plugin")) {
+			task fatJar(type: Jar) {
+				baseName = project.name
+				from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+				with jar
+			}
+		}
 	}
 
-	if (it.name == "quide-platform") {
+	if (projectName == "quide-platform") {
 		apply plugin: 'application'
 		apply plugin: 'com.github.johnrengelman.shadow'
 	}

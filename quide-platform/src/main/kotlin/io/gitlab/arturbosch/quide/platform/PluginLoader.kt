@@ -6,14 +6,21 @@ import java.util.ServiceLoader
 /**
  * @author Artur Bosch
  */
-class PluginLoader(val pluginDetector: PluginDetector) {
+interface PluginLoader {
+	fun load(): List<Plugin>
+}
 
-	fun load(): List<Plugin> {
-		val urls = pluginDetector.search()
-				.toTypedArray()
+class BasePluginLoader(val pluginDetector: PluginDetector) : PluginLoader {
+
+	private val logger = loggerFor<PluginLoader>()
+
+	override fun load(): List<Plugin> {
+		val urls = pluginDetector.search().toTypedArray()
 		val loader = URLClassLoader(urls)
 		return ServiceLoader.load(Plugin::class.java, loader)
-				.asIterable().toList()
+				.asIterable().toList().apply {
+			logger.info { "Loaded Plugins: " + joinToString(transform = Plugin::name) }
+		}
 	}
 
 }

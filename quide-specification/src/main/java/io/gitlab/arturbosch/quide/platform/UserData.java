@@ -5,7 +5,6 @@ import io.gitlab.arturbosch.quide.model.SmellContainer;
 import io.gitlab.arturbosch.quide.platform.reflect.TypeToken;
 import io.gitlab.arturbosch.quide.vcs.Versionable;
 
-import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Optional;
@@ -18,14 +17,20 @@ public abstract class UserData implements AnalysisAware {
 
 	protected Map<String, Object> storage = new ConcurrentHashMap<>();
 
+	public static final String LAST_CONTAINER = "lastContainer";
+	public static final String CURRENT_CONTAINER = "currentContainer";
+	public static final String LAST_VERSION = "lastVersion";
+	public static final String CURRENT_VERSION = "currentVersion";
+	public static final String PROJECT_PATH = "projectPath";
+
 	@Override
 	public Optional<Versionable> lastVersion() {
-		return get("lastVersion", TypeToken.get(Versionable.class));
+		return get(LAST_VERSION, TypeToken.get(Versionable.class));
 	}
 
 	@Override
 	public Optional<Versionable> currentVersion() {
-		return get("lastVersion", TypeToken.get(Versionable.class));
+		return get(CURRENT_VERSION, TypeToken.get(Versionable.class));
 	}
 
 	@Override
@@ -33,7 +38,7 @@ public abstract class UserData implements AnalysisAware {
 		TypeToken<SmellContainer<CodeSmell>> typeToken =
 				new TypeToken<SmellContainer<CodeSmell>>() {
 				};
-		return get("lastContainer", typeToken);
+		return get(LAST_CONTAINER, TypeToken.get(typeToken.getType()));
 	}
 
 	@Override
@@ -41,27 +46,24 @@ public abstract class UserData implements AnalysisAware {
 		TypeToken<SmellContainer<CodeSmell>> typeToken =
 				new TypeToken<SmellContainer<CodeSmell>>() {
 				};
-		return get("currentContainer", typeToken);
+		return get(CURRENT_CONTAINER, TypeToken.get(typeToken.getType()));
 	}
 
 	@Override
 	public Optional<Path> projectPath() {
-		return get("projectPath", TypeToken.get(Path.class));
+		return get(PROJECT_PATH, TypeToken.get(Path.class));
 	}
 
-	@SuppressWarnings("unchecked")
-	public <T> Optional<T> get(String key, TypeToken<T> typeToken) {
-		Type type = typeToken.getType();
+	@SuppressWarnings({"unchecked", "unused"})
+	public <T> Optional<T> get(String key, TypeToken<?> typeToken) {
 		Object value = storage.get(key);
-		if (value != null && value.getClass().equals(type)) {
-			return Optional.of((T) value);
-		} else {
-			return Optional.empty();
-		}
+		System.out.println("Get " + value);
+		return Optional.ofNullable((T) value);
 	}
 
 	public <T> void put(String key, T value) {
 		storage.put(key, value);
+		System.out.println("Put " + value);
 	}
 
 }

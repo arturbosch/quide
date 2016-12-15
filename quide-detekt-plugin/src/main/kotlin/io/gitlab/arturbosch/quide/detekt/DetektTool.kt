@@ -15,10 +15,13 @@ class DetektTool : Detector<DetektCodeSmell> {
 
 	override fun <U : UserData> execute(data: U) {
 		data.projectPath().ifPresent {
+			println("Found project path: " + it)
 			val detektion = Detekt(it).run()
-			val smells = detektion.findings
+			println(detektion.findings.size)
+			detektion.findings.forEach(::println)
+			val smells = DetektSmellContainer(detektion.findings
 					.flatMap { it.value }
-					.map(::DetektCodeSmell)
+					.map(::DetektCodeSmell))
 			data.put("currentContainer", smells)
 		}
 	}

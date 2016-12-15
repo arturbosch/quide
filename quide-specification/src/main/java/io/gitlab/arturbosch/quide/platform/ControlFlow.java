@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.platform;
 
+import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,11 +18,12 @@ public interface ControlFlow {
 
 	List<Plugin> plugins();
 
-	default void execute() {
+	default void execute(Path projectPath) {
 		LOGGER.info("Starting quide...");
 		plugins().forEach(plugin -> {
 			LOGGER.info("Running " + plugin.detector().name() + "...");
 			UserData data = plugin.userData();
+			data.put(UserData.PROJECT_PATH, projectPath);
 			List<Processor> processors = plugin.processors();
 			executeProcessors(processors, data, InjectionPoint.BeforeDetection);
 			plugin.detector().execute(data);
