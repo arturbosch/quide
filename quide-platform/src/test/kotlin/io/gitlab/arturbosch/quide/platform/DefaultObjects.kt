@@ -6,18 +6,11 @@ import io.gitlab.arturbosch.quide.model.SmellContainer
 import io.gitlab.arturbosch.quide.vcs.FileChange
 import io.gitlab.arturbosch.quide.vcs.Revision
 import io.gitlab.arturbosch.quide.vcs.Versionable
-import java.net.URL
 import java.time.ZonedDateTime
 
 /**
  * @author Artur Bosch
  */
-
-object TestPluginDetector : PluginDetector {
-	override fun search(): List<URL> {
-		return emptyList()
-	}
-}
 
 object DefaultContainer : SmellContainer<CodeSmell> {
 	override fun all(): MutableList<CodeSmell> {

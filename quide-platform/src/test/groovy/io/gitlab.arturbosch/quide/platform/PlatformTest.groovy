@@ -16,4 +16,11 @@ class PlatformTest extends Specification {
 		plugins.size() == 1
 		plugins[0].detector().name() == "SimpleDetector"
 	}
+
+	class TestPluginDetector implements PluginDetector {
+		@Override
+		List<URL> search() {
+			return []
+		}
+	}
 }
