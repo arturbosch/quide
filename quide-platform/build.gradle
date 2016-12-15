@@ -1,4 +1,4 @@
-mainClassName = 'io.gitlab.arturbosch.quide.platform.PlatformKt'
+mainClassName = 'io.gitlab.arturbosch.quide.platform.MainKt'
 
 apply plugin: 'groovy'
 

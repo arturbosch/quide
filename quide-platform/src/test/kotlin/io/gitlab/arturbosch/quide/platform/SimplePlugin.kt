@@ -17,11 +17,12 @@ class SimplePlugin : Plugin {
 
 	private val storage = Storage
 
-	override fun <T : CodeSmell> detector(): Detector<T> {
-		return object : Detector<T> {
+	override fun detector(): Detector<*> {
+		return object : Detector<CodeSmell> {
 			override fun name(): String {
 				return "SimpleDetector"
 			}
+
 			override fun <U : UserData?> execute(data: U) {
 			}
 		}
@@ -31,16 +32,16 @@ class SimplePlugin : Plugin {
 		return mutableListOf()
 	}
 
-	override fun <T : CodeSmell?> mapping(): SmellMapping<T> {
-		return object : SmellMapping<T> {
-			override fun map(versionable: Versionable?, before: SmellContainer<T>?, after: SmellContainer<T>?): SmellContainer<T> {
+	override fun mapping(): SmellMapping<*> {
+		return object : SmellMapping<CodeSmell> {
+			override fun map(versionable: Versionable, before: SmellContainer<CodeSmell>, after: SmellContainer<CodeSmell>): SmellContainer<CodeSmell> {
 				throw UnsupportedOperationException("not implemented")
 			}
 
 			override fun <U : UserData?> execute(data: U) {
 			}
 
-			override fun compareAlgorithm(): SmellCompareStrategy<T> {
+			override fun compareAlgorithm(): SmellCompareStrategy<CodeSmell> {
 				throw UnsupportedOperationException("not implemented")
 			}
 

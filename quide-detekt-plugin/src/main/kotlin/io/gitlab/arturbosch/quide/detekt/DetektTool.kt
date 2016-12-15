@@ -1,9 +1,7 @@
 package io.gitlab.arturbosch.quide.detekt
 
-import io.gitlab.arturbosch.detekt.api.CodeSmell
+import io.gitlab.arturbosch.detekt.core.Detekt
 import io.gitlab.arturbosch.quide.detection.Detector
-import io.gitlab.arturbosch.quide.model.BaseCodeSmell
-import io.gitlab.arturbosch.quide.model.SmellContainer
 import io.gitlab.arturbosch.quide.platform.UserData
 
 /**
@@ -11,19 +9,18 @@ import io.gitlab.arturbosch.quide.platform.UserData
  */
 class DetektTool : Detector<DetektCodeSmell> {
 
-	override fun run(userData: UserData): SmellContainer<DetektCodeSmell> {
-		return object : SmellContainer<DetektCodeSmell> {
-			override fun all(): MutableList<DetektCodeSmell> {
-				throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-			}
+	override fun name(): String {
+		return "Detekt"
+	}
 
-			override fun findBySourcePath(path: String?): MutableList<DetektCodeSmell> {
-				throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-			}
-
+	override fun <U : UserData> execute(data: U) {
+		data.projectPath().ifPresent {
+			val detektion = Detekt(it).run()
+			val smells = detektion.findings
+					.flatMap { it.value }
+					.map(::DetektCodeSmell)
+			data.put("currentContainer", smells)
 		}
 	}
 
 }
-
-class DetektCodeSmell(private val smell: CodeSmell) : BaseCodeSmell()
