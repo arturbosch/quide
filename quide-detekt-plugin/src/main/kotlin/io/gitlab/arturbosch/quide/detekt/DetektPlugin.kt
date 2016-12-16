@@ -9,6 +9,9 @@ import io.gitlab.arturbosch.quide.platform.UserData
  * @author Artur Bosch
  */
 class DetektPlugin : Plugin {
+
+	override fun name(): String = "KotlinPlugin"
+
 	override fun detector(): Detector<*> {
 		return DetektTool()
 	}
