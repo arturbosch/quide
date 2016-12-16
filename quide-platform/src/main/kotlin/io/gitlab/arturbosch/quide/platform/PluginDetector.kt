@@ -13,7 +13,7 @@ interface PluginDetector {
 
 object BasePluginDetector : PluginDetector {
 
-	private val logger = loggerFor<PluginDetector>()
+	private val logger by logFactory()
 
 	override fun search(): List<URL> {
 		return Files.list(HomeFolder.pluginDirectory)

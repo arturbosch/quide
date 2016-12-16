@@ -12,7 +12,7 @@ interface PluginLoader {
 
 class BasePluginLoader(val pluginDetector: PluginDetector) : PluginLoader {
 
-	private val logger = loggerFor<PluginLoader>()
+	private val logger by logFactory()
 
 	override fun load(): List<Plugin> {
 		val urls = pluginDetector.search().toTypedArray()
