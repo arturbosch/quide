@@ -10,11 +10,11 @@ import io.gitlab.arturbosch.quide.vcs.Versionable;
  */
 public abstract class BaseCodeSmell implements CodeSmell {
 
-	private String sourcePath;
-	private Versionable startVersion;
-	private Versionable endVersion;
-	private boolean consistent;
-	private int weight;
+	protected String sourcePath;
+	protected Versionable startVersion;
+	protected Versionable endVersion;
+	protected boolean consistent;
+	protected int weight;
 
 	@Override
 	public Versionable startVersion() {
