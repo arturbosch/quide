@@ -1,7 +1,6 @@
 package io.gitlab.arturbosch.quide.detekt
 
 import io.gitlab.arturbosch.quide.detection.Detector
-import io.gitlab.arturbosch.quide.mapping.SmellMapping
 import io.gitlab.arturbosch.quide.platform.Plugin
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -14,12 +13,8 @@ class DetektPlugin : Plugin {
 		return DetektTool()
 	}
 
-	override fun mapping(): SmellMapping<*> {
-		return DetektMapping()
-	}
-
 	override fun processors(): MutableList<Processor> {
-		return mutableListOf(PrintProcessor())
+		return mutableListOf(PrintProcessor(), DetektMapping())
 	}
 
 	override fun userData(): UserData {

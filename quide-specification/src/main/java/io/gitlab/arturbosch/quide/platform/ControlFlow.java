@@ -33,7 +33,6 @@ public interface ControlFlow {
 			LOGGER.info("Starting '" + detectorName + "' ...");
 			plugin.detector().execute(data);
 			executeProcessors(processors, data, InjectionPoint.AfterDetection);
-			plugin.mapping().execute(data);
 			executeProcessors(processors, data, InjectionPoint.AfterAnalysis);
 		});
 	}

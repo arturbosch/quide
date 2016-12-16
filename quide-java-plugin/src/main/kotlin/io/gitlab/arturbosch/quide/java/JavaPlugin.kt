@@ -1,7 +1,6 @@
 package io.gitlab.arturbosch.quide.java
 
 import io.gitlab.arturbosch.quide.detection.Detector
-import io.gitlab.arturbosch.quide.mapping.SmellMapping
 import io.gitlab.arturbosch.quide.platform.Plugin
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -15,11 +14,7 @@ class JavaPlugin : Plugin {
 	}
 
 	override fun processors(): MutableList<Processor> {
-		return mutableListOf(PrintProcessor())
-	}
-
-	override fun mapping(): SmellMapping<*> {
-		return SmartSmellsMapping()
+		return mutableListOf(PrintProcessor(), SmartSmellsMapping())
 	}
 
 	override fun userData(): UserData {
