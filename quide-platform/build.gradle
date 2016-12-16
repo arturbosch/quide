@@ -9,6 +9,5 @@ configurations {
 }
 
 dependencies {
-	compile "io.gitlab.arturbosch:kutils:$kutilsVersion"
 	compile project(":quide-specification")
 }

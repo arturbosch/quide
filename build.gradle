@@ -66,6 +66,7 @@ subprojects {
 		log "org.apache.logging.log4j:log4j-api:$loggerVersion"
 		log "org.apache.logging.log4j:log4j-core:$loggerVersion"
 		kotlin "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+		kotlin "io.gitlab.arturbosch:kutils:$kutilsVersion"
 		spock "org.spockframework:spock-core:$spockVersion"
 		spock 'org.codehaus.groovy:groovy-all:$groovyVersion'
 	}
