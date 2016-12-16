@@ -6,5 +6,5 @@ configurations {
 
 dependencies {
 	compile project(":quide-specification")
-	compile "io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.M5"
+	compile "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
 }

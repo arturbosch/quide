@@ -2,3 +2,5 @@ rootProject.name = 'quide'
 include 'quide-platform'
 include 'quide-specification'
 include 'quide-detekt-plugin'
+include 'quide-java-plugin'
+
