@@ -20,21 +20,18 @@ public interface ControlFlow {
 
 	List<Plugin> plugins();
 
-	default void execute(Path projectPath) {
-		LOGGER.info("Starting quide ...");
-		plugins().forEach(plugin -> {
-			String toolName = plugin.name();
-			LOGGER.info("Starting '" + toolName + "' ...");
-			UserData data = plugin.userData();
-			data.put(UserData.PROJECT_PATH, projectPath);
-			List<Processor> processors = plugin.processors();
-			executeProcessors(processors, data, InjectionPoint.BeforeDetection);
-			String detectorName = plugin.detector().name();
-			LOGGER.info("Starting '" + detectorName + "' ...");
-			plugin.detector().execute(data);
-			executeProcessors(processors, data, InjectionPoint.AfterDetection);
-			executeProcessors(processors, data, InjectionPoint.AfterAnalysis);
-		});
+	default void execute(Plugin plugin, Path projectPath) {
+		String toolName = plugin.name();
+		LOGGER.info("Starting '" + toolName + "' ...");
+		UserData data = plugin.userData();
+		data.put(UserData.PROJECT_PATH, projectPath);
+		List<Processor> processors = plugin.processors();
+		executeProcessors(processors, data, InjectionPoint.BeforeDetection);
+		String detectorName = plugin.detector().name();
+		LOGGER.info("Starting '" + detectorName + "' ...");
+		plugin.detector().execute(data);
+		executeProcessors(processors, data, InjectionPoint.AfterDetection);
+		executeProcessors(processors, data, InjectionPoint.AfterAnalysis);
 	}
 
 	default void executeProcessors(List<Processor> processors,
@@ -45,7 +42,7 @@ public interface ControlFlow {
 				.sorted(Comparator.comparingInt(Processor::priority))
 				.forEach(processor -> {
 					String name = processor.name();
-					LOGGER.info("Executing processor '" + name + "' (InjectionPoint: " + injectionPoint + ")");
+					LOGGER.info("Executing processor '" + name + "'");
 					processor.execute(userData);
 				});
 	}

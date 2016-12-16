@@ -8,5 +8,5 @@ import java.nio.file.Paths
 fun main(args: Array<String>) {
 	val analysis = Analysis(Paths.get(args[0]))
 	Platform(BasePluginLoader(BasePluginDetector))
-			.execute(analysis.projectPath)
+			.analyze(analysis.projectPath)
 }
