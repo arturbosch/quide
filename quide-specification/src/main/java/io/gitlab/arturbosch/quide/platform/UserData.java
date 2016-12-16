@@ -57,13 +57,11 @@ public abstract class UserData implements AnalysisAware {
 	@SuppressWarnings({"unchecked", "unused"})
 	public <T> Optional<T> get(String key, TypeToken<?> typeToken) {
 		Object value = storage.get(key);
-		System.out.println("Get " + value);
 		return Optional.ofNullable((T) value);
 	}
 
 	public <T> void put(String key, T value) {
 		storage.put(key, value);
-		System.out.println("Put " + value);
 	}
 
 }
