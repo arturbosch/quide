@@ -2,10 +2,11 @@ apply plugin: 'groovy'
 
 configurations {
 	compile.extendsFrom log
+	compileOnly.extendsFrom kotlin
 	testCompile.extendsFrom spock
 }
 
 dependencies {
 	compile project(":quide-specification")
-	compile "io.gitlab.arturbosch.smartsmells:smartsmells:$smartsmellsVersion"
+	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:$smartsmellsVersion"
 }

@@ -20,7 +20,7 @@ object BasePluginDetector : PluginDetector {
 				.filter { it.toString().endsWith(".jar") }
 				.map { it.toUri().toURL() }
 				.toList().apply {
-			logger.info { "Jars found: " + joinToString { it.path.substringAfterLast('/') } }
+			logger.info("Jars found: " + joinToString { it.path.substringAfterLast('/') })
 		}
 	}
 }

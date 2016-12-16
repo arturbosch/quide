@@ -9,6 +9,10 @@ import io.gitlab.arturbosch.quide.model.SmellContainer
  */
 
 class DetektCodeSmell(private val smell: Finding) : BaseCodeSmell() {
+	init {
+		sourcePath = smell.location.file
+	}
+
 	override fun toString(): String = smell.compact()
 }
 

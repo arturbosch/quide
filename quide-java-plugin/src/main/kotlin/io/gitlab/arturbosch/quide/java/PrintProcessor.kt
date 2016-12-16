@@ -1,4 +1,4 @@
-package io.gitlab.arturbosch.quide.detekt
+package io.gitlab.arturbosch.quide.java
 
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
@@ -16,7 +16,7 @@ class PrintProcessor : Processor {
 		val smells = data.currentContainer().orElseThrow {
 			RuntimeException("Could not retrieve container!")
 		}.all()
-		logger.info("Detekt detected: #${smells.size} smells")
+		logger.info("SmartSmells detected: #${smells.size} smells")
 	}
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {

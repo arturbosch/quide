@@ -19,7 +19,7 @@ class BasePluginLoader(val pluginDetector: PluginDetector) : PluginLoader {
 		val loader = URLClassLoader(urls)
 		return ServiceLoader.load(Plugin::class.java, loader)
 				.asIterable().toList().apply {
-			logger.info { "Loaded Plugins: " + joinToString(transform = Plugin::name) }
+			logger.info("Loaded Plugins: " + joinToString(transform = Plugin::name))
 		}
 	}
 
