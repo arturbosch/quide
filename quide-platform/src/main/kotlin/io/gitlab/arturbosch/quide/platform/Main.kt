@@ -10,3 +10,5 @@ fun main(args: Array<String>) {
 	Platform(BasePluginLoader(BasePluginDetector))
 			.analyze(analysis.projectPath)
 }
+
+const val QUIDE = "quide"

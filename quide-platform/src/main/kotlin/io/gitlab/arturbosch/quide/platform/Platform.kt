@@ -3,6 +3,7 @@ package io.gitlab.arturbosch.quide.platform
 import io.gitlab.arturbosch.kutils.awaitAll
 import io.gitlab.arturbosch.kutils.runAsync
 import io.gitlab.arturbosch.kutils.withExecutor
+import io.gitlab.arturbosch.kutils.withNamedThreadPoolExecutor
 import java.nio.file.Path
 
 /**
@@ -21,8 +22,8 @@ class Platform(private val pluginLoader: PluginLoader) : ControlFlow {
 	}
 
 	fun analyze(path: Path) {
-		logger.info("Starting quide ...")
-		withExecutor {
+		logger.info("Starting $QUIDE ...")
+		withExecutor(withNamedThreadPoolExecutor(QUIDE)) {
 			val futures = plugins().map {
 				runAsync {
 					execute(it, path)
