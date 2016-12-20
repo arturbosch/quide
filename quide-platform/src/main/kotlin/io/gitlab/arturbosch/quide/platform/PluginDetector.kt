@@ -8,20 +8,23 @@ import java.nio.file.Files
  * @author Artur Bosch
  */
 interface PluginDetector {
-	fun search(): List<URL>
+	val jars: Array<URL>
 }
 
 object BasePluginDetector : PluginDetector {
 
 	private val logger by logFactory()
 
-	override fun search(): List<URL> {
-		return Files.list(HomeFolder.pluginDirectory)
+	private val lazyPlugins = lazy {
+		Files.list(HomeFolder.pluginDirectory)
 				.filter { it.toString().endsWith(".jar") }
 				.map { it.toUri().toURL() }
 				.toList().apply {
 			logger.info("Jars found: " + joinToString { it.path.substringAfterLast('/') })
 		}
 	}
+
+	override val jars: Array<URL>
+		get() = lazyPlugins.value.toTypedArray()
 }
 

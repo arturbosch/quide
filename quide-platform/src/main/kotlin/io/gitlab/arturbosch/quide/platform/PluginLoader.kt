@@ -15,7 +15,7 @@ class BasePluginLoader(val pluginDetector: PluginDetector) : PluginLoader {
 	private val logger by logFactory()
 
 	override fun load(): List<Plugin> {
-		val urls = pluginDetector.search().toTypedArray()
+		val urls = pluginDetector.jars
 		val loader = URLClassLoader(urls, javaClass.classLoader)
 		return ServiceLoader.load(Plugin::class.java, loader)
 				.asIterable().toList().apply {

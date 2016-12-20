@@ -7,8 +7,9 @@ import java.nio.file.Paths
  */
 fun main(args: Array<String>) {
 	val analysis = Analysis(Paths.get(args[0]))
-	Platform(BasePluginLoader(BasePluginDetector))
-			.analyze(analysis.projectPath)
+	val detector = BasePluginDetector
+	val quide = Quide(BaseVCSLoader(detector), BasePlatform(BasePluginLoader(detector)))
+	quide.analyze(analysis.projectPath)
 }
 
 const val QUIDE = "quide"
