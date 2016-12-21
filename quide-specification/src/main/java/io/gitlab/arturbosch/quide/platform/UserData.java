@@ -50,8 +50,13 @@ public abstract class UserData implements AnalysisAware {
 	}
 
 	@Override
-	public Optional<Path> projectPath() {
-		return get(PROJECT_PATH, TypeToken.get(Path.class));
+	public Path projectPath() {
+		Optional<Path> maybePath = get(PROJECT_PATH, TypeToken.get(Path.class));
+		if (maybePath.isPresent()) {
+			return maybePath.get();
+		} else {
+			throw new AnalysisAware.ProjectPathUnspecifiedError();
+		}
 	}
 
 	@SuppressWarnings({"unchecked", "unused"})

@@ -15,5 +15,11 @@ public interface AnalysisAware {
 	Optional<Versionable> currentVersion();
 	Optional<SmellContainer<CodeSmell>> lastContainer();
 	Optional<SmellContainer<CodeSmell>> currentContainer();
-	Optional<Path> projectPath();
+	Path projectPath();
+
+	class ProjectPathUnspecifiedError extends RuntimeException {
+		public ProjectPathUnspecifiedError() {
+			super("Project path must be specified for plugins usage!");
+		}
+	}
 }

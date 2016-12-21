@@ -17,16 +17,15 @@ class DetektTool : Detector<DetektCodeSmell> {
 	}
 
 	override fun <U : UserData> execute(data: U) {
-		data.projectPath().ifPresent {
-			val config = YamlConfig.load(
-					Paths.get("/home/artur/Repos/detekt/default-detekt-config.yml"))
-			val filters = listOf(".*test.*").map(::PathFilter)
-			val detektion = Detekt(it, config, pathFilters = filters).run()
-			val smells = DetektSmellContainer(detektion.findings
-					.flatMap { it.value }
-					.map(::DetektCodeSmell))
-			data.put("currentContainer", smells)
-		}
+		val projectPath = data.projectPath()
+		val config = YamlConfig.load(
+				Paths.get("/home/artur/Repos/detekt/default-detekt-config.yml"))
+		val filters = listOf(".*test.*").map(::PathFilter)
+		val detektion = Detekt(projectPath, config, pathFilters = filters).run()
+		val smells = DetektSmellContainer(detektion.findings
+				.flatMap { it.value }
+				.map(::DetektCodeSmell))
+		data.put("currentContainer", smells)
 	}
 
 }
