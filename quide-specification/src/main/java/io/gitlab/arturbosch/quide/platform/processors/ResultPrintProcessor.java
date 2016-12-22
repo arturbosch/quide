@@ -32,6 +32,8 @@ public class ResultPrintProcessor implements Processor {
 					.map(Object::toString)
 					.collect(Collectors.joining("\n"));
 
+			if (smellString.isEmpty()) return;
+
 			try {
 				Files.write(file, smellString.getBytes());
 			} catch (IOException e) {
