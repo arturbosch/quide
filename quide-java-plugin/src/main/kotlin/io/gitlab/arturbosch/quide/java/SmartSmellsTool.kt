@@ -16,9 +16,7 @@ class SmartSmellsTool : Detector<JavaSmellContainer> {
 	override fun <U : UserData> execute(data: U): JavaSmellContainer {
 		val projectPath = data.projectPath()
 		val smellResult = DetectorFacade.fullStackFacade().run(projectPath)
-		val container = JavaSmellContainer(smellResult)
-		data.put("currentContainer", container)
-		return container
+		return JavaSmellContainer(smellResult)
 	}
 
 }

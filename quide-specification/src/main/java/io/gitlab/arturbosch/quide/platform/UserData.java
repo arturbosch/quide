@@ -15,13 +15,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class UserData implements AnalysisAware {
 
-	protected Map<String, Object> storage = new ConcurrentHashMap<>();
-
 	public static final String LAST_CONTAINER = "lastContainer";
 	public static final String CURRENT_CONTAINER = "currentContainer";
 	public static final String LAST_VERSION = "lastVersion";
 	public static final String CURRENT_VERSION = "currentVersion";
+	public static final String OUTPUT_PATH = "outputPath";
 	public static final String PROJECT_PATH = "projectPath";
+	public static final String TOOL_NAME = "toolName";
+
+	protected Map<String, Object> storage = new ConcurrentHashMap<>();
 
 	@Override
 	public Optional<Versionable> lastVersion() {
@@ -50,13 +52,20 @@ public abstract class UserData implements AnalysisAware {
 	}
 
 	@Override
+	public Optional<Path> outputPath() {
+		return get(OUTPUT_PATH, TypeToken.get(Path.class));
+	}
+
+	@Override
 	public Path projectPath() {
-		Optional<Path> maybePath = get(PROJECT_PATH, TypeToken.get(Path.class));
-		if (maybePath.isPresent()) {
-			return maybePath.get();
-		} else {
-			throw new AnalysisAware.ProjectPathUnspecifiedError();
-		}
+		return (Path) get(PROJECT_PATH, TypeToken.get(Path.class))
+				.orElseThrow(AnalysisAware.ProjectPathUnspecifiedError::new);
+	}
+
+	@Override
+	public String toolName() {
+		return (String) get(TOOL_NAME, TypeToken.get(String.class))
+				.orElseThrow(AnalysisAware.ToolNameUnSpecifiedError::new);
 	}
 
 	@SuppressWarnings({"unchecked", "unused"})

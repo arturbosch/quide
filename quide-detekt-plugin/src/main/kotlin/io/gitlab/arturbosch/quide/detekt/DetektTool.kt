@@ -24,10 +24,7 @@ class DetektTool : Detector<DetektSmellContainer> {
 		val detektion = Detekt(projectPath, config, pathFilters = filters).run()
 		return DetektSmellContainer(detektion.findings
 				.flatMap { it.value }
-				.map(::DetektCodeSmell)).apply {
-			data.put("currentContainer", this)
-		}
-
+				.map(::DetektCodeSmell))
 	}
 
 }
