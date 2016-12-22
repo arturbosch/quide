@@ -3,6 +3,8 @@ package io.gitlab.arturbosch.quide.platform
 import io.gitlab.arturbosch.quide.vcs.VersionProvider
 import spock.lang.Specification
 
+import java.nio.file.Path
+
 /**
  * @author Artur Bosch
  */
@@ -10,7 +12,7 @@ class BasePlatformTest extends Specification {
 
 	def "successful platform lifecycle run"() {
 		when:
-		def platform = new BasePlatform(new BasePluginLoader(new TestPluginDetector()))
+		def platform = new BasePlatform(new EmptyAnalysis(), new BasePluginLoader(new TestPluginDetector()))
 		def plugins = platform.plugins()
 
 		then:
@@ -21,8 +23,8 @@ class BasePlatformTest extends Specification {
 	def "successful base version platform lifecycle run"() {
 		when:
 		def detector = new TestPluginDetector()
-		def platform = new BasePlatform(new BasePluginLoader(detector))
-		def quide = new Quide(new TestVCSLoader(), platform)
+		def platform = new BasePlatform(new EmptyAnalysis(), new BasePluginLoader(detector))
+		def quide = new QuidePlatform(new TestVCSLoader(), platform)
 
 		then:
 		quide.executablePlatform instanceof BasePlatform
@@ -31,11 +33,24 @@ class BasePlatformTest extends Specification {
 	def "successful multiple version platform lifecycle run"() {
 		when:
 		def detector = new TestPluginDetector()
-		def platform = new BasePlatform(new BasePluginLoader(detector))
-		def quide = new Quide(new BaseVCSLoader(detector), platform)
+		def platform = new BasePlatform(new EmptyAnalysis(), new BasePluginLoader(detector))
+		def quide = new QuidePlatform(new BaseVCSLoader(detector), platform)
 
 		then:
 		quide.executablePlatform instanceof MultiPlatform
+	}
+
+
+	class EmptyAnalysis implements Analysis {
+		@Override
+		Path getProjectPath() {
+			return null
+		}
+
+		@Override
+		Path getOutputPath() {
+			return null
+		}
 	}
 
 	class TestVCSLoader implements VCSLoader {

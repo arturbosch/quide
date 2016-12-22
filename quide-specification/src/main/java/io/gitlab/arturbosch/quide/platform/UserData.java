@@ -6,9 +6,9 @@ import io.gitlab.arturbosch.quide.platform.reflect.TypeToken;
 import io.gitlab.arturbosch.quide.vcs.Versionable;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Artur Bosch
@@ -23,7 +23,7 @@ public abstract class UserData implements AnalysisAware {
 	public static final String PROJECT_PATH = "projectPath";
 	public static final String TOOL_NAME = "toolName";
 
-	protected Map<String, Object> storage = new ConcurrentHashMap<>();
+	protected Map<String, Object> storage = new HashMap<>();
 
 	@Override
 	public Optional<Versionable> lastVersion() {

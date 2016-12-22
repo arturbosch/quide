@@ -1,7 +1,7 @@
 package io.gitlab.arturbosch.quide.platform
 
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import kotlin.reflect.KProperty
 
 
@@ -15,7 +15,7 @@ class LoggerDelegate {
 	private var logger: Logger? = null
 
 	operator fun getValue(thisRef: Any, property: KProperty<*>): Logger {
-		if (logger == null) logger = LogManager.getLogger(thisRef.javaClass.simpleName)
+		if (logger == null) logger = LoggerFactory.getLogger(thisRef.javaClass.simpleName)
 		return logger!!
 	}
 

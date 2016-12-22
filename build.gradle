@@ -64,6 +64,7 @@ subprojects {
 
 	dependencies {
 		log "org.slf4j:slf4j-api:$slfVersion"
+		log "org.apache.logging.log4j:log4j-slf4j-impl:$loggerVersion"
 		log "org.apache.logging.log4j:log4j-api:$loggerVersion"
 		log "org.apache.logging.log4j:log4j-core:$loggerVersion"
 		kotlin "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"

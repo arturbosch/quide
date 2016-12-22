@@ -6,17 +6,18 @@ import io.gitlab.arturbosch.kutils.withExecutor
 import io.gitlab.arturbosch.kutils.withNamedThreadPoolExecutor
 import io.gitlab.arturbosch.quide.vcs.VersionProvider
 import io.gitlab.arturbosch.quide.vcs.Versionable
-import java.nio.file.Path
 
 /**
  * @author Artur Bosch
  */
 interface Platform {
-	fun analyze(path: Path)
+	fun analyze()
 }
 
-class Quide(vcsLoader: VCSLoader, platform: BasePlatform) : Platform {
+class QuidePlatform(vcsLoader: VCSLoader,
+					platform: BasePlatform) : Platform {
 
+	private val logger by logFactory()
 	private val executablePlatform: Platform
 
 	init {
@@ -28,26 +29,30 @@ class Quide(vcsLoader: VCSLoader, platform: BasePlatform) : Platform {
 		}
 	}
 
-	override fun analyze(path: Path) {
-		executablePlatform.analyze(path)
+	override fun analyze() {
+		logger.info("Starting $QUIDE ...")
+		executablePlatform.analyze()
 	}
 }
 
-class MultiPlatform(private val platform: BasePlatform, private val versionProvider: VersionProvider) : Platform {
-	override fun analyze(path: Path) {
+class MultiPlatform(private val platform: BasePlatform,
+					private val versionProvider: VersionProvider) : Platform {
+
+	override fun analyze() {
 		var lastVersion: Versionable? = null
 		var currentVersion = versionProvider.nextVersion()
 		while (currentVersion.isPresent) {
 			platform.plugins().forEach { it.userData().put(UserData.LAST_VERSION, lastVersion) }
 			platform.plugins().forEach { it.userData().put(UserData.CURRENT_VERSION, currentVersion) }
-			platform.analyze(path)
+			platform.analyze()
 			lastVersion = currentVersion.get()
 			currentVersion = versionProvider.nextVersion()
 		}
 	}
 }
 
-class BasePlatform(private val pluginLoader: PluginLoader) : ControlFlow, Platform {
+class BasePlatform(private val analysis: Analysis,
+				   private val pluginLoader: PluginLoader) : ControlFlow, Platform {
 
 	private val logger by logFactory()
 
@@ -59,12 +64,11 @@ class BasePlatform(private val pluginLoader: PluginLoader) : ControlFlow, Platfo
 		return _plugins.value
 	}
 
-	override fun analyze(path: Path) {
-		logger.info("Starting $QUIDE ...")
+	override fun analyze() {
 		withExecutor(withNamedThreadPoolExecutor(QUIDE)) {
 			val futures = plugins().map { plugin ->
 				runAsync {
-					execute(plugin, path)
+					execute(plugin, analysis.projectPath, analysis.outputPath)
 				}.exceptionally {
 					logger.error("An error occurred while executing ${plugin.name()}", it)
 				}
