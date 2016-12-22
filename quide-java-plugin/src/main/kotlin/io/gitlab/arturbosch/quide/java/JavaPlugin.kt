@@ -9,7 +9,7 @@ import io.gitlab.arturbosch.quide.platform.UserData
  * @author Artur Bosch
  */
 class JavaPlugin : Plugin {
-	override fun detector(): Detector<*> {
+	override fun detector(): Detector<JavaSmellContainer> {
 		return SmartSmellsTool()
 	}
 

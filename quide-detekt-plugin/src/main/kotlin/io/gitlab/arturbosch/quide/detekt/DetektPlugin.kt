@@ -12,7 +12,7 @@ class DetektPlugin : Plugin {
 
 	override fun name(): String = "KotlinPlugin"
 
-	override fun detector(): Detector<*> {
+	override fun detector(): Detector<DetektSmellContainer> {
 		return DetektTool()
 	}
 

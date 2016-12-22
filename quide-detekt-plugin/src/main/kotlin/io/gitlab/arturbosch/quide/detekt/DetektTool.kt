@@ -10,22 +10,24 @@ import java.nio.file.Paths
 /**
  * @author Artur Bosch
  */
-class DetektTool : Detector<DetektCodeSmell> {
+class DetektTool : Detector<DetektSmellContainer> {
 
 	override fun name(): String {
 		return "Detekt"
 	}
 
-	override fun <U : UserData> execute(data: U) {
+	override fun <U : UserData> execute(data: U): DetektSmellContainer {
 		val projectPath = data.projectPath()
 		val config = YamlConfig.load(
 				Paths.get("/home/artur/Repos/detekt/default-detekt-config.yml"))
 		val filters = listOf(".*test.*").map(::PathFilter)
 		val detektion = Detekt(projectPath, config, pathFilters = filters).run()
-		val smells = DetektSmellContainer(detektion.findings
+		return DetektSmellContainer(detektion.findings
 				.flatMap { it.value }
-				.map(::DetektCodeSmell))
-		data.put("currentContainer", smells)
+				.map(::DetektCodeSmell)).apply {
+			data.put("currentContainer", this)
+		}
+
 	}
 
 }
