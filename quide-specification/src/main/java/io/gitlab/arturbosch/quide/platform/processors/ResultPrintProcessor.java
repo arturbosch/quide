@@ -21,29 +21,29 @@ public class ResultPrintProcessor implements Processor {
 
 	@Override
 	public <U extends UserData> void execute(U data) {
-		data.currentContainer().ifPresent(container ->
-				data.outputPath().ifPresent(outputPath -> {
-					String tool = data.toolName();
-					Path file = filePath(tool, outputPath);
-					LOGGER.info("Saving " + tool + " result at " + file);
+		data.currentContainer().ifPresent(container -> {
+			Path outputPath = data.outputPath().orElse(data.projectPath());
 
-					String smellString = container.all().stream()
-							.map(Object::toString)
-							.collect(Collectors.joining("\n"));
+			String tool = data.toolName();
+			Path file = filePath(tool, outputPath);
+			LOGGER.info("Saving " + tool + " result at " + file);
 
-					try {
-						Files.write(file, smellString.getBytes());
-					} catch (IOException e) {
-						LOGGER.warn("The result of " + tool + "could not be saved.", e);
-					}
-				})
-		);
+			String smellString = container.all().stream()
+					.map(Object::toString)
+					.collect(Collectors.joining("\n"));
+
+			try {
+				Files.write(file, smellString.getBytes());
+			} catch (IOException e) {
+				LOGGER.warn("The result of " + tool + "could not be saved.", e);
+			}
+		});
 	}
 
 	private Path filePath(String tool, Path output) {
 		String date = LocalDateTime.now().toString();
 		String ending = ".quide";
-		String filename = tool + date + ending;
+		String filename = tool + "_" + date + ending;
 		return output.resolve(filename);
 	}
 

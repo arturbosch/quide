@@ -5,6 +5,7 @@ import io.gitlab.arturbosch.quide.platform.Plugin
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.platform.processors.NumberOfSmellsProcessor
+import io.gitlab.arturbosch.quide.platform.processors.ResultPrintProcessor
 
 /**
  * @author Artur Bosch
@@ -15,7 +16,7 @@ class JavaPlugin : Plugin {
 	}
 
 	override fun processors(): MutableList<Processor> {
-		return mutableListOf(NumberOfSmellsProcessor())
+		return mutableListOf(NumberOfSmellsProcessor(), ResultPrintProcessor())
 	}
 
 	override fun userData(): UserData {
