@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.platform;
 
+import io.gitlab.arturbosch.quide.model.SmellContainer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,21 +16,27 @@ public interface ControlFlow {
 	Logger LOGGER = LogManager.getLogger(ControlFlow.class.getSimpleName());
 
 	enum InjectionPoint {
-		BeforeDetection, AfterDetection, AfterAnalysis
+		BeforeDetection, AfterDetection, BeforeAnalysis, AfterAnalysis
 	}
 
 	List<Plugin> plugins();
 
 	default void execute(Plugin plugin, Path projectPath) {
-		String toolName = plugin.name();
-		LOGGER.info("Starting '" + toolName + "' ...");
 		UserData data = plugin.userData();
 		data.put(UserData.PROJECT_PATH, projectPath);
+
 		List<Processor> processors = plugin.processors();
+		executeProcessors(processors, data, InjectionPoint.BeforeAnalysis);
 		executeProcessors(processors, data, InjectionPoint.BeforeDetection);
+
 		String detectorName = plugin.detector().name();
 		LOGGER.info("Starting '" + detectorName + "' ...");
-		plugin.detector().execute(data);
+
+		data.currentContainer().ifPresent(currentContainer ->
+				data.put(UserData.LAST_CONTAINER, currentContainer));
+		SmellContainer container = plugin.detector().execute(data);
+		data.put(UserData.CURRENT_CONTAINER, container);
+
 		executeProcessors(processors, data, InjectionPoint.AfterDetection);
 		executeProcessors(processors, data, InjectionPoint.AfterAnalysis);
 	}
