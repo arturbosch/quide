@@ -4,13 +4,12 @@ import io.gitlab.arturbosch.quide.model.CodeSmell;
 import io.gitlab.arturbosch.quide.model.SmellContainer;
 import io.gitlab.arturbosch.quide.vcs.Versionable;
 
-import java.nio.file.Path;
 import java.util.Optional;
 
 /**
  * @author Artur Bosch
  */
-public interface AnalysisAware {
+public interface AnalysisAware extends AnalysisContext {
 
 	Optional<Versionable> lastVersion();
 
@@ -19,10 +18,6 @@ public interface AnalysisAware {
 	Optional<SmellContainer<CodeSmell>> lastContainer();
 
 	Optional<SmellContainer<CodeSmell>> currentContainer();
-
-	Optional<Path> outputPath();
-
-	Path projectPath();
 
 	String toolName();
 
@@ -35,6 +30,12 @@ public interface AnalysisAware {
 	class ToolNameUnSpecifiedError extends IllegalStateException {
 		public ToolNameUnSpecifiedError() {
 			super("Tool name must be specified for plugins usage!");
+		}
+	}
+
+	class NoQuideHomeDirectoryError extends IllegalStateException {
+		public NoQuideHomeDirectoryError() {
+			super("There was no instance of QuideDirectory!");
 		}
 	}
 }

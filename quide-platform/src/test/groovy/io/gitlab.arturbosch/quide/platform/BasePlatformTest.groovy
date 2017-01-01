@@ -43,12 +43,17 @@ class BasePlatformTest extends Specification {
 
 	class EmptyAnalysis implements Analysis {
 		@Override
-		Path getProjectPath() {
+		Path projectPath() {
 			return null
 		}
 
 		@Override
-		Path getOutputPath() {
+		Optional<Path> outputPath() {
+			return null
+		}
+
+		@Override
+		QuideDirectory quideDirectory() {
 			return null
 		}
 	}

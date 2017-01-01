@@ -68,7 +68,7 @@ class BasePlatform(private val analysis: Analysis,
 		withExecutor(withNamedThreadPoolExecutor(QUIDE)) {
 			val futures = plugins().map { plugin ->
 				runAsync {
-					execute(plugin, analysis.projectPath, analysis.outputPath)
+					execute(plugin, analysis)
 				}.exceptionally {
 					logger.error("An error occurred while executing ${plugin.name()}", it)
 				}

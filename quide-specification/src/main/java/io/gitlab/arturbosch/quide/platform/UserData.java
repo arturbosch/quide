@@ -22,6 +22,7 @@ public abstract class UserData implements AnalysisAware {
 	public static final String OUTPUT_PATH = "outputPath";
 	public static final String PROJECT_PATH = "projectPath";
 	public static final String TOOL_NAME = "toolName";
+	public static final String QUIDE_DIRECTORY = "quideDirectory";
 
 	protected Map<String, Object> storage = new HashMap<>();
 
@@ -66,6 +67,12 @@ public abstract class UserData implements AnalysisAware {
 	public String toolName() {
 		return (String) get(TOOL_NAME, TypeToken.get(String.class))
 				.orElseThrow(AnalysisAware.ToolNameUnSpecifiedError::new);
+	}
+
+	@Override
+	public QuideDirectory quideDirectory() {
+		return (QuideDirectory) get(QUIDE_DIRECTORY, TypeToken.get(QuideDirectory.class))
+				.orElseThrow(AnalysisAware.NoQuideHomeDirectoryError::new);
 	}
 
 	@SuppressWarnings({"unchecked", "unused"})

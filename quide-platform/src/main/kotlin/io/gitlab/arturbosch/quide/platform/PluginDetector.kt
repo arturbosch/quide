@@ -16,7 +16,7 @@ object BasePluginDetector : PluginDetector {
 	private val logger by logFactory()
 
 	private val lazyPlugins = lazy {
-		Files.list(HomeFolder.pluginDirectory)
+		Files.list(HomeFolder.pluginsDir())
 				.filter { it.toString().endsWith(".jar") }
 				.map { it.toUri().toURL() }
 				.toList().apply {

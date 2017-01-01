@@ -4,7 +4,6 @@ import io.gitlab.arturbosch.quide.model.SmellContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,13 +20,14 @@ public interface ControlFlow {
 
 	List<Plugin> plugins();
 
-	default void execute(Plugin plugin, Path input, Path output) {
+	default void execute(Plugin plugin, AnalysisContext context) {
 		UserData data = plugin.userData();
 		String detectorName = plugin.detector().name();
 
 		data.put(UserData.TOOL_NAME, detectorName);
-		data.put(UserData.PROJECT_PATH, input);
-		data.put(UserData.OUTPUT_PATH, output);
+		data.put(UserData.PROJECT_PATH, context.projectPath());
+		context.outputPath().ifPresent(outputPath -> data.put(UserData.OUTPUT_PATH, outputPath));
+		data.put(UserData.QUIDE_DIRECTORY, context.quideDirectory());
 
 		List<Processor> processors = plugin.processors();
 		executeProcessors(processors, data, InjectionPoint.BeforeAnalysis);

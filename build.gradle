@@ -70,7 +70,7 @@ subprojects {
 		kotlin "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 		kotlin "io.gitlab.arturbosch:kutils:$kutilsVersion"
 		spock "org.spockframework:spock-core:$spockVersion"
-		spock 'org.codehaus.groovy:groovy-all:$groovyVersion'
+		spock "org.codehaus.groovy:groovy-all:$groovyVersion"
 	}
 
 	sourceSets {
