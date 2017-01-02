@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format.iml" group="codesmell-baseline-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_main.iml" group="codesmell-baseline-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_test.iml" group="codesmell-baseline-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide.iml" filepath="$PROJECT_DIR$/.idea/modules/quide.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" group="quide-detekt-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" group="quide-detekt-plugin" />
@@ -12,9 +15,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" group="quide-platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" group="quide-platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" group="quide-platform" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-smell-baseline-format/quide-smell-baseline-format.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-smell-baseline-format/quide-smell-baseline-format.iml" group="quide-smell-baseline-format" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-smell-baseline-format/quide-smell-baseline-format_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-smell-baseline-format/quide-smell-baseline-format_main.iml" group="quide-smell-baseline-format" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-smell-baseline-format/quide-smell-baseline-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-smell-baseline-format/quide-smell-baseline-format_test.iml" group="quide-smell-baseline-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" group="quide-specification" />

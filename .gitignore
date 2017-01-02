@@ -1,11 +1,7 @@
 
 .gradle/
-.idea/gradle.xml
-.idea/workspace.xml
 build/
-.idea/compiler.xml
-.idea/libraries/
 .idea/modules/quide_main.iml
 .idea/modules/quide_test.iml
-.idea/modules/quide-specification/
-.idea/uiDesigner.xml
+/.idea/
+SmartSmells_2017-01-01T20:44:12.983.quide
