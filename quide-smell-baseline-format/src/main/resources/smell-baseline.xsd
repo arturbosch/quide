@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="SmellBaseline" type="SmellBaseline"/>
+    <xs:complexType name="Blacklist">
+        <xs:sequence>
+            <xs:element name="ID" maxOccurs="unbounded" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Class"/>
+                        <xs:enumeration value="Other"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="timestamp"/>
+    </xs:complexType>
+    <xs:complexType name="SmellBaseline">
+        <xs:sequence>
+            <xs:element type="Blacklist" name="Blacklist"/>
+            <xs:element type="Whitelist" name="Whitelist"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Whitelist">
+        <xs:sequence>
+            <xs:element name="ID" maxOccurs="unbounded" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Class"/>
+                        <xs:enumeration value="Other"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="timestamp"/>
+    </xs:complexType>
+</xs:schema>
