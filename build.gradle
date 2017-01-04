@@ -25,6 +25,8 @@ subprojects {
 	repositories {
 		mavenCentral()
 		mavenLocal()
+		maven { url "http://dl.bintray.com/arturbosch/generic" }
+		maven { url "http://dl.bintray.com/arturbosch/code-analysis" }
 	}
 
 	apply plugin: 'java'
