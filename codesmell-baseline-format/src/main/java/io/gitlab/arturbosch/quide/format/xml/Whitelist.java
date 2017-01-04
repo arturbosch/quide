@@ -5,6 +5,7 @@ import io.gitlab.arturbosch.quide.format.internal.Validate;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class Whitelist implements Listing {
 	}
 
 	public List<String> getIds() {
-		return ids;
+		return ids == null ? ids = Collections.emptyList() : ids;
 	}
 
 	@Override
