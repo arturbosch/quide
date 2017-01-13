@@ -18,6 +18,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" group="quide-specification" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" group="quide-vcs-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" group="quide-vcs-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" group="quide-vcs-plugin" />
     </modules>
   </component>
 </project>

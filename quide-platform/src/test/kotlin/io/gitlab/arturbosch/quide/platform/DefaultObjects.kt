@@ -42,7 +42,7 @@ object DefaultVersion : Versionable {
 object DefaultRevision : Revision {
 	override fun versionHash(): String = ""
 	override fun parentHash(): String = ""
-	override fun commit(): String = ""
+	override fun message(): String = ""
 	override fun author(): String = ""
 	override fun date(): ZonedDateTime = ZonedDateTime.now()
 	override fun isMerge(): Boolean = false

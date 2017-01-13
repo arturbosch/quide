@@ -4,4 +4,5 @@ include 'quide-specification'
 include 'quide-detekt-plugin'
 include 'quide-java-plugin'
 include 'codesmell-baseline-format'
+include 'quide-vcs-plugin'
 

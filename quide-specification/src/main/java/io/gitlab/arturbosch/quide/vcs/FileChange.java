@@ -5,7 +5,7 @@ import io.gitlab.arturbosch.quide.validation.Validate;
 /**
  * @author Artur Bosch
  */
-public interface FileChange extends Comparable<FileChange> {
+public interface FileChange {
 
 	/**
 	 * Enumerates possible types of changes.

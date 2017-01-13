@@ -11,7 +11,7 @@ public interface Revision {
 
 	String parentHash();
 
-	String commit();
+	String message();
 
 	String author();
 
