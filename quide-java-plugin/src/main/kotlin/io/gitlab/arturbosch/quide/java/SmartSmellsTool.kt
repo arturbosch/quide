@@ -40,7 +40,7 @@ class SmartSmellsTool : Detector<JavaSmellContainer> {
 		var result: SmellResult? = null
 		while (nextVersion.isPresent) {
 			val current = nextVersion.get()
-			logger.info("${current.versionNumber()} - ${current.revision().message()}")
+			logger.info("${current.versionNumber()} - ${current.revision().date()} - ${current.revision().message()}")
 			result = generateNewCompilationUnits(versionProvider, facade, current)
 			logger.info("Successful executed detectors with ${result.smellSets.map { "${it.key} - ${it.value.size} " }}")
 			nextVersion = versionProvider.nextVersion()
