@@ -35,7 +35,7 @@ class SmartSmellsTool : Detector<JavaSmellContainer> {
 	}
 
 	private fun loopVersions(projectPath: Path, facade: UpdatableDetectorFacade): SmellResult? {
-		val versionProvider = QuideGitVersionProvider()
+		val versionProvider = QuideGitVersionProvider(projectPath)
 		var nextVersion = versionProvider.nextVersion()
 		var result: SmellResult? = null
 		while (nextVersion.isPresent) {
@@ -74,7 +74,7 @@ class SmartSmellsTool : Detector<JavaSmellContainer> {
 				.map { versionProvider.root.resolve(it.path()) }
 				.filter { it.toString().endsWith(".java") }
 				.toList()
-
+		logger.info("Parsed all changes...")
 		val size = additions.size + modifications.size + relocations.size
 		logger.info("Running detectors with $size compilation info's.")
 		facade.remove(deletions)
