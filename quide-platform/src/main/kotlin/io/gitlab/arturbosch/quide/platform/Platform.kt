@@ -38,14 +38,18 @@ class QuidePlatform(vcsLoader: VCSLoader,
 class MultiPlatform(private val platform: BasePlatform,
 					private val versionProvider: VersionProvider) : Platform {
 
+	private val logger by logFactory()
+
 	override fun analyze() {
 		var lastVersion: Versionable? = null
 		var currentVersion = versionProvider.nextVersion()
 		while (currentVersion.isPresent) {
+			val current = currentVersion.get()
+			logger.info("${current.versionNumber()} - ${current.revision().date()} - ${current.revision().message()}")
 			platform.plugins().forEach { it.userData().put(UserData.LAST_VERSION, lastVersion) }
-			platform.plugins().forEach { it.userData().put(UserData.CURRENT_VERSION, currentVersion) }
+			platform.plugins().forEach { it.userData().put(UserData.CURRENT_VERSION, current) }
 			platform.analyze()
-			lastVersion = currentVersion.get()
+			lastVersion = current
 			currentVersion = versionProvider.nextVersion()
 		}
 	}
