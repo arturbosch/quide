@@ -35,19 +35,19 @@ class VersionCrawler(projectPath: Path, private val facade: UpdatableDetectorFac
 
 		val sequence = current.fileChanges().asSequence()
 		val additions = sequence.filter { it.isOfType(FileChange.Type.ADDITION) }
-				.map { it.newFile() }.map { versionProvider.root.resolve(it.path()) to it.content() }
+				.map { it.newFile() }.map { versionProvider.root!!.resolve(it.path()) to it.content() }
 				.filter { it.first.toString().endsWith(".java") }
 				.filter { !it.second.isNullOrEmpty() }
 				.toMap()
 		val modifications = sequence.filter { it.isOfType(FileChange.Type.MODIFICATION) }
-				.map { it.newFile() }.map { versionProvider.root.resolve(it.path()) to it.content() }
+				.map { it.newFile() }.map { versionProvider.root!!.resolve(it.path()) to it.content() }
 				.filter { it.first.toString().endsWith(".java") }
 				.filter { !it.second.isNullOrEmpty() }
 				.toMap()
 		val relocations = sequence.filter { it.isOfType(FileChange.Type.RELOCATION) }
 				.map { change ->
-					versionProvider.root.resolve(change.oldFile().path()) to
-							Pair(versionProvider.root.resolve(change.newFile().path()), change.newFile().content())
+					versionProvider.root!!.resolve(change.oldFile().path()) to
+							Pair(versionProvider.root!!.resolve(change.newFile().path()), change.newFile().content())
 				}
 				.filter { it.first.toString().endsWith(".java") }
 				.filter { it.second.a.toString().endsWith(".java") }
@@ -55,7 +55,7 @@ class VersionCrawler(projectPath: Path, private val facade: UpdatableDetectorFac
 				.toMap()
 		val deletions = sequence.filter { it.isOfType(FileChange.Type.REMOVAL) }
 				.map { it.oldFile() }
-				.map { versionProvider.root.resolve(it.path()) }
+				.map { versionProvider.root!!.resolve(it.path()) }
 				.filter { it.toString().endsWith(".java") }
 				.toList()
 		logger.info("Parsed all changes...")

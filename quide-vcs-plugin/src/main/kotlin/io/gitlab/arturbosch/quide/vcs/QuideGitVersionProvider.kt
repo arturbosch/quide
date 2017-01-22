@@ -13,8 +13,8 @@ import java.util.Optional
 /**
  * @author Artur Bosch
  */
-class QuideGitVersionProvider(private var root: Path? = null,
-							  private var relative: Path? = root) : VersionProvider {
+class QuideGitVersionProvider(var root: Path? = null,
+							  var relative: Path? = root) : VersionProvider {
 
 	private val logger = LoggerFactory.getLogger(javaClass.simpleName)
 
