@@ -33,8 +33,9 @@ class BasePlatformTest extends Specification {
 	def "successful multiple version platform lifecycle run"() {
 		when:
 		def detector = new TestPluginDetector()
-		def platform = new BasePlatform(new EmptyAnalysis(), new BasePluginLoader(detector))
-		def quide = new QuidePlatform(new BaseVCSLoader(detector), platform)
+		def analysis = new EmptyAnalysis()
+		def platform = new BasePlatform(analysis, new BasePluginLoader(detector))
+		def quide = new QuidePlatform(new BaseVCSLoader(detector, analysis), platform)
 
 		then:
 		quide.executablePlatform instanceof MultiPlatform

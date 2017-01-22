@@ -4,9 +4,10 @@ package io.gitlab.arturbosch.quide.platform
  * @author Artur Bosch
  */
 fun main(args: Array<String>) {
+	val analysis = Analysis.parse(args)
 	QuidePlatform(
-			BaseVCSLoader(BasePluginDetector),
-			BasePlatform(Analysis.parse(args), BasePluginLoader(BasePluginDetector))
+			BaseVCSLoader(BasePluginDetector, analysis),
+			BasePlatform(analysis, BasePluginLoader(BasePluginDetector))
 	).analyze()
 }
 

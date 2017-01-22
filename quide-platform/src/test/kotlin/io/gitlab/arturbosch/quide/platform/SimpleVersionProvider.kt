@@ -9,8 +9,16 @@ import java.util.Optional
  */
 class SimpleVersionProvider : VersionProvider {
 
-	override fun nextVersion(): Optional<Versionable> {
-		return Optional.empty()
+	private var current = 0
+
+	override fun initialize(context: AnalysisContext) {
+
 	}
 
+	override fun nextVersion(): Optional<Versionable> {
+		if (current++ < 5) {
+			return Optional.of(DefaultVersion())
+		}
+		return Optional.empty()
+	}
 }

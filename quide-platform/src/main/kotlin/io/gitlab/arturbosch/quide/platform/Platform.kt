@@ -22,6 +22,7 @@ class QuidePlatform(vcsLoader: VCSLoader,
 
 	init {
 		val provider = vcsLoader.load()
+
 		if (provider != null) {
 			executablePlatform = MultiPlatform(platform, provider)
 		} else {

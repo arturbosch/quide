@@ -11,7 +11,8 @@ interface VCSLoader {
 	fun load(): VersionProvider?
 }
 
-class BaseVCSLoader(val pluginDetector: PluginDetector) : VCSLoader {
+class BaseVCSLoader(val pluginDetector: PluginDetector,
+					val analysis: Analysis) : VCSLoader {
 
 	private val logger by logFactory()
 
@@ -22,6 +23,7 @@ class BaseVCSLoader(val pluginDetector: PluginDetector) : VCSLoader {
 				.asIterable().toList().firstOrNull().apply {
 			if (this != null) {
 				logger.info("Registered VersionProvider: " + this.name())
+				initialize(analysis)
 			}
 		}
 	}
