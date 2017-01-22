@@ -20,6 +20,7 @@ class JavaSmellContainer(private val smells: SmellResult) : SmellContainer<JavaC
 	override fun all(): MutableList<JavaCodeSmell> {
 		return smells.smellSets.values
 				.flatMap { it }
+				.filter { it != null }
 				.map(::JavaCodeSmell)
 				.toMutableList()
 	}
