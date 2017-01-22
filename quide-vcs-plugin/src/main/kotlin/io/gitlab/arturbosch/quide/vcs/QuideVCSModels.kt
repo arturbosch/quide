@@ -9,12 +9,12 @@ import java.util.concurrent.atomic.AtomicInteger
 
 
 private val idGenerator = AtomicInteger()
-private val NEXT_VERSION: Int
+private val nextVersion: Int
 	get() = idGenerator.incrementAndGet()
 
 data class QuideVersion(private val commit: VcsCommit,
 						private val relativePath: Path,
-						private val versionId: Int = NEXT_VERSION) : Versionable {
+						private val versionId: Int = nextVersion) : Versionable {
 
 	private val changes = commit.changes.map(::QuideFileChange).toMutableList()
 	private val revision = QuideRevision(commit)
