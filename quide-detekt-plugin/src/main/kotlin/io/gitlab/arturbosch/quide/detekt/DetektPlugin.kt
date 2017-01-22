@@ -12,6 +12,8 @@ import io.gitlab.arturbosch.quide.platform.processors.ResultPrintProcessor
  */
 class DetektPlugin : Plugin {
 
+	private val storage = object : UserData() {}
+
 	override fun name(): String = "KotlinPlugin"
 
 	override fun detector(): Detector<DetektSmellContainer> {
@@ -23,7 +25,7 @@ class DetektPlugin : Plugin {
 	}
 
 	override fun userData(): UserData {
-		return object : UserData() {}
+		return storage
 	}
 
 }

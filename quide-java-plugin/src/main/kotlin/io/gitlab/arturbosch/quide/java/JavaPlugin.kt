@@ -10,6 +10,9 @@ import io.gitlab.arturbosch.quide.platform.processors.NumberOfSmellsProcessor
  * @author Artur Bosch
  */
 class JavaPlugin : Plugin {
+
+	private val storage = object : UserData() {}
+
 	override fun detector(): Detector<JavaSmellContainer> {
 		return SmartSmellsTool()
 	}
@@ -19,6 +22,6 @@ class JavaPlugin : Plugin {
 	}
 
 	override fun userData(): UserData {
-		return object : UserData() {}
+		return storage
 	}
 }
