@@ -25,9 +25,13 @@ object DefaultContainer : SmellContainer<CodeSmell> {
 
 object DefaultSmell : BaseCodeSmell()
 
-object DefaultVersion : Versionable {
+class DefaultVersion(val version: Int = generator++) : Versionable {
+
+	companion object {
+		private var generator = 0
+	}
 	override fun versionNumber(): Int {
-		return -1
+		return version
 	}
 
 	override fun revision(): Revision {
@@ -37,6 +41,12 @@ object DefaultVersion : Versionable {
 	override fun fileChanges(): MutableList<FileChange> {
 		return mutableListOf()
 	}
+
+	override fun toString(): String {
+		return "DefaultVersion(version=$version)"
+	}
+
+
 }
 
 object DefaultRevision : Revision {

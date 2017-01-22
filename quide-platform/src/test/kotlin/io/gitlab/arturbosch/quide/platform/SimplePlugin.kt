@@ -20,7 +20,7 @@ class SimplePlugin : Plugin {
 			}
 
 			override fun <U : UserData?> execute(data: U): SmellContainer<CodeSmell>? {
-				return null
+				return DefaultContainer
 			}
 		}
 	}

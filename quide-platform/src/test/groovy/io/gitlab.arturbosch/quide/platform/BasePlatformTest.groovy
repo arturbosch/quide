@@ -1,9 +1,9 @@
 package io.gitlab.arturbosch.quide.platform
 
-import io.gitlab.arturbosch.quide.vcs.VersionProvider
+import io.gitlab.arturbosch.quide.platform.test.EmptyAnalysis
+import io.gitlab.arturbosch.quide.platform.test.TestPluginDetector
+import io.gitlab.arturbosch.quide.platform.test.TestVCSLoader
 import spock.lang.Specification
-
-import java.nio.file.Path
 
 /**
  * @author Artur Bosch
@@ -40,35 +40,4 @@ class BasePlatformTest extends Specification {
 		quide.executablePlatform instanceof MultiPlatform
 	}
 
-
-	class EmptyAnalysis implements Analysis {
-		@Override
-		Path projectPath() {
-			return null
-		}
-
-		@Override
-		Optional<Path> outputPath() {
-			return null
-		}
-
-		@Override
-		QuideDirectory quideDirectory() {
-			return null
-		}
-	}
-
-	class TestVCSLoader implements VCSLoader {
-		@Override
-		VersionProvider load() {
-			return null
-		}
-	}
-
-	class TestPluginDetector implements PluginDetector {
-		@Override
-		URL[] getJars() {
-			return []
-		}
-	}
 }
