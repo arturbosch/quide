@@ -8,5 +8,4 @@ public interface Nameable {
 	default String name() {
 		return getClass().getSimpleName();
 	}
-
 }

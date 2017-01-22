@@ -7,6 +7,7 @@ import java.util.Optional;
  * @author Artur Bosch
  */
 public interface AnalysisContext {
+
 	Path projectPath();
 
 	Optional<Path> outputPath();

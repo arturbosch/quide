@@ -33,5 +33,4 @@ public interface QuideDirectory {
 	default Path configurationsDir() {
 		return checkDir(home().resolve("configurations"));
 	}
-
 }
