@@ -65,7 +65,8 @@ class BasePlatform(private val analysis: Analysis,
 	}
 
 	override fun analyze() {
-		withExecutor(withNamedThreadPoolExecutor(QUIDE)) {
+		val cores = plugins().size
+		withExecutor(withNamedThreadPoolExecutor(QUIDE, cores)) {
 			val futures = plugins().map { plugin ->
 				runAsync {
 					execute(plugin, analysis)
