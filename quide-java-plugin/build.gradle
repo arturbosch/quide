@@ -8,6 +8,5 @@ configurations {
 
 dependencies {
 	compile project(":quide-specification")
-	compile project(":quide-vcs-plugin")
 	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:$smartsmellsVersion"
 }
