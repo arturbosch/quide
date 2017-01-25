@@ -11,5 +11,4 @@ fun main(args: Array<String>) {
 	).analyze()
 }
 
-
 const val QUIDE = "quide"
