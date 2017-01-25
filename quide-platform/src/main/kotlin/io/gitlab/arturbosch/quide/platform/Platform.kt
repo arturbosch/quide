@@ -71,6 +71,10 @@ class BasePlatform(private val analysis: Analysis,
 
 	override fun analyze() {
 		val cores = plugins().size
+		if (cores < 1) {
+			logger.info("No plugins available...shutting down!")
+			return
+		}
 		withExecutor(withNamedThreadPoolExecutor(QUIDE, cores)) {
 			val futures = plugins().map { plugin ->
 				runAsync {
