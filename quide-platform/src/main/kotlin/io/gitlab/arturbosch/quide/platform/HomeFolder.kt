@@ -13,13 +13,15 @@ object HomeFolder : QuideDirectory {
 
 object QuideProperties {
 	private val properties = Properties().apply {
-		Files.newInputStream(HomeFolder.propertiesPath).use {
+		val propertiesPath = HomeFolder.propertiesPath
+		if (Files.notExists(propertiesPath)) Files.createFile(propertiesPath)
+		Files.newInputStream(propertiesPath).use {
 			load(it)
 		}
 	}
 
-	fun getOrNull(key: String): String {
-		return properties.getProperty(key, null)
+	fun getOrNull(key: String): String?  {
+		return properties.getProperty(key)
 	}
 }
 
