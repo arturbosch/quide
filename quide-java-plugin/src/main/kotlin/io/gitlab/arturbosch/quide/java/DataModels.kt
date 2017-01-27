@@ -16,16 +16,18 @@ class JavaCodeSmell(private val smell: DetectionResult) : BaseCodeSmell() {
 	override fun toString(): String = smell.toString()
 }
 
-class JavaSmellContainer(private val smells: SmellResult) : SmellContainer<JavaCodeSmell> {
+class JavaSmellContainer(smells: SmellResult? = null) : SmellContainer<JavaCodeSmell> {
+	val codeSmells: MutableList<JavaCodeSmell> = smells?.smellSets?.values
+			?.flatMap { it }
+			?.filter { it != null }
+			?.map(::JavaCodeSmell)
+			?.toMutableList() ?: mutableListOf()
+
 	override fun all(): MutableList<JavaCodeSmell> {
-		return smells.smellSets.values
-				.flatMap { it }
-				.filter { it != null }
-				.map(::JavaCodeSmell)
-				.toMutableList()
+		return codeSmells
 	}
 
 	override fun findBySourcePath(path: String): MutableList<JavaCodeSmell> {
-		return all().filter { it.isLocatedAt(path) }.toMutableList()
+		return codeSmells.filter { it.isLocatedAt(path) }.toMutableList()
 	}
 }
