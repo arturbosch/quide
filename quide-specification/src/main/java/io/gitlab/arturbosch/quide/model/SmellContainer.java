@@ -1,5 +1,8 @@
 package io.gitlab.arturbosch.quide.model;
 
+import io.gitlab.arturbosch.quide.validation.Validate;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,5 +59,25 @@ public interface SmellContainer<T extends CodeSmell> {
 				.filter(smell -> smell.isLocatedAt(path))
 				.filter(CodeSmell::isAlive)
 				.collect(Collectors.toList());
+	}
+
+	/**
+	 * Adds a new smell to this container
+	 *
+	 * @param smell code smell to add
+	 */
+	default void addSmell(T smell) {
+		Validate.notNull(smell);
+		all().add(smell);
+	}
+
+	/**
+	 * Adds a collection of smells to this container
+	 *
+	 * @param smells collection of smells
+	 */
+	default void addSmells(Collection<T> smells) {
+		Validate.notNull(smells);
+		all().addAll(smells);
 	}
 }
