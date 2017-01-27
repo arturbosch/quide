@@ -19,4 +19,8 @@ fun String.asResourcePath(): Path {
 	return Paths.get(TestUtils.javaClass.getResource("/$this").file)
 }
 
+fun String.asResourceStringPath(): String {
+	return asResourcePath().toString()
+}
+
 object TestUtils

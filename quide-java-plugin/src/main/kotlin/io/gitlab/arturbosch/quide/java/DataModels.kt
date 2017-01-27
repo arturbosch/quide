@@ -12,7 +12,7 @@ class JavaCodeSmell(private val smell: DetectionResult) : BaseCodeSmell() {
 	init {
 		sourcePath = smell.pathAsString
 	}
-
+	fun compact() = smell.asCompactString()
 	override fun toString(): String = smell.toString()
 }
 
