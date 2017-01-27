@@ -73,17 +73,30 @@ class MappingTest {
 		val containerTwo = "Version$number.java".lint()
 		val versionTwo = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionOne)
-		storage.put(UserData.LAST_CONTAINER, containerOne)
+		storage.put(UserData.LAST_CONTAINER, mapOne)
 		storage.put(UserData.CURRENT_VERSION, versionTwo)
 		storage.put(UserData.CURRENT_CONTAINER, containerTwo)
 		mapping.execute(storage)
 		val mapTwo = currentContainer()
-		mapTwo.codeSmells.forEach(::println)
-		println(mapTwo.size())
-
 		assert(mapTwo.size() == 12)
 		assert(mapTwo.all().all { it.startVersion().versionNumber() == 1 })
 		assert(mapTwo.all().all { it.endVersion().versionNumber() == 2 })
+
+		// Version 3
+		println("Version $number")
+		val containerThree = "Version$number.java".lint()
+		val versionThree = nextVersion()
+		storage.put(UserData.LAST_VERSION, versionTwo)
+		storage.put(UserData.LAST_CONTAINER, mapTwo)
+		storage.put(UserData.CURRENT_VERSION, versionThree)
+		storage.put(UserData.CURRENT_CONTAINER, containerThree)
+		mapping.execute(storage)
+		val mapThree = currentContainer()
+		mapThree.alive().forEach { println(it) }
+		assert(mapThree.size() == 12) // Three smells marked as dead, containers do not shrink!
+		assert(mapThree.all().all { it.startVersion().versionNumber() == 1 })
+		assert(mapThree.all().all { it.endVersion().versionNumber() == 3 })
+		assert(mapThree.alive().size == 9)
 	}
 
 	private fun currentContainer() = storage.currentContainer<JavaSmellContainer, JavaCodeSmell>().get()

@@ -63,9 +63,19 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 			// just add mapped smell in separate list to distinct from really new smells
 			smellsInOldFile.forEach { findSmell ->
 				smellsInNewFile.find { compare.matches(it, findSmell) }?.let {
+					// when found, we need the new smell specific information like
+					// new source path etc so we copy version information and work with the new smell
+					it.copyVersionInformationFrom(findSmell)
+					before.all().remove(findSmell)
 					mappedSmells.add(it)
+					before.addSmell(it)
 				} ?: searchInAst.add(findSmell) // Not equal
 				// but maybe still the same smell -> search for growth in AST
+			}
+			// We try to search for modified smells with the help of an AST
+			// Remaining not found smells in the AST were deleted
+			searchInAst.forEach {
+				it.killedIn(versionable)
 			}
 			// Truly new smells in modified file -> add to container
 			smellsInNewFile.minus(mappedSmells).forEach {

@@ -27,7 +27,7 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	 *
 	 * @param other code smell
 	 */
-	void copyVersionInformationFrom(CodeSmell other) {
+	public void copyVersionInformationFrom(CodeSmell other) {
 		startVersion = other.startVersion();
 		endVersion = other.endVersion();
 		weight = other.weight();
