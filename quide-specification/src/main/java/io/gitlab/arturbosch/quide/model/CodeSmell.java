@@ -33,6 +33,7 @@ public interface CodeSmell {
 		Validate.notNull(versionable);
 		killedInVersions().put(versionable.versionNumber(), versionable);
 		setAlive(false);
+		setConsistent(false);
 	}
 
 	default void revivedIn(Versionable versionable) {

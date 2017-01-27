@@ -15,11 +15,11 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	protected String sourcePath;
 	protected Versionable startVersion;
 	protected Versionable endVersion;
-	protected boolean consistent;
-	protected int weight;
-	protected boolean alive;
-	protected HashMap<Integer, Versionable> revivedInVersions;
-	protected HashMap<Integer, Versionable> killedInVersions;
+	protected boolean consistent = true;
+	protected int weight = 0;
+	protected boolean alive = true;
+	protected HashMap<Integer, Versionable> revivedInVersions = new HashMap<>();
+	protected HashMap<Integer, Versionable> killedInVersions = new HashMap<>();
 
 	@Override
 	public HashMap<Integer, Versionable> killedInVersions() {
