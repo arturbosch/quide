@@ -19,4 +19,12 @@ public interface SmellContainer<T extends CodeSmell> {
 	 * @return a subset of smells for given path
 	 */
 	List<T> findBySourcePath(String path);
+
+	/**
+	 * Size of the smell container eg. #smells.
+	 * @return amount of smells
+	 */
+	default int size() {
+		return all().size();
+	}
 }

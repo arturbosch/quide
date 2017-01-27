@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.quide.validation.Validate;
 import io.gitlab.arturbosch.quide.vcs.Versionable;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 
 /**
  * Interface for smells which can be connected to a version.
@@ -28,6 +29,20 @@ public interface CodeSmell {
 		setEndVersion(versionable);
 	}
 
+	default void killedIn(Integer versionAsNumber, Versionable versionable) {
+		Validate.notNull(versionAsNumber);
+		Validate.notNull(versionable);
+		killedInVersions().put(versionAsNumber, versionable);
+		setAlive(false);
+	}
+
+	default void revivedIn(Integer versionAsNumber, Versionable versionable) {
+		Validate.notNull(versionAsNumber);
+		Validate.notNull(versionable);
+		revivedInVersions().put(versionAsNumber, versionable);
+		setAlive(true);
+	}
+
 	Versionable startVersion();
 
 	void setStartVersion(Versionable versionable);
@@ -35,6 +50,14 @@ public interface CodeSmell {
 	Versionable endVersion();
 
 	void setEndVersion(Versionable versionable);
+
+	boolean isAlive();
+
+	void setAlive(boolean alive);
+
+	HashMap<Integer, Versionable> killedInVersions();
+
+	HashMap<Integer, Versionable> revivedInVersions();
 
 	/**
 	 * The smell existence is continuous starting from startVersion to EndVersion.
