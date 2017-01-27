@@ -1,25 +1,38 @@
 package io.gitlab.arturbosch.quide.platform;
 
-import io.gitlab.arturbosch.quide.model.CodeSmell;
-import io.gitlab.arturbosch.quide.model.SmellContainer;
-import io.gitlab.arturbosch.quide.vcs.Versionable;
+import io.gitlab.arturbosch.quide.platform.reflect.TypeToken;
 
+import java.nio.file.Path;
 import java.util.Optional;
 
 /**
  * @author Artur Bosch
  */
-public interface AnalysisAware extends AnalysisContext {
+public interface AnalysisAware extends AnalysisContext, StorageAware {
 
-	Optional<Versionable> lastVersion();
+	String OUTPUT_PATH = "outputPath";
+	String PROJECT_PATH = "projectPath";
+	String TOOL_NAME = "toolName";
+	String QUIDE_DIRECTORY = "quideDirectory";
 
-	Optional<Versionable> currentVersion();
+	default Optional<Path> outputPath() {
+		return get(OUTPUT_PATH, TypeToken.get(Path.class));
+	}
 
-	Optional<SmellContainer<CodeSmell>> lastContainer();
+	default Path projectPath() {
+		return get(PROJECT_PATH, TypeToken.get(Path.class))
+				.orElseThrow(ProjectPathUnspecifiedError::new);
+	}
 
-	Optional<SmellContainer<CodeSmell>> currentContainer();
+	default String toolName() {
+		return get(TOOL_NAME, TypeToken.get(String.class))
+				.orElseThrow(ToolNameUnSpecifiedError::new);
+	}
 
-	String toolName();
+	default QuideDirectory quideDirectory() {
+		return get(QUIDE_DIRECTORY, TypeToken.get(QuideDirectory.class))
+				.orElseThrow(NoQuideHomeDirectoryError::new);
+	}
 
 	class ProjectPathUnspecifiedError extends IllegalStateException {
 		public ProjectPathUnspecifiedError() {
