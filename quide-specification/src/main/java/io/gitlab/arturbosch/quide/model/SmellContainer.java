@@ -53,7 +53,7 @@ public interface SmellContainer<T extends CodeSmell> {
 	 */
 	default List<T> aliveInPath(String path) {
 		return all().stream()
-				.filter(smell -> smell.sourcePath().equals(path))
+				.filter(smell -> smell.isLocatedAt(path))
 				.filter(CodeSmell::isAlive)
 				.collect(Collectors.toList());
 	}
