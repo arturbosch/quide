@@ -48,8 +48,7 @@ class MappingTest {
 						SFile("Version$number.java".asResourceStringPath(), "Version$number.java".content())
 				))
 			}
-			number++
-			return SVersion(number, fileChanges.toMutableList())
+			return SVersion(number++, fileChanges.toMutableList())
 		}
 	}
 

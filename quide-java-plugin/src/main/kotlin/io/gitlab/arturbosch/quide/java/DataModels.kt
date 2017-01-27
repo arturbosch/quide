@@ -4,23 +4,27 @@ import io.gitlab.arturbosch.quide.model.BaseCodeSmell
 import io.gitlab.arturbosch.quide.model.SmellContainer
 import io.gitlab.arturbosch.smartsmells.api.SmellResult
 import io.gitlab.arturbosch.smartsmells.common.DetectionResult
+import io.gitlab.arturbosch.smartsmells.config.Smell
+import io.gitlab.arturbosch.smartsmells.out.XMLWriter
 
 /**
  * @author Artur Bosch
  */
-class JavaCodeSmell(private val smell: DetectionResult) : BaseCodeSmell() {
+class JavaCodeSmell(type: Smell, private val smell: DetectionResult) : BaseCodeSmell() {
 	init {
 		sourcePath = smell.pathAsString
 	}
-	fun compact() = smell.asCompactString()
+
+	val asXmlContent: String = XMLWriter.toXml(type, smell).let {
+		it.substring(0, it.indexOf("path"))
+	}
 	override fun toString(): String = smell.toString()
 }
 
 class JavaSmellContainer(smells: SmellResult? = null) : SmellContainer<JavaCodeSmell> {
-	val codeSmells: MutableList<JavaCodeSmell> = smells?.smellSets?.values
+	val codeSmells: MutableList<JavaCodeSmell> = smells?.smellSets
+			?.map { entrySet -> entrySet.value.map { JavaCodeSmell(entrySet.key, it) } }
 			?.flatMap { it }
-			?.filter { it != null }
-			?.map(::JavaCodeSmell)
 			?.toMutableList() ?: mutableListOf()
 
 	override fun all(): MutableList<JavaCodeSmell> {

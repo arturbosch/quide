@@ -10,7 +10,7 @@ import io.gitlab.arturbosch.quide.vcs.SourceFile
  */
 class ASTCompareStrategy : SmellCompareStrategy<JavaCodeSmell> {
 	override fun matches(first: JavaCodeSmell, second: JavaCodeSmell): Boolean {
-		return first.compact() == second.compact()
+		return first.asXmlContent == second.asXmlContent
 	}
 
 	override fun patchSmell(smell: JavaCodeSmell, sourceFile: SourceFile, patch: Patch): JavaCodeSmell {
