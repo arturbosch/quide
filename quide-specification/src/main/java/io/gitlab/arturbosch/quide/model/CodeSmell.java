@@ -29,17 +29,15 @@ public interface CodeSmell {
 		setEndVersion(versionable);
 	}
 
-	default void killedIn(Integer versionAsNumber, Versionable versionable) {
-		Validate.notNull(versionAsNumber);
+	default void killedIn(Versionable versionable) {
 		Validate.notNull(versionable);
-		killedInVersions().put(versionAsNumber, versionable);
+		killedInVersions().put(versionable.versionNumber(), versionable);
 		setAlive(false);
 	}
 
-	default void revivedIn(Integer versionAsNumber, Versionable versionable) {
-		Validate.notNull(versionAsNumber);
+	default void revivedIn(Versionable versionable) {
 		Validate.notNull(versionable);
-		revivedInVersions().put(versionAsNumber, versionable);
+		revivedInVersions().put(versionable.versionNumber(), versionable);
 		setAlive(true);
 	}
 
