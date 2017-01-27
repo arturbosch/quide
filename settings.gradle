@@ -5,5 +5,4 @@ include 'quide-detekt-plugin'
 include 'quide-java-plugin'
 include 'codesmell-baseline-format'
 include 'quide-vcs-plugin'
-include 'quide-java-evolutionary-plugin'
 
