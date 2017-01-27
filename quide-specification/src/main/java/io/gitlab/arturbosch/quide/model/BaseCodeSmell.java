@@ -21,6 +21,22 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	protected HashMap<Integer, Versionable> revivedInVersions = new HashMap<>();
 	protected HashMap<Integer, Versionable> killedInVersions = new HashMap<>();
 
+	/**
+	 * Copies all version related information from given other smell.
+	 * This method can be useful in smell mappings.
+	 *
+	 * @param other code smell
+	 */
+	void copyVersionInformationFrom(CodeSmell other) {
+		startVersion = other.startVersion();
+		endVersion = other.endVersion();
+		weight = other.weight();
+		consistent = other.isConsistent();
+		alive = other.isAlive();
+		revivedInVersions = other.revivedInVersions();
+		killedInVersions = other.killedInVersions();
+	}
+
 	@Override
 	public HashMap<Integer, Versionable> killedInVersions() {
 		return killedInVersions;

@@ -88,4 +88,5 @@ public interface CodeSmell {
 	 * @return path to the file this smell occurred
 	 */
 	String sourcePath();
+
 }
