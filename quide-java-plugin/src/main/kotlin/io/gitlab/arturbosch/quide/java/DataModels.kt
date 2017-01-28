@@ -18,7 +18,7 @@ class JavaCodeSmell(type: Smell, private val smell: DetectionResult) : BaseCodeS
 	val asXmlContent: String = XMLWriter.toXml(type, smell).let {
 		it.substring(0, it.indexOf("path"))
 	}
-	override fun toString(): String = smell.toString()
+	override fun toString(): String = smell.toString() + "\n\t" + super.toString()
 }
 
 class JavaSmellContainer(smells: SmellResult? = null) : SmellContainer<JavaCodeSmell> {

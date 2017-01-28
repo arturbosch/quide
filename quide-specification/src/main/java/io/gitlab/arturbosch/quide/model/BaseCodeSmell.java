@@ -103,4 +103,17 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	public String sourcePath() {
 		return sourcePath;
 	}
+
+	@Override
+	public String toString() {
+		return "VersionInfo{" +
+				"startVersion=" + startVersion.versionNumber() +
+				", endVersion=" + endVersion.versionNumber() +
+				", consistent=" + consistent +
+				", weight=" + weight +
+				", alive=" + alive +
+				", revivedInVersions=" + revivedInVersions.keySet() +
+				", killedInVersions=" + killedInVersions.keySet() +
+				'}';
+	}
 }
