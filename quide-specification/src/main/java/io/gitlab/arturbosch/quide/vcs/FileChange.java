@@ -20,7 +20,7 @@ public interface FileChange {
 
 	SourceFile newFile();
 
-	default Patch patch(DiffTool diff) {
+	default <P extends Patch> P patch(DiffTool<P> diff) {
 		Validate.notNull(diff);
 		return diff.createPatchFor(oldFile(), newFile());
 	}

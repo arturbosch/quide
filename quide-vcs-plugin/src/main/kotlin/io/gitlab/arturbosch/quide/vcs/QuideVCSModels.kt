@@ -50,9 +50,15 @@ data class QuideFileChange(private val vcsChange: VcsChange) : FileChange {
 
 	private val oldFile = QuideSourceFile(vcsChange.filePathBefore, vcsChange.fileContentBefore().value)
 	private val newFile = QuideSourceFile(vcsChange.filePath, vcsChange.fileContent().value)
+	private var patch: Patch? = null
 
 	override fun type(): FileChange.Type = type
 	override fun oldFile(): SourceFile = oldFile
 	override fun newFile(): SourceFile = newFile
+
+	@Suppress("UNCHECKED_CAST")
+	override fun <P : Patch> patch(diff: DiffTool<P>): P {
+		return patch as P? ?: super.patch(diff).apply { patch = this }
+	}
 
 }
