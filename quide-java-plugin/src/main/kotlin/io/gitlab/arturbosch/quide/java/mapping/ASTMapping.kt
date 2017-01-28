@@ -47,39 +47,44 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 		// all living smells get new end version before modifying them
 		before.alive().forEach { it.setEndVersion(versionable) }
 		// modified smells need to get mapped
-		val modifiedFilePairs = changes.filter { it.isOfType(FileChange.Type.MODIFICATION) }
-				.map { it.oldFile() to it.newFile() }
-		modifiedFilePairs.forEach {
-			val oldFile = it.first
-			val newFile = it.second
+		val modifications = changes.filter { it.isOfType(FileChange.Type.MODIFICATION) }
+		modifications.forEach { fileChange ->
+			val oldFile = fileChange.oldFile()
+			val newFile = fileChange.newFile()
 			val smellsInOldFile = before.findBySourcePath(oldFile.path())
 			val smellsInNewFile = after.findBySourcePath(newFile.path())
-			val searchInAst = mutableListOf<JavaCodeSmell>()
-			val mappedSmells = mutableListOf <JavaCodeSmell>()
 			// Smell Equality? -> nothing to do as end version already set
 			// just add mapped smell in separate list to distinct from really new smells
-			smellsInOldFile.forEach { findSmell ->
-				smellsInNewFile.find { compareSmells(it, findSmell) }?.let {
-					// when found, we need the new smell specific information like
-					// new source path etc so we copy version information and work with the new smell
-					it.copyVersionInformationFrom(findSmell)
-					before.all().remove(findSmell)
-					mappedSmells.add(it)
-					before.addSmell(it)
-				} ?: searchInAst.add(findSmell) // Not equal
-				// but maybe still the same smell -> search for growth in AST
+			fun mapUnchangedSmells(beforeSmells: MutableList<JavaCodeSmell>,
+								   afterSmells: MutableList<JavaCodeSmell>):
+					Pair<MutableList<JavaCodeSmell>, MutableList<JavaCodeSmell>> {
+
+				val unmappedSmells = mutableListOf<JavaCodeSmell>()
+				val mappedSmells = mutableListOf <JavaCodeSmell>()
+				beforeSmells.forEach { findSmell ->
+					afterSmells.find { compareSmells(it, findSmell) }?.let {
+						// when found, we need the new smell specific information like
+						// new source path etc so we copy version information and work with the new smell
+						it.copyVersionInformationFrom(findSmell)
+						before.all().remove(findSmell)
+						mappedSmells.add(it)
+						before.addSmell(it)
+					} ?: unmappedSmells.add(findSmell) // Not equal
+					// but maybe still the same smell -> search for growth in AST
+				}
+				return unmappedSmells to mappedSmells
 			}
+
+			val (unmappedSmells, mappedSmells) = mapUnchangedSmells(smellsInOldFile, smellsInNewFile)
 			// We try to search for modified smells with the help of an AST
-			val notMappedSmellsInNewFile = smellsInNewFile.minus(mappedSmells)
-			tryMapWithAST(versionable, searchInAst, notMappedSmellsInNewFile)
-			mappedSmells.clear()
+			val notMappedSmellsInNewFile = smellsInNewFile.minus(mappedSmells).toMutableList()
+			val patchedSmells = unmappedSmells.map { updateSmell(it, fileChange) }.toMutableList()
+			val (removedSmells, astMappedSmells) = mapUnchangedSmells(patchedSmells, notMappedSmellsInNewFile)
 
 			// Remaining not found smells in the AST were deleted
-			searchInAst.forEach {
-				it.killedIn(versionable)
-			}
+			removedSmells.forEach { it.killedIn(versionable) }
 			// Truly new smells in modified file -> add to container
-			notMappedSmellsInNewFile.minus(mappedSmells).forEach {
+			notMappedSmellsInNewFile.minus(astMappedSmells).forEach {
 				it.applyVersion(versionable)
 				before.addSmell(it)
 			}
@@ -90,12 +95,6 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 		before.all().addAll(handleAdditions(versionable, after, changes))
 
 		return before
-	}
-
-	private fun tryMapWithAST(versionable: Versionable,
-							  unmappedSmells: MutableList<JavaCodeSmell>,
-							  newSmells: List<JavaCodeSmell>) {
-
 	}
 
 	private fun handleDeleted(versionable: Versionable,

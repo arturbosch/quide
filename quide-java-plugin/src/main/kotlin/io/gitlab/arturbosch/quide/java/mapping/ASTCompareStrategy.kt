@@ -9,11 +9,12 @@ import io.gitlab.arturbosch.quide.vcs.SourceFile
  * @author Artur Bosch
  */
 class ASTCompareStrategy : SmellCompareStrategy<JavaCodeSmell> {
+
 	override fun matches(first: JavaCodeSmell, second: JavaCodeSmell): Boolean {
 		return first.asXmlContent == second.asXmlContent
 	}
 
 	override fun patchSmell(smell: JavaCodeSmell, sourceFile: SourceFile, patch: Patch): JavaCodeSmell {
-		throw UnsupportedOperationException("not implemented")
+		return smell
 	}
 }

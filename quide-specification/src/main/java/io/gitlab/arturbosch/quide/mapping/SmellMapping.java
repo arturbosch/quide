@@ -6,6 +6,7 @@ import io.gitlab.arturbosch.quide.platform.Executable;
 import io.gitlab.arturbosch.quide.validation.Validate;
 import io.gitlab.arturbosch.quide.vcs.DiffTool;
 import io.gitlab.arturbosch.quide.vcs.FileChange;
+import io.gitlab.arturbosch.quide.vcs.Patch;
 import io.gitlab.arturbosch.quide.vcs.Versionable;
 
 /**
@@ -17,7 +18,7 @@ public interface SmellMapping<T extends CodeSmell> extends Executable {
 
 	SmellCompareStrategy<T> compareAlgorithm();
 
-	DiffTool diffTool();
+	DiffTool<? extends Patch> diffTool();
 
 	/**
 	 * This method is intended to be used when starting with the first version as only
@@ -50,7 +51,7 @@ public interface SmellMapping<T extends CodeSmell> extends Executable {
 	 */
 	SmellContainer<T> map(Versionable versionable, SmellContainer<T> before, SmellContainer<T> after);
 
-	default CodeSmell updateSmell(T smell, FileChange fileChange) {
+	default T updateSmell(T smell, FileChange fileChange) {
 		Validate.notNull(smell);
 		Validate.notNull(fileChange);
 		return compareAlgorithm().patchSmell(smell, fileChange.newFile(), fileChange.patch(diffTool()));

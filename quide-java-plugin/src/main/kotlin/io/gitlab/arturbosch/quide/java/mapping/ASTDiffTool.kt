@@ -8,7 +8,7 @@ import io.gitlab.arturbosch.quide.vcs.SourceFile
  */
 class ASTDiffTool : DiffTool<ASTPatch> {
 
-	override fun createPatchFor(oldFile: SourceFile?, newFile: SourceFile?): ASTPatch {
-		throw UnsupportedOperationException("not implemented")
+	override fun createPatchFor(oldFile: SourceFile, newFile: SourceFile): ASTPatch {
+		return ASTPatch()
 	}
 }
