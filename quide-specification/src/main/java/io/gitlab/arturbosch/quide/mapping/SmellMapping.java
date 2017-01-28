@@ -56,9 +56,9 @@ public interface SmellMapping<T extends CodeSmell> extends Executable {
 		return compareAlgorithm().patchSmell(smell, fileChange.newFile(), fileChange.patch(diffTool()));
 	}
 
-	default void compareSmells(T first, T second) {
+	default boolean compareSmells(T first, T second) {
 		Validate.notNull(first);
 		Validate.notNull(second);
-		compareAlgorithm().matches(first, second);
+		return compareAlgorithm().matches(first, second);
 	}
 }

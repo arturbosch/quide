@@ -46,9 +46,6 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 
 		// all living smells get new end version before modifying them
 		before.alive().forEach { it.setEndVersion(versionable) }
-		// deleted smells are set to alive=false
-		handleDeleted(versionable, before, changes)
-		before.all().addAll(handleAdditions(versionable, after, changes))
 		// modified smells need to get mapped
 		val modifiedFilePairs = changes.filter { it.isOfType(FileChange.Type.MODIFICATION) }
 				.map { it.oldFile() to it.newFile() }
@@ -62,7 +59,7 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 			// Smell Equality? -> nothing to do as end version already set
 			// just add mapped smell in separate list to distinct from really new smells
 			smellsInOldFile.forEach { findSmell ->
-				smellsInNewFile.find { compare.matches(it, findSmell) }?.let {
+				smellsInNewFile.find { compareSmells(it, findSmell) }?.let {
 					// when found, we need the new smell specific information like
 					// new source path etc so we copy version information and work with the new smell
 					it.copyVersionInformationFrom(findSmell)
@@ -73,18 +70,32 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 				// but maybe still the same smell -> search for growth in AST
 			}
 			// We try to search for modified smells with the help of an AST
+			val notMappedSmellsInNewFile = smellsInNewFile.minus(mappedSmells)
+			tryMapWithAST(versionable, searchInAst, notMappedSmellsInNewFile)
+			mappedSmells.clear()
+
 			// Remaining not found smells in the AST were deleted
 			searchInAst.forEach {
 				it.killedIn(versionable)
 			}
 			// Truly new smells in modified file -> add to container
-			smellsInNewFile.minus(mappedSmells).forEach {
+			notMappedSmellsInNewFile.minus(mappedSmells).forEach {
 				it.applyVersion(versionable)
 				before.addSmell(it)
 			}
 		}
 
+		// deleted smells are set to alive=false
+		handleDeleted(versionable, before, changes)
+		before.all().addAll(handleAdditions(versionable, after, changes))
+
 		return before
+	}
+
+	private fun tryMapWithAST(versionable: Versionable,
+							  unmappedSmells: MutableList<JavaCodeSmell>,
+							  newSmells: List<JavaCodeSmell>) {
+
 	}
 
 	private fun handleDeleted(versionable: Versionable,

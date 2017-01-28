@@ -92,11 +92,27 @@ class MappingTest {
 		storage.put(UserData.CURRENT_CONTAINER, containerThree)
 		mapping.execute(storage)
 		val mapThree = currentContainer()
-		mapThree.alive().forEach { println(it) }
 		assert(mapThree.size() == 12) // Three smells marked as dead, containers do not shrink!
 		assert(mapThree.all().all { it.startVersion().versionNumber() == 1 })
 		assert(mapThree.all().all { it.endVersion().versionNumber() == 3 })
 		assert(mapThree.alive().size == 9)
+
+		// Version 4
+		println("Version $number")
+		val containerFour = "Version$number.java".lint()
+		val versionFour = nextVersion()
+		storage.put(UserData.LAST_VERSION, versionThree)
+		storage.put(UserData.LAST_CONTAINER, mapThree)
+		storage.put(UserData.CURRENT_VERSION, versionFour)
+		storage.put(UserData.CURRENT_CONTAINER, containerFour)
+		mapping.execute(storage)
+		val mapFour = currentContainer()
+		mapFour.all().forEach { println(it) }
+		assert(mapFour.size() == 12) // no new smells in this version
+		assert(mapFour.alive().all { it.startVersion().versionNumber() == 1 })
+		assert(mapFour.alive().all { it.endVersion().versionNumber() == 3 })
+		assert(mapFour.alive().size == 4) // 9 - 5 DeadCodes - 1 LPL + 1 LM = 4
+		assert(mapFour.all().find { "LongParameterList" in it.asXmlContent }?.isAlive ?: false)
 	}
 
 	private fun currentContainer() = storage.currentContainer<JavaSmellContainer, JavaCodeSmell>().get()
