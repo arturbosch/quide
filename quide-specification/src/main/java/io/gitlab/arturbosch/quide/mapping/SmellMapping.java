@@ -18,7 +18,18 @@ public interface SmellMapping<T extends CodeSmell> extends Executable {
 
 	SmellCompareStrategy<T> compareAlgorithm();
 
-	DiffTool<? extends Patch> diffTool();
+	DiffTool<? extends Patch<T>> diffTool();
+
+	/**
+	 * Compares the before and after smell container and creates a new smell container respecting
+	 * the differences of before and after.
+	 *
+	 * @param versionable the current version
+	 * @param before      the smells of last version
+	 * @param after       the smells of this version
+	 * @return a new container with mapped smells
+	 */
+	SmellContainer<T> map(Versionable versionable, SmellContainer<T> before, SmellContainer<T> after);
 
 	/**
 	 * This method is intended to be used when starting with the first version as only
@@ -40,21 +51,10 @@ public interface SmellMapping<T extends CodeSmell> extends Executable {
 		return container;
 	}
 
-	/**
-	 * Compares the before and after smell container and creates a new smell container respecting
-	 * the differences of before and after.
-	 *
-	 * @param versionable the current version
-	 * @param before      the smells of last version
-	 * @param after       the smells of this version
-	 * @return a new container with mapped smells
-	 */
-	SmellContainer<T> map(Versionable versionable, SmellContainer<T> before, SmellContainer<T> after);
-
 	default T updateSmell(T smell, FileChange fileChange) {
 		Validate.notNull(smell);
 		Validate.notNull(fileChange);
-		return compareAlgorithm().patchSmell(smell, fileChange.newFile(), fileChange.patch(diffTool()));
+		return fileChange.patch(diffTool()).patchSmell(smell);
 	}
 
 	default boolean compareSmells(T first, T second) {
