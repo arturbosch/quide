@@ -10,16 +10,28 @@ import io.gitlab.arturbosch.smartsmells.out.XMLWriter
 /**
  * @author Artur Bosch
  */
-class JavaCodeSmell(private val type: Smell, val smell: DetectionResult) : BaseCodeSmell() {
+class JavaCodeSmell(private val type: Smell, var smell: DetectionResult) : BaseCodeSmell() {
+
 	init {
 		sourcePath = smell.pathAsString
 	}
 
-	val asXmlContent: String = XMLWriter.toXml(type, smell).let {
-		it.substring(0, it.indexOf("path"))
+	var asXmlContent: String = toXmlContent()
+
+	private fun toXmlContent(): String {
+		return XMLWriter.toXml(type, smell).let {
+			it.substring(0, it.indexOf("path"))
+		}
 	}
 
 	override fun toString(): String = smell.toString() + "\n\t" + super.toString()
+
+	fun updateInternal(updated: DetectionResult): JavaCodeSmell {
+		return this.apply {
+			smell = updated
+			asXmlContent = toXmlContent()
+		}
+	}
 
 	fun ofEverywhere() = when (type) {
 		Smell.DEAD_CODE, Smell.COMMENT -> true

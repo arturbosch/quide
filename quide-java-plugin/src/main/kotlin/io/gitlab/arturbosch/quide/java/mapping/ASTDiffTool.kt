@@ -34,9 +34,7 @@ class ASTDiffTool : DiffTool<ASTPatch> {
 				.map { AstChunk(it.type, it.original.astElements(oldUnit), it.revised.astElements(newUnit)) }
 
 		private fun <T> Chunk<T>.astElements(unit: CompilationUnit): List<Node> {
-			val start = position + 1
-			val end = start + lines.size
-			val filter = ElementsInRangeFilter(start, end)
+			val filter = ElementsInRangeFilter(this)
 			filter.visitBreadthFirst(unit)
 			return filter.posToElement
 		}
@@ -64,15 +62,26 @@ class ASTDiffTool : DiffTool<ASTPatch> {
 
 	}
 
-	private class ElementsInRangeFilter(val start: Int, val end: Int) : TreeVisitor() {
+	private class ElementsInRangeFilter(chunk: Chunk<*>) : TreeVisitor() {
+
+		val start = chunk.position + 1
+		val end = start + chunk.lines.size
+		val text = chunk.lines.joinToString("\n").trim()
 
 		val posToElement: MutableList<Node> = mutableListOf()
 
 		override fun process(node: Node) {
+			if (isWithinMethod(node)) {
+				posToElement.add(node)
+				return
+			}
 			if (node.begin.get().line >= start && node.end.get().line <= end) {
 				posToElement.add(node)
 			}
 		}
+
+		private fun isWithinMethod(node: Node) = (node.begin.get().line >= start && node is MethodDeclaration
+				&& text.contains(node.declarationAsString))
 
 	}
 
