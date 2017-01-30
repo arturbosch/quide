@@ -6,6 +6,7 @@ import io.gitlab.arturbosch.quide.vcs.FileChange
 import io.gitlab.arturbosch.quide.vcs.Revision
 import io.gitlab.arturbosch.quide.vcs.SourceFile
 import io.gitlab.arturbosch.quide.vcs.Versionable
+import org.junit.Ignore
 import org.junit.Test
 import java.io.File
 
@@ -56,6 +57,7 @@ class MappingTest {
 	}
 
 	@Test
+	@Ignore
 	fun test() {
 		val mapping = ASTMapping()
 

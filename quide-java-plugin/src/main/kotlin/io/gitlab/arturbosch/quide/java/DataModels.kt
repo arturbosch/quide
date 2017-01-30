@@ -10,7 +10,7 @@ import io.gitlab.arturbosch.smartsmells.out.XMLWriter
 /**
  * @author Artur Bosch
  */
-class JavaCodeSmell(private val type: Smell, private val smell: DetectionResult) : BaseCodeSmell() {
+class JavaCodeSmell(private val type: Smell, val smell: DetectionResult) : BaseCodeSmell() {
 	init {
 		sourcePath = smell.pathAsString
 	}

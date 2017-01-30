@@ -1,13 +1,13 @@
 package io.gitlab.arturbosch.quide.java.mapping
 
-import com.github.javaparser.ast.Node
 import io.gitlab.arturbosch.quide.java.JavaCodeSmell
 import io.gitlab.arturbosch.quide.vcs.Patch
+import io.gitlab.arturbosch.smartsmells.smells.longmethod.LongMethod
 
 /**
  * @author Artur Bosch
  */
-class ASTPatch(originalElements: List<Node>, revisedElements: List<Node>) : Patch<JavaCodeSmell> {
+class ASTPatch(val chunks: List<ASTDiffTool.AstChunk>) : Patch<JavaCodeSmell> {
 
 	override fun patchSmell(smell: JavaCodeSmell): JavaCodeSmell {
 		return when {
@@ -18,6 +18,14 @@ class ASTPatch(originalElements: List<Node>, revisedElements: List<Node>) : Patc
 	}
 
 	private fun JavaCodeSmell.patchMethodLevel(): JavaCodeSmell {
+		val smell = this.smell
+		if (smell is LongMethod) {
+			chunks.find { it.nodeByMethodSignature(smell.signature) != null }
+					?.nodeByMethodSignature(smell.signature)?.let {
+
+			}
+			println("TREFFER!")
+		}
 		return this
 	}
 
