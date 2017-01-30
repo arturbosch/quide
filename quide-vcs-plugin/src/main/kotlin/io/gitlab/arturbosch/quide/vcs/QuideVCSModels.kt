@@ -46,19 +46,19 @@ data class QuideFileChange(private val vcsChange: VcsChange) : FileChange {
 		VcsChange.Type.DELETED -> FileChange.Type.REMOVAL
 		VcsChange.Type.MODIFIED -> FileChange.Type.MODIFICATION
 		VcsChange.Type.MOVED -> FileChange.Type.RELOCATION
+		else -> throw UnsupportedOperationException("No other types are supported!")
 	}
 
 	private val oldFile = QuideSourceFile(vcsChange.filePathBefore, vcsChange.fileContentBefore().value)
 	private val newFile = QuideSourceFile(vcsChange.filePath, vcsChange.fileContent().value)
-	private var patch: Patch? = null
+	private var patch: Patch<*>? = null
 
 	override fun type(): FileChange.Type = type
 	override fun oldFile(): SourceFile = oldFile
 	override fun newFile(): SourceFile = newFile
 
 	@Suppress("UNCHECKED_CAST")
-	override fun <P : Patch> patch(diff: DiffTool<P>): P {
-		return patch as P? ?: super.patch(diff).apply { patch = this }
+	override fun <P : Patch<*>?> patch(diff: DiffTool<P>): P {
+		return patch as P ?: super.patch(diff).apply { patch = this }
 	}
-
 }
