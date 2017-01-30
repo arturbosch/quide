@@ -10,7 +10,7 @@ import io.gitlab.arturbosch.smartsmells.out.XMLWriter
 /**
  * @author Artur Bosch
  */
-class JavaCodeSmell(type: Smell, private val smell: DetectionResult) : BaseCodeSmell() {
+class JavaCodeSmell(private val type: Smell, private val smell: DetectionResult) : BaseCodeSmell() {
 	init {
 		sourcePath = smell.pathAsString
 	}
@@ -18,7 +18,36 @@ class JavaCodeSmell(type: Smell, private val smell: DetectionResult) : BaseCodeS
 	val asXmlContent: String = XMLWriter.toXml(type, smell).let {
 		it.substring(0, it.indexOf("path"))
 	}
+
 	override fun toString(): String = smell.toString() + "\n\t" + super.toString()
+
+	fun ofEverywhere() = when (type) {
+		Smell.DEAD_CODE, Smell.COMMENT -> true
+		else -> false
+	}
+
+	fun ofMethodOrClass() = when (type) {
+		Smell.JAVADOC -> true
+		else -> false
+	}
+
+	fun ofMethod() = when (type) {
+		Smell.LONG_METHOD, Smell.COMPLEX_METHOD, Smell.LONG_PARAM, Smell.FEATURE_ENVY,
+		Smell.NESTED_BLOCK_DEPTH -> true
+		else -> false
+	}
+
+	fun ofClass() = when (type) {
+		Smell.DATA_CLASS, Smell.GOD_CLASS, Smell.MIDDLE_MAN, Smell.SHOTGUN_SURGERY, Smell.LARGE_CLASS,
+		Smell.CLASS_INFO, Smell.CYCLE -> true
+		else -> false
+	}
+
+	fun ofLocal() = when (type) {
+		Smell.MESSAGE_CHAIN, Smell.STATE_CHECKING -> true
+		else -> false
+	}
+
 }
 
 class JavaSmellContainer(smells: SmellResult? = null) : SmellContainer<JavaCodeSmell> {
