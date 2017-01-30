@@ -7,6 +7,7 @@ import io.gitlab.arturbosch.quide.vcs.Revision
 import io.gitlab.arturbosch.quide.vcs.SourceFile
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import org.junit.Test
+import java.io.File
 
 /**
  * @author Artur Bosch
@@ -18,6 +19,8 @@ class MappingTest {
 	data class SFile(val path: String, val content: String) : SourceFile {
 		override fun path() = path
 		override fun content() = content
+
+		constructor(file: File) : this(file.canonicalPath, file.readText())
 	}
 
 	data class SFileChange(val type: FileChange.Type, val oldFile: SFile, val newFile: SFile) : FileChange {

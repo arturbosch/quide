@@ -1,16 +1,28 @@
 package io.gitlab.arturbosch.quide.java.mapping
 
-import com.github.javaparser.ast.CompilationUnit
+import com.github.javaparser.ast.Node
 import io.gitlab.arturbosch.quide.java.JavaCodeSmell
 import io.gitlab.arturbosch.quide.vcs.Patch
 
 /**
  * @author Artur Bosch
  */
-class ASTPatch(val oldUnit: CompilationUnit, val newUnit: CompilationUnit) : Patch<JavaCodeSmell> {
+class ASTPatch(originalElements: List<Node>, revisedElements: List<Node>) : Patch<JavaCodeSmell> {
 
 	override fun patchSmell(smell: JavaCodeSmell): JavaCodeSmell {
-		return smell
+		return when {
+			smell.ofClass() -> smell.patchClassLevel()
+			smell.ofMethod() -> smell.patchMethodLevel()
+			else -> smell
+		}
+	}
+
+	private fun JavaCodeSmell.patchMethodLevel(): JavaCodeSmell {
+		return this
+	}
+
+	private fun JavaCodeSmell.patchClassLevel(): JavaCodeSmell {
+		return this
 	}
 
 }
