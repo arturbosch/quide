@@ -35,8 +35,21 @@ class PatchTest {
 				SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()))
 
 		val smell = patch(file1, file2, longMethod)
-		println(smell.signature)
+
 		assert(smell.signature == "private String method()")
+	}
+
+	@Test
+	fun patchMethodMoved() {
+		val file1 = File(javaClass.getResource("/patch/Base.java").path)
+		val file2 = File(javaClass.getResource("/patch/MethodMoved.java").path)
+
+		val longMethod = LongMethod("method", "public void method()", 1, 1,
+				SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()))
+
+		val smell = patch(file1, file2, longMethod)
+		println(smell.sourceRange)
+		assert(smell.sourceRange.toString() == "SourceRange(7, 9, 2, 2)")
 	}
 
 	private fun patch(file1: File, file2: File, longMethod: LongMethod): LongMethod {
