@@ -8,18 +8,19 @@ import io.gitlab.arturbosch.smartsmells.smells.longmethod.LongMethod
 import org.junit.Test
 import java.io.File
 
+
 /**
  * @author Artur Bosch
  */
 class PatchTest {
 
+	val file1 = File(javaClass.getResource("/patch/Base.java").path)
+	val longMethod = LongMethod("method", "public void method()", 1, 1,
+			SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()))
+
 	@Test
 	fun patchMethodSignatureChanged() {
-		val file1 = File(javaClass.getResource("/patch/Base.java").path)
 		val file2 = File(javaClass.getResource("/patch/MethodSignatureChange.java").path)
-
-		val longMethod = LongMethod("method", "public void method()", 1, 1,
-				SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()))
 
 		val smell = patch(file1, file2, longMethod)
 
@@ -28,11 +29,7 @@ class PatchTest {
 
 	@Test
 	fun patchMethodOverloaded() {
-		val file1 = File(javaClass.getResource("/patch/Base.java").path)
 		val file2 = File(javaClass.getResource("/patch/MethodOverloaded.java").path)
-
-		val longMethod = LongMethod("method", "public void method()", 1, 1,
-				SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()))
 
 		val smell = patch(file1, file2, longMethod)
 
@@ -41,15 +38,29 @@ class PatchTest {
 
 	@Test
 	fun patchMethodMoved() {
-		val file1 = File(javaClass.getResource("/patch/Base.java").path)
 		val file2 = File(javaClass.getResource("/patch/MethodMoved.java").path)
 
-		val longMethod = LongMethod("method", "public void method()", 1, 1,
-				SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()))
+		val smell = patch(file1, file2, longMethod)
+
+		assert(smell.sourceRange.toString() == "SourceRange(7, 9, 2, 2)")
+	}
+
+	@Test
+	fun patchMethodMovedOfDeletion() {
+		val file2 = File(javaClass.getResource("/patch/DeletionBeforeMethod.java").path)
 
 		val smell = patch(file1, file2, longMethod)
-		println(smell.sourceRange)
-		assert(smell.sourceRange.toString() == "SourceRange(7, 9, 2, 2)")
+
+		assert(smell.sourceRange.toString() == "SourceRange(2, 3, 2, 2)")
+	}
+
+	@Test
+	fun patchMethodGrowthAndRenamed() {
+		val file2 = File(javaClass.getResource("/patch/MethodGrowthPlusRename.java").path)
+
+		val smell = patch(file1, file2, longMethod)
+
+		assert(smell.sourceRange.toString() == "SourceRange(9, 24, 2, 2)")
 	}
 
 	private fun patch(file1: File, file2: File, longMethod: LongMethod): LongMethod {

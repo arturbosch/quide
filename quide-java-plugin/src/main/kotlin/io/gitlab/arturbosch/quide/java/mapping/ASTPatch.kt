@@ -10,6 +10,10 @@ import io.gitlab.arturbosch.smartsmells.smells.MethodSpecific
  */
 class ASTPatch(val chunks: List<ASTDiffTool.AstChunk>, val unit: CompilationUnit) : Patch<JavaCodeSmell> {
 
+	private val methods = unit.types.flatMap { it.methods }
+	private val fields = unit.types.flatMap { it.fields }
+	private val types = unit.types
+
 	override fun patchSmell(smell: JavaCodeSmell): JavaCodeSmell {
 		return when {
 			smell.ofClass() -> smell.patchClassLevel()
@@ -21,17 +25,18 @@ class ASTPatch(val chunks: List<ASTDiffTool.AstChunk>, val unit: CompilationUnit
 	private fun JavaCodeSmell.patchMethodLevel(): JavaCodeSmell {
 		val smell = this.smell
 		if (smell is MethodSpecific) {
-			chunks.find { it.nodeByMethodSignature(smell.signature()) != null }
-					?.nodeByMethodSignature(smell.signature())?.let {
-				println("TREFFER!")
-				val copy = smell.copy(it)
-				return this.updateInternal(copy)
-			} ?: unit.types.flatMap { it.methods }
-					.find { it.declarationAsString == smell.signature() }?.let {
+			methods.find { it.declarationAsString == smell.signature() }?.let {
 				println("TREFFER!")
 				val copy = smell.copy(it)
 				return this.updateInternal(copy)
 			}
+			chunks.asSequence().map { it.nodeByMethodSignature(smell.signature()) }
+					.find { it != null }
+					?.let {
+						println("TREFFER!")
+						val copy = smell.copy(it)
+						return this.updateInternal(copy)
+					}
 		}
 		return this
 	}
