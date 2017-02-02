@@ -34,9 +34,8 @@ class PatchClassTest {
 
 		val largeClass = LargeClass("InnerTest", "Test\$InnerTest<T extends String, B extends Boolean>", 1, 1,
 				SourcePath.of(file1.toPath()), SourceRange.of(9, 15, 2, 2))
-		println(largeClass)
 		val smell = patch(file1, file2, largeClass)
-		println(smell)
+
 		assert(smell.signature() == "Test\$InnerTest<T extends Integer, B extends Integer>")
 	}
 
