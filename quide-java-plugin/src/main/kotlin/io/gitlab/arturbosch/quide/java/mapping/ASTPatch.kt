@@ -11,7 +11,7 @@ import io.gitlab.arturbosch.smartsmells.smells.MethodSpecific
 /**
  * @author Artur Bosch
  */
-class ASTPatch(val chunks: List<ASTDiffTool.AstChunk>, unit: CompilationUnit) : Patch<JavaCodeSmell> {
+class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCodeSmell> {
 
 	private val methods = unit.types.flatMap { it.methods }
 	private val fields = unit.types.flatMap { it.fields }
