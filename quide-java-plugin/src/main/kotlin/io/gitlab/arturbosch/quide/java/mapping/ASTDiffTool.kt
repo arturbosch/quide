@@ -3,10 +3,13 @@ package io.gitlab.arturbosch.quide.java.mapping
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.Node
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.visitor.TreeVisitor
 import difflib.Chunk
 import difflib.Delta
+import io.gitlab.arturbosch.jpal.ast.ClassHelper
+import io.gitlab.arturbosch.jpal.internal.Printer
 import io.gitlab.arturbosch.quide.vcs.DiffTool
 import io.gitlab.arturbosch.quide.vcs.SourceFile
 
@@ -50,10 +53,19 @@ class ASTDiffTool : DiffTool<ASTPatch> {
 		private val cache = hashMapOf<String, Node>()
 
 		fun nodeByMethodSignature(signature: String): MethodDeclaration? {
-			return cache[signature] as MethodDeclaration? ?: {
-				val before = originalNodes.find { it is MethodDeclaration } as MethodDeclaration?
-				val after = revisedNodes.find { it is MethodDeclaration } as MethodDeclaration?
-				if (before != null && after != null && before.declarationAsString == signature) {
+			return nodeBySignature(signature) { it.declarationAsString }
+		}
+
+		fun nodeByClassSignature(signature: String): ClassOrInterfaceDeclaration? {
+			return nodeBySignature(signature) { ClassHelper.createFullSignature(it) }
+		}
+
+		inline private fun <reified T : Node> nodeBySignature(signature: String,
+															  crossinline signatureFunction: (T) -> String): T? {
+			return cache[signature] as T? ?: {
+				val before = originalNodes.find { it is T } as T?
+				val after = revisedNodes.find { it is T } as T?
+				if (before != null && after != null && signatureFunction(before) == signature) {
 					cache.put(signature, after)
 					after
 				} else null
@@ -71,13 +83,24 @@ class ASTDiffTool : DiffTool<ASTPatch> {
 		val posToElement: MutableList<Node> = mutableListOf()
 
 		override fun process(node: Node) {
-			if (isWithinMethod(node)) {
+			if (!node.range.isPresent) return // we need to compare positions
+			if (node is CompilationUnit) return // Filter CU's if class change is searched
+
+			// Best and fastest way if lines are same
+			if (node.begin.get().line == start && node.end.get().line == end) {
 				posToElement.add(node)
 				return
 			}
-			if (node.begin.get().line >= start && node.end.get().line <= end) {
+
+			if (isWithinMethod(node)) { // method signature comparison for performance
+				posToElement.add(node)
+				return
+			}
+
+			if (node.begin.get().line >= start && node.toString(Printer.NO_COMMENTS).contains(text)) {
 				posToElement.add(node)
 			}
+
 		}
 
 		private fun isWithinMethod(node: Node) = (node.begin.get().line >= start && node is MethodDeclaration

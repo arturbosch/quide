@@ -12,7 +12,7 @@ import java.io.File
 /**
  * @author Artur Bosch
  */
-class PatchTest {
+class PatchMethodTest {
 
 	val file1 = File(javaClass.getResource("/patch/Base.java").path)
 	val longMethod = LongMethod("method", "public void method()", 1, 1,
