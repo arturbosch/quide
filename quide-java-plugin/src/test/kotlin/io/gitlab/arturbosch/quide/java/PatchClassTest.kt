@@ -28,6 +28,24 @@ class PatchClassTest {
 	}
 
 	@Test
+	fun patchMovedClassByImports() {
+		val file2 = File(javaClass.getResource("/patch/MovedClassOfImports.java").path)
+
+		val smell = patch(file1, file2, largeClass)
+
+		assert(smell.positions.toString() == "SourceRange(7, 14, 1, 1)")
+	}
+
+	@Test
+	fun patchMovedClassByImportsAndRenamed() {
+		val file2 = File(javaClass.getResource("/patch/MovedClassOfImportsAndRenamed.java").path)
+
+		val smell = patch(file1, file2, largeClass)
+
+		assert(smell.positions.toString() == "SourceRange(7, 14, 1, 1)")
+	}
+
+	@Test
 	fun patchGenericTypesOfInnerClass() {
 		val file1 = File(javaClass.getResource("/patch/InnerClassesBase.java").path)
 		val file2 = File(javaClass.getResource("/patch/GenericTypesInnerClassChanged.java").path)
