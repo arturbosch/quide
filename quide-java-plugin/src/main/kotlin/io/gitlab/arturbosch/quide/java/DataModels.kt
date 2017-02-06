@@ -3,7 +3,7 @@ package io.gitlab.arturbosch.quide.java
 import io.gitlab.arturbosch.quide.model.BaseCodeSmell
 import io.gitlab.arturbosch.quide.model.SmellContainer
 import io.gitlab.arturbosch.smartsmells.api.SmellResult
-import io.gitlab.arturbosch.smartsmells.common.DetectionResult
+import io.gitlab.arturbosch.smartsmells.smells.DetectionResult
 import io.gitlab.arturbosch.smartsmells.config.Smell
 import io.gitlab.arturbosch.smartsmells.out.XMLWriter
 
