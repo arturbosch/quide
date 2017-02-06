@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.jpal.ast.source.SourcePath
 import io.gitlab.arturbosch.jpal.ast.source.SourceRange
 import io.gitlab.arturbosch.quide.java.mapping.ASTDiffTool
 import io.gitlab.arturbosch.smartsmells.config.Smell
+import io.gitlab.arturbosch.smartsmells.smells.ElementTarget
 import io.gitlab.arturbosch.smartsmells.smells.longmethod.LongMethod
 import org.junit.Test
 import java.io.File
@@ -16,7 +17,7 @@ class PatchMethodTest {
 
 	val file1 = File(javaClass.getResource("/patch/Base.java").path)
 	val longMethod = LongMethod("method", "public void method()", 1, 1,
-			SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()))
+			SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()), ElementTarget.METHOD)
 
 	@Test
 	fun patchMethodSignatureChanged() {

@@ -117,7 +117,7 @@ class MappingTest {
 		assert(mapFour.alive().all { it.startVersion().versionNumber() == 1 })
 		assert(mapFour.alive().all { it.endVersion().versionNumber() == 3 })
 		assert(mapFour.alive().size == 4) // 9 - 5 DeadCodes - 1 LPL + 1 LM = 4
-		assert(mapFour.all().find { "LongParameterList" in it.asXmlContent }?.isAlive ?: false)
+		assert(mapFour.all().find { "LongParameterList" in it.compareString }?.isAlive ?: false)
 	}
 
 	private fun currentContainer() = storage.currentContainer<JavaSmellContainer, JavaCodeSmell>().get()

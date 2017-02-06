@@ -6,6 +6,7 @@ import io.gitlab.arturbosch.jpal.ast.ClassHelper
 import io.gitlab.arturbosch.quide.java.JavaCodeSmell
 import io.gitlab.arturbosch.quide.vcs.Patch
 import io.gitlab.arturbosch.smartsmells.smells.ClassSpecific
+import io.gitlab.arturbosch.smartsmells.smells.ElementTarget
 import io.gitlab.arturbosch.smartsmells.smells.MethodSpecific
 
 /**
@@ -18,9 +19,9 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 	private val types = unit.nodesByType(ClassOrInterfaceDeclaration::class.java)
 
 	override fun patchSmell(smell: JavaCodeSmell): JavaCodeSmell {
-		return when {
-			smell.ofClass() -> smell.patchClassLevel()
-			smell.ofMethod() -> smell.patchMethodLevel()
+		return when (smell.smell.elementTarget()) {
+			ElementTarget.CLASS -> smell.patchClassLevel()
+			ElementTarget.METHOD -> smell.patchMethodLevel()
 			else -> smell
 		}
 	}
