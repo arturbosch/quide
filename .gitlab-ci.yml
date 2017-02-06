@@ -16,7 +16,7 @@ build:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
-build:
+plugins:
   stage: plugins
   script:
     - ./gradlew fatjar shadow
