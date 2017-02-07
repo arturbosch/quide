@@ -2,9 +2,9 @@ package io.gitlab.arturbosch.quide.java.mapping
 
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import difflib.Delta
-import io.gitlab.arturbosch.jpal.ast.ClassHelper
 
 /**
  * @author Artur Bosch
@@ -13,12 +13,20 @@ data class ASTChunk(val type: Delta.TYPE, val originalNodes: List<Node>, val rev
 
 	private val cache = hashMapOf<String, Node>()
 
+	fun anyNodeBySignature(signature: String): Node? {
+		return nodeBySignature(signature, Node::toSignature)
+	}
+
+	fun nodeByFieldSignature(signature: String): FieldDeclaration? {
+		return nodeBySignature(signature) { it.toSignature() }
+	}
+
 	fun nodeByMethodSignature(signature: String): MethodDeclaration? {
 		return nodeBySignature(signature) { it.declarationAsString }
 	}
 
 	fun nodeByClassSignature(signature: String): ClassOrInterfaceDeclaration? {
-		return nodeBySignature(signature) { ClassHelper.createFullSignature(it) }
+		return nodeBySignature(signature) { it.toSignature() }
 	}
 
 	inline private fun <reified T : Node> nodeBySignature(signature: String,

@@ -22,6 +22,7 @@ class JavaCodeSmell(private val type: Smell, var smell: DetectionResult) : BaseC
 	fun updateInternal(updated: DetectionResult): JavaCodeSmell {
 		return this.apply {
 			smell = updated
+			addWeight(1)
 			compareString = smell.asComparableString()
 		}
 	}
