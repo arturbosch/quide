@@ -27,6 +27,10 @@ class JavaCodeSmell(private val type: Smell, var smell: DetectionResult) : BaseC
 		}
 	}
 
+	fun compare(second: JavaCodeSmell): Boolean {
+		return compareString == second.compareString
+	}
+
 }
 
 class JavaSmellContainer(smells: SmellResult? = null) : SmellContainer<JavaCodeSmell> {

@@ -9,7 +9,7 @@ import io.gitlab.arturbosch.quide.mapping.SmellCompareStrategy
 class ASTCompareStrategy : SmellCompareStrategy<JavaCodeSmell> {
 
 	override fun matches(first: JavaCodeSmell, second: JavaCodeSmell): Boolean {
-		return first.compareString == second.compareString
+		return first.compare(second)
 	}
 
 }
