@@ -6,7 +6,6 @@ import io.gitlab.arturbosch.quide.vcs.FileChange
 import io.gitlab.arturbosch.quide.vcs.Revision
 import io.gitlab.arturbosch.quide.vcs.SourceFile
 import io.gitlab.arturbosch.quide.vcs.Versionable
-import org.junit.Ignore
 import org.junit.Test
 import java.io.File
 
@@ -47,9 +46,11 @@ class MappingTest {
 			if (number == 1) {
 				return SVersion(number++, fileChanges)
 			} else {
+				val lastVersion = "repo/version${number - 1}/Version.java"
+				val thisVersion = "repo/version$number/Version.java"
 				fileChanges = mutableListOf(SFileChange(FileChange.Type.MODIFICATION,
-						SFile("Version${number - 1}.java".asResourceStringPath(), "Version${number - 1}.java".content()),
-						SFile("Version$number.java".asResourceStringPath(), "Version$number.java".content())
+						SFile(lastVersion.asResourceStringPath(), lastVersion.content()),
+						SFile(thisVersion.asResourceStringPath(), thisVersion.content())
 				))
 			}
 			return SVersion(number++, fileChanges.toMutableList())
@@ -62,7 +63,7 @@ class MappingTest {
 
 		// Version 1
 		println("Version $number")
-		val containerOne = "Version$number.java".lint()
+		val containerOne = "repo/version$number/Version.java".lint()
 		val versionOne = nextVersion()
 		storage.put(UserData.CURRENT_VERSION, versionOne)
 		storage.put(UserData.CURRENT_CONTAINER, containerOne)
@@ -74,7 +75,7 @@ class MappingTest {
 
 		// Version 2
 		println("Version $number")
-		val containerTwo = "Version$number.java".lint()
+		val containerTwo = "repo/version$number/Version.java".lint()
 		val versionTwo = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionOne)
 		storage.put(UserData.LAST_CONTAINER, mapOne)
@@ -88,7 +89,7 @@ class MappingTest {
 
 		// Version 3
 		println("Version $number")
-		val containerThree = "Version$number.java".lint()
+		val containerThree = "repo/version$number/Version.java".lint()
 		val versionThree = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionTwo)
 		storage.put(UserData.LAST_CONTAINER, mapTwo)
@@ -104,7 +105,7 @@ class MappingTest {
 
 		// Version 4
 		println("Version $number")
-		val containerFour = "Version$number.java".lint()
+		val containerFour = "repo/version$number/Version.java".lint()
 		val versionFour = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionThree)
 		storage.put(UserData.LAST_CONTAINER, mapThree)
