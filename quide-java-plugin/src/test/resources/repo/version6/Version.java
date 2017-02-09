@@ -1,7 +1,5 @@
 @SuppressWarnings("ALL")
-class Version1 {
-
-	private int deadInt;
+class Version {
 
 	class FeatureEnvy {
 		String string;

@@ -1,5 +1,7 @@
 @SuppressWarnings("ALL")
-class Version1 {
+class Version {
+
+	private int deadInt;
 
 	class FeatureEnvy {
 		String string;
@@ -14,16 +16,12 @@ class Version1 {
 		}
 	}
 
-	public void lpl(int a, int b, int c, int d, int e, int f) {
-		FeatureEnvy envy = new FeatureEnvy();
-		envy.getI();
-		envy.getI();
-		envy.getI();
-		envy.getString();
-		envy.getString();
-		envy.getString();
-	}
-
+	/**
+	 * CommentSmell still dead but again a LM.
+	 * @param type sss
+	 * @param <T> sss
+	 * @return sss
+	 */
 	public <T> T lm(T type) {
 		System.out.println();
 		System.out.println();
@@ -45,5 +43,20 @@ class Version1 {
 		System.out.println();
 		System.out.println();
 		System.out.println();
+		System.out.println();
+		System.out.println();
+	}
+
+	/**
+	 * No LPL anymore, all dead parameters disappear.
+	 */
+	public void lpl() {
+		FeatureEnvy envy = new FeatureEnvy();
+		envy.getI();
+		envy.getI();
+		envy.getI();
+		envy.getString();
+		envy.getString();
+		envy.getString();
 	}
 }

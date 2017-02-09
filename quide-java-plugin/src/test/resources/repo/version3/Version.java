@@ -1,5 +1,5 @@
 @SuppressWarnings("ALL")
-class Version1 {
+class Version {
 
 	class FeatureEnvy {
 		String string;

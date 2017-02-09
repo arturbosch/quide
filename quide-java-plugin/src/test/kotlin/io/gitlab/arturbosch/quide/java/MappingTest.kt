@@ -57,7 +57,6 @@ class MappingTest {
 	}
 
 	@Test
-	@Ignore
 	fun test() {
 		val mapping = ASTMapping()
 
@@ -97,6 +96,7 @@ class MappingTest {
 		storage.put(UserData.CURRENT_CONTAINER, containerThree)
 		mapping.execute(storage)
 		val mapThree = currentContainer()
+		mapThree.all().forEach { println(it) }
 		assert(mapThree.size() == 12) // Three smells marked as dead, containers do not shrink!
 		assert(mapThree.all().all { it.startVersion().versionNumber() == 1 })
 		assert(mapThree.all().all { it.endVersion().versionNumber() == 3 })
