@@ -3,7 +3,7 @@ apply plugin: 'groovy'
 configurations {
 	compile.extendsFrom log
 	compileOnly.extendsFrom kotlin
-	testCompile.extendsFrom kotlin
+	testCompile.extendsFrom kotlinTest
 	testCompile.extendsFrom spock
 }
 
