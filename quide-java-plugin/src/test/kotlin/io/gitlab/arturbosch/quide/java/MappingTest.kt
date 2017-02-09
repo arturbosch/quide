@@ -6,6 +6,7 @@ import io.gitlab.arturbosch.quide.vcs.FileChange
 import io.gitlab.arturbosch.quide.vcs.Revision
 import io.gitlab.arturbosch.quide.vcs.SourceFile
 import io.gitlab.arturbosch.quide.vcs.Versionable
+import io.gitlab.arturbosch.smartsmells.smells.longparam.LongParameterList
 import org.junit.Test
 import java.io.File
 
@@ -116,9 +117,9 @@ class MappingTest {
 		mapFour.all().forEach { println(it) }
 		assert(mapFour.size() == 12) // no new smells in this version
 		assert(mapFour.alive().all { it.startVersion().versionNumber() == 1 })
-		assert(mapFour.alive().all { it.endVersion().versionNumber() == 3 })
+		assert(mapFour.alive().all { it.endVersion().versionNumber() == 4 })
 		assert(mapFour.alive().size == 4) // 9 - 5 DeadCodes - 1 LPL + 1 LM = 4
-		assert(mapFour.all().find { "LongParameterList" in it.compareString }?.isAlive ?: false)
+		assert(mapFour.all().find { it.smell is LongParameterList }!!.isAlive.not())
 	}
 
 	private fun currentContainer() = storage.currentContainer<JavaSmellContainer, JavaCodeSmell>().get()
