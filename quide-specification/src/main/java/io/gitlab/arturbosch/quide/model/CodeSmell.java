@@ -15,7 +15,7 @@ public interface CodeSmell {
 
 	default boolean isLocatedAt(Path path) {
 		Validate.notNull(path);
-		return path.toAbsolutePath().toString().equals(sourcePath());
+		return path.toAbsolutePath().normalize().toString().equals(sourcePath());
 	}
 
 	default boolean isLocatedAt(String path) {

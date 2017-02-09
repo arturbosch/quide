@@ -24,7 +24,7 @@ public interface SmellContainer<T extends CodeSmell> {
 	 */
 	default List<T> findBySourcePath(String path) {
 		return all().stream()
-				.filter(smell -> smell.sourcePath().equals(path))
+				.filter(smell -> smell.isLocatedAt(path))
 				.collect(Collectors.toList());
 	}
 
@@ -45,6 +45,19 @@ public interface SmellContainer<T extends CodeSmell> {
 	default List<T> alive() {
 		return all().stream()
 				.filter(CodeSmell::isAlive)
+				.collect(Collectors.toList());
+	}
+
+	/**
+	 * Filters the container for dead smells/killed within an evolutionary analysis.
+	 * Dead smells should also be considered in mapping as they can get revived.
+	 *
+	 * @return living smells
+	 */
+
+	default List<T> dead() {
+		return all().stream()
+				.filter(codeSmell -> !codeSmell.isAlive())
 				.collect(Collectors.toList());
 	}
 
