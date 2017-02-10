@@ -12,11 +12,18 @@ import io.gitlab.arturbosch.quide.vcs.Versionable
  * @author Artur Bosch
  */
 interface Platform {
+	val plugins: List<Plugin>
 	fun analyze()
+	fun forEachPlugin(doBlock: (Plugin) -> Unit) {
+		plugins.forEach(doBlock)
+	}
 }
 
 class QuidePlatform(vcsLoader: VCSLoader,
 					platform: BasePlatform) : Platform {
+
+	override val plugins: List<Plugin>
+		get() = executablePlatform.plugins
 
 	private val logger by logFactory()
 	private val executablePlatform: Platform
@@ -44,6 +51,9 @@ class MultiPlatform(private val platform: BasePlatform,
 		platform.plugins().forEach { it.userData().put(VersionAware.VERSION_PROVIDER, versionProvider) }
 	}
 
+	override val plugins: List<Plugin>
+		get() = platform.plugins
+
 	private val logger by logFactory()
 
 	override fun analyze() {
@@ -52,14 +62,14 @@ class MultiPlatform(private val platform: BasePlatform,
 		while (currentVersion.isPresent) {
 			val current = currentVersion.get()
 			logger.info("${current.versionNumber()} - ${current.revision().date()} - ${current.revision().message()}")
-			platform.plugins().forEach { it.userData().put(UserData.LAST_VERSION, lastVersion) }
-			platform.plugins().forEach { it.userData().put(UserData.CURRENT_VERSION, current) }
+			forEachPlugin { it.userData().put(UserData.LAST_VERSION, lastVersion) }
+			forEachPlugin { it.userData().put(UserData.CURRENT_VERSION, current) }
 			platform.analyze()
 			lastVersion = current
 			currentVersion = versionProvider.nextVersion()
 		}
 
-		platform.plugins().forEach {
+		forEachPlugin {
 			it.userData().lastContainer<io.gitlab.arturbosch.quide.model.SmellContainer<CodeSmell>, CodeSmell>()
 					.ifPresent { it.all().forEach { println(it) } }
 		}
@@ -68,6 +78,9 @@ class MultiPlatform(private val platform: BasePlatform,
 
 class BasePlatform(private val analysis: Analysis,
 				   private val pluginLoader: PluginLoader) : ControlFlow, Platform {
+
+	override val plugins: List<Plugin>
+		get() = plugins()
 
 	private val logger by logFactory()
 
