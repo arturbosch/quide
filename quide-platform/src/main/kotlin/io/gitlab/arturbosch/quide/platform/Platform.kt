@@ -40,6 +40,10 @@ class QuidePlatform(vcsLoader: VCSLoader,
 class MultiPlatform(private val platform: BasePlatform,
 					private val versionProvider: VersionProvider) : Platform {
 
+	init {
+		platform.plugins().forEach { it.userData().put(VersionAware.VERSION_PROVIDER, versionProvider) }
+	}
+
 	private val logger by logFactory()
 
 	override fun analyze() {
