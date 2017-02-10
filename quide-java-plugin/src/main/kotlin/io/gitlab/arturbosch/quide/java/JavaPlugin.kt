@@ -11,14 +11,14 @@ import io.gitlab.arturbosch.quide.platform.processors.NumberOfSmellsProcessor
  */
 class JavaPlugin : Plugin {
 
-	private val storage = object : UserData() {}
+	private val storage = JavaPluginData()
 
 	override fun detector(): Detector<JavaSmellContainer> {
 		return SmartSmellsTool()
 	}
 
 	override fun processors(): MutableList<Processor> {
-		return mutableListOf(NumberOfSmellsProcessor())
+		return mutableListOf(DetectorFacadeProcessor(), MappingProcessor(), NumberOfSmellsProcessor())
 	}
 
 	override fun userData(): UserData {
