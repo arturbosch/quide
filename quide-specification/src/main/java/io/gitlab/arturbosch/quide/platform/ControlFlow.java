@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Artur Bosch
  */
-public interface ControlFlow extends Runnable {
+public interface ControlFlow {
 
 	Logger LOGGER = LoggerFactory.getLogger(ControlFlow.class.getSimpleName());
 
