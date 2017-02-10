@@ -16,7 +16,7 @@ data class QuideVersion(private val commit: VcsCommit,
 						private val relativePath: Path,
 						private val versionId: Int = nextVersion) : Versionable {
 
-	private val changes = commit.changes.map(::QuideFileChange).toMutableList()
+	private val changes = commit.changes.map { change -> QuideFileChange(relativePath, change) }.toMutableList()
 	private val revision = QuideRevision(commit)
 
 	override fun versionNumber(): Int = versionId
@@ -39,7 +39,7 @@ data class QuideSourceFile(private val path: String, private val content: String
 	override fun content(): String = content
 }
 
-data class QuideFileChange(private val vcsChange: VcsChange) : FileChange {
+data class QuideFileChange(private val path: Path, private val vcsChange: VcsChange) : FileChange {
 
 	private val type: FileChange.Type = when (vcsChange.type) {
 		VcsChange.Type.ADDED -> FileChange.Type.ADDITION
@@ -49,8 +49,8 @@ data class QuideFileChange(private val vcsChange: VcsChange) : FileChange {
 		else -> throw UnsupportedOperationException("No other types are supported!")
 	}
 
-	private val oldFile = QuideSourceFile(vcsChange.filePathBefore, vcsChange.fileContentBefore().value)
-	private val newFile = QuideSourceFile(vcsChange.filePath, vcsChange.fileContent().value)
+	private val oldFile = QuideSourceFile(path.resolve(vcsChange.filePathBefore).toString(), vcsChange.fileContentBefore().value)
+	private val newFile = QuideSourceFile(path.resolve(vcsChange.filePath).toString(), vcsChange.fileContent().value)
 	private var patch: Patch<*>? = null
 
 	override fun type(): FileChange.Type = type
