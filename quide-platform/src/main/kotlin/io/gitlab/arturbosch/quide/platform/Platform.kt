@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.kutils.awaitAll
 import io.gitlab.arturbosch.kutils.runAsync
 import io.gitlab.arturbosch.kutils.withExecutor
 import io.gitlab.arturbosch.kutils.withNamedThreadPoolExecutor
+import io.gitlab.arturbosch.quide.model.CodeSmell
 import io.gitlab.arturbosch.quide.vcs.VersionProvider
 import io.gitlab.arturbosch.quide.vcs.Versionable
 
@@ -52,6 +53,11 @@ class MultiPlatform(private val platform: BasePlatform,
 			platform.analyze()
 			lastVersion = current
 			currentVersion = versionProvider.nextVersion()
+		}
+
+		platform.plugins().forEach {
+			it.userData().lastContainer<io.gitlab.arturbosch.quide.model.SmellContainer<CodeSmell>, CodeSmell>()
+					.ifPresent { it.all().forEach { println(it) } }
 		}
 	}
 }

@@ -107,8 +107,8 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	@Override
 	public String toString() {
 		return "VersionInfo{" +
-				"startVersion=" + startVersion.versionNumber() +
-				", endVersion=" + endVersion.versionNumber() +
+				"startVersion=" + (startVersion == null ? "-1" : startVersion.versionNumber()) +
+				", endVersion=" + (startVersion == null ? "-1" : endVersion.versionNumber()) +
 				", consistent=" + consistent +
 				", weight=" + weight +
 				", alive=" + alive +
