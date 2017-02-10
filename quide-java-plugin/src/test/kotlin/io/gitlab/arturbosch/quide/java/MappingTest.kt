@@ -147,6 +147,22 @@ class MappingTest {
 		assert(mapFive.alive().all { it.endVersion().versionNumber() == 5 })
 		assert(mapFive.alive().size == 5) // 4 + 1
 
+		// Version 6 - moved field dead code smell, +1 resurrect, +1 again killed
+		println("Version $number")
+		val containerSix = "repo/version$number/Version.java".lint().replacePath()
+		val versionSix = nextVersion()
+		storage.put(UserData.LAST_VERSION, versionFive)
+		storage.put(UserData.LAST_CONTAINER, mapFive)
+		storage.put(UserData.CURRENT_VERSION, versionSix)
+		storage.put(UserData.CURRENT_CONTAINER, containerSix)
+		mapping.execute(storage)
+		val mapSix = currentContainer()
+		mapFive.all().forEach { println(it) }
+		assert(mapSix.size() == 13) // stayed same
+		assert(mapSix.alive().all { it.endVersion().versionNumber() == 6 })
+		assert(mapSix.dead().find { it.compareString.contains("LongMethod") }!!.killedInVersions().size == 2)
+		assert(mapSix.alive().find { it.compareString.contains("CommentSmell") }!!.revivedInVersions()[6]!!.versionNumber() == 6)
+		assert(mapSix.alive().size == 5)
 	}
 
 	private fun currentContainer() = storage.currentContainer<JavaSmellContainer, JavaCodeSmell>().get()
