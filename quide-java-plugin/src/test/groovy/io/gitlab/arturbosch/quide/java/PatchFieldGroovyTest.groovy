@@ -15,7 +15,7 @@ import spock.lang.Specification
 class PatchFieldGroovyTest extends Specification {
 
 	def file1 = new File(getClass().getResource("/patch/Base.java").path)
-	def deadCode = new DeadCode("value", "private int value;", SourcePath.of(file1.toPath()),
+	def deadCode = new DeadCode("value", "private int value;", SourcePath.of(file1.toPath(), file1.toPath()),
 			SourceRange.of(3, 3, 5, 23), ElementTarget.FIELD)
 
 	def "patch unnamed field"() {

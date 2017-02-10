@@ -16,7 +16,7 @@ import java.io.File
 class PatchFieldTest {
 
 	val file1 = File(javaClass.getResource("/patch/Base.java").path)
-	val deadCode = DeadCode("value", "private int value;", SourcePath.of(file1.toPath()),
+	val deadCode = DeadCode("value", "private int value;", SourcePath.of(file1.toPath(), file1.toPath()),
 			SourceRange.of(3, 3, 5, 23), ElementTarget.FIELD)
 
 	@Test

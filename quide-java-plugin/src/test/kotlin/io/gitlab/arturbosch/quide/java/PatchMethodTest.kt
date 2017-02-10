@@ -17,7 +17,7 @@ class PatchMethodTest {
 
 	val file1 = File(javaClass.getResource("/patch/Base.java").path)
 	val longMethod = LongMethod("method", "public void method()", 1, 1,
-			SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath()), ElementTarget.METHOD)
+			SourceRange.of(5, 5, 7, 6), SourcePath.of(file1.toPath(), file1.toPath()), ElementTarget.METHOD)
 
 	@Test
 	fun patchMethodSignatureChanged() {

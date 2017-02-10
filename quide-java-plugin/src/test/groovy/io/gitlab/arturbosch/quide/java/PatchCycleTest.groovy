@@ -16,8 +16,8 @@ class PatchCycleTest extends Specification {
 
 	def file1 = new File(getClass().getResource("/patch/CycleBase.java").path)
 	def cycle = new Cycle(
-			new Dependency("CycleTwo", "CycleTwo cycleTwo;", SourcePath.of(file1.toPath()), SourceRange.of(4, 4, 9, 27)),
-			new Dependency("CycleOne", "CycleOne cycleOne;", SourcePath.of(file1.toPath()), SourceRange.of(8, 8, 9, 27))
+			new Dependency("CycleTwo", "CycleTwo cycleTwo;", SourcePath.of(file1.toPath(), file1.toPath()), SourceRange.of(4, 4, 9, 27)),
+			new Dependency("CycleOne", "CycleOne cycleOne;", SourcePath.of(file1.toPath(), file1.toPath()), SourceRange.of(8, 8, 9, 27))
 	)
 
 	def "patch renamed cycle one"() {

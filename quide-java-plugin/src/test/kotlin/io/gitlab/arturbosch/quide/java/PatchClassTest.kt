@@ -17,7 +17,7 @@ class PatchClassTest {
 
 	val file1 = File(javaClass.getResource("/patch/Base.java").path)
 	val largeClass = LargeClass("Test", "Test", 1, 1,
-			SourcePath.of(file1.toPath()), SourceRange.of(1, 8, 1, 2), ElementTarget.CLASS)
+			SourcePath.of(file1.toPath(), file1.toPath()), SourceRange.of(1, 8, 1, 2), ElementTarget.CLASS)
 
 	@Test
 	fun patchRenamedClass() {
@@ -52,7 +52,7 @@ class PatchClassTest {
 		val file2 = File(javaClass.getResource("/patch/GenericTypesInnerClassChanged.java").path)
 
 		val largeClass = LargeClass("InnerTest", "Test\$InnerTest<T extends String, B extends Boolean>", 1, 1,
-				SourcePath.of(file1.toPath()), SourceRange.of(9, 15, 2, 2), ElementTarget.CLASS)
+				SourcePath.of(file1.toPath(), file1.toPath()), SourceRange.of(9, 15, 2, 2), ElementTarget.CLASS)
 		val smell = patch(file1, file2, largeClass)
 
 		assert(smell.signature() == "Test\$InnerTest<T extends Integer, B extends Integer>")
