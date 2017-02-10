@@ -15,6 +15,10 @@ class JavaCodeSmell(private val type: Smell, var smell: DetectionResult) : BaseC
 		sourcePath = smell.pathAsString
 	}
 
+	internal fun overridePathTestOnly(path: String) {
+		sourcePath = path
+	}
+
 	var compareString: String = smell.asComparableString()
 
 	override fun toString(): String = smell.toString() + "\n\t" + super.toString()

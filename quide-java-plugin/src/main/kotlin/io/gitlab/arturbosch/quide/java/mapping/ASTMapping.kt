@@ -66,6 +66,12 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 						// when found, we need the new smell specific information like
 						// new source path etc so we copy version information and work with the new smell
 						it.copyVersionInformationFrom(findSmell)
+						if (!it.isAlive) { // is resurrected smell?
+							it.setEndVersion(versionable)
+							it.revivedIn(versionable)
+							it.addWeight(1) // extra weight
+							it.isAlive = true
+						}
 						before.all().remove(findSmell)
 						mappedSmells.add(it)
 						before.addSmell(it)
@@ -80,20 +86,12 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 			val notMappedSmellsInNewFile = smellsInNewFile.minus(mappedSmells).toMutableList()
 			val patchedSmells = unmappedSmells.map { updateSmell(it, fileChange) }.toMutableList()
 			val (removedSmells, astMappedSmells) = mapUnchangedSmells(patchedSmells, notMappedSmellsInNewFile)
+			astMappedSmells.forEach { it.addWeight(1) } // modified smells get extra weight
 
 			// Remaining not found smells in the AST were deleted
 			removedSmells.forEach { it.killedIn(versionable) }
-			// Ok, after AST patching still no match, lets check if an old smell awoke
-			val againNotMappedSmells = notMappedSmellsInNewFile.minus(astMappedSmells).toMutableList()
-			val awokenSmells = mapUnchangedSmells(before.dead(), againNotMappedSmells).second // only mapped
-			awokenSmells.forEach {
-				it.setEndVersion(versionable)
-				it.revivedIn(versionable)
-				it.addWeight(1)
-				it.isAlive = true
-			}
-			val newSmells = againNotMappedSmells.minus(awokenSmells)
 			// As they are truly new smells in modified file -> add to container
+			val newSmells = notMappedSmellsInNewFile.minus(astMappedSmells).toMutableList()
 			newSmells.forEach {
 				it.applyVersion(versionable)
 				before.addSmell(it)

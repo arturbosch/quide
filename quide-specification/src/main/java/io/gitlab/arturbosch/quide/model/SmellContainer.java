@@ -75,6 +75,19 @@ public interface SmellContainer<T extends CodeSmell> {
 	}
 
 	/**
+	 * Combination of {@link #findBySourcePath(String)} and {@link #dead()}
+	 *
+	 * @param path path smells need to have
+	 * @return smells in given path and which are dead
+	 */
+	default List<T> deadInPath(String path) {
+		return all().stream()
+				.filter(smell -> smell.isLocatedAt(path))
+				.filter(codeSmell -> !codeSmell.isAlive())
+				.collect(Collectors.toList());
+	}
+
+	/**
 	 * Adds a new smell to this container
 	 *
 	 * @param smell code smell to add
