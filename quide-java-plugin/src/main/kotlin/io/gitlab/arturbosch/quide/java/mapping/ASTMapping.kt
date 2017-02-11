@@ -53,7 +53,7 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 			val newFile = fileChange.newFile()
 			val smellsInOldFile = before.findBySourcePath(oldFile.path())
 			val smellsInNewFile = after.findBySourcePath(newFile.path())
-			// Smell Equality? -> nothing to do as end version already set
+			// Smell Equality? -> nothing to do as end version is already set
 			// just add mapped smell in separate list to distinct from really new smells
 			fun mapUnchangedSmells(beforeSmells: MutableList<JavaCodeSmell>,
 								   afterSmells: MutableList<JavaCodeSmell>):
@@ -84,7 +84,10 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 			val (unmappedSmells, mappedSmells) = mapUnchangedSmells(smellsInOldFile, smellsInNewFile)
 			// We try to search for modified smells with the help of an AST
 			val notMappedSmellsInNewFile = smellsInNewFile.minus(mappedSmells).toMutableList()
-			val patchedSmells = unmappedSmells.map { updateSmell(it, fileChange) }.toMutableList()
+			val patchedSmells = unmappedSmells.asSequence()
+					.filter { it.isAlive } // do not need to try patch dead smells which may be got resurrected
+					.map { updateSmell(it, fileChange) } // ^^ they were not in last version, so no diff can be created
+					.toMutableList()
 			val (removedSmells, astMappedSmells) = mapUnchangedSmells(patchedSmells, notMappedSmellsInNewFile)
 			astMappedSmells.forEach { it.addWeight(1) } // modified smells get extra weight
 
