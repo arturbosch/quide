@@ -12,7 +12,7 @@ class BasePlatformTest extends Specification {
 
 	def "successful platform lifecycle run"() {
 		when:
-		def platform = new BasePlatform(new EmptyAnalysis(), new BasePluginLoader(new TestPluginDetector()))
+		def platform = new BasePlatform(new EmptyAnalysis(), new BasePluginLoader(new TestPluginDetector()), null)
 		def plugins = platform.plugins()
 
 		then:
@@ -23,11 +23,11 @@ class BasePlatformTest extends Specification {
 	def "successful base version platform lifecycle run"() {
 		when:
 		def detector = new TestPluginDetector()
-		def platform = new BasePlatform(new EmptyAnalysis(), new BasePluginLoader(detector))
-		def quide = new QuidePlatform(new TestVCSLoader(), platform)
+		def quide = new QuidePlatform(new EmptyAnalysis(), new TestVCSLoader(), new BasePluginLoader(detector))
 
 		then:
 		quide.executablePlatform instanceof BasePlatform
+		quide.executablePlatform.multiPlatform == null
 	}
 
 }

@@ -13,24 +13,21 @@ class MultiPlatformTest extends Specification {
 		when:
 		def detector = new TestPluginDetector()
 		def analysis = new EmptyAnalysis()
-		def platform = new BasePlatform(analysis, new BasePluginLoader(detector))
-		def quide = new QuidePlatform(new BaseVCSLoader(detector, analysis), platform)
+		def quide = new QuidePlatform(analysis, new BaseVCSLoader(detector, analysis), new BasePluginLoader(detector))
 
 		then:
-		quide.executablePlatform instanceof MultiPlatform
+		quide.executablePlatform.multiPlatform != null
 	}
 
 	def "successful multiple version platform lifecycle run"() {
 		when:
 		def detector = new TestPluginDetector()
 		def analysis = new EmptyAnalysis()
-		def basePlatform = new BasePlatform(analysis, new BasePluginLoader(detector))
-		def platform = new QuidePlatform(new BaseVCSLoader(detector, analysis), basePlatform)
-		platform.analyze()
+		def quide = new QuidePlatform(analysis, new BaseVCSLoader(detector, analysis), new BasePluginLoader(detector))
+		quide.analyze()
 		then:
-		platform.executablePlatform instanceof MultiPlatform
-		basePlatform.plugins()[0].userData().currentVersion().isPresent()
-		basePlatform.plugins()[0].userData().lastVersion().isPresent()
+		quide.executablePlatform.plugins()[0].userData().currentVersion().isPresent()
+		quide.executablePlatform.plugins()[0].userData().lastVersion().isPresent()
 	}
 
 }

@@ -5,9 +5,9 @@ package io.gitlab.arturbosch.quide.platform
  */
 fun main(args: Array<String>) {
 	val analysis = Analysis.parse(args)
-	QuidePlatform(
+	QuidePlatform(analysis,
 			BaseVCSLoader(BasePluginDetector, analysis),
-			BasePlatform(analysis, BasePluginLoader(BasePluginDetector))
+			BasePluginLoader(BasePluginDetector)
 	).analyze()
 }
 
