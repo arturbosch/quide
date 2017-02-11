@@ -1,8 +1,11 @@
 package io.gitlab.arturbosch.quide.java.mapping
 
 import com.github.javaparser.ast.Node
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import difflib.DiffUtils
 import difflib.Patch
+import io.gitlab.arturbosch.jpal.ast.ClassHelper
+import io.gitlab.arturbosch.jpal.internal.Printer
 import java.util.ArrayList
 
 /**
@@ -22,3 +25,6 @@ fun <N : Node> Node.nodesByType(clazz: Class<N>): List<N> {
 	}
 	return nodes
 }
+
+fun Node.toSignature(): String = toString(Printer.NO_COMMENTS)
+fun ClassOrInterfaceDeclaration.toSignature(): String = ClassHelper.createFullSignature(this)

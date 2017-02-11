@@ -1,14 +1,11 @@
 package io.gitlab.arturbosch.quide.java.mapping
 
 import com.github.javaparser.ast.CompilationUnit
-import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.expr.Expression
 import com.github.javaparser.ast.stmt.Statement
 import difflib.Delta
-import io.gitlab.arturbosch.jpal.ast.ClassHelper
-import io.gitlab.arturbosch.jpal.internal.Printer
 import io.gitlab.arturbosch.quide.java.JavaCodeSmell
 import io.gitlab.arturbosch.quide.vcs.Patch
 import io.gitlab.arturbosch.smartsmells.smells.ClassSpecific
@@ -84,11 +81,13 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 				smell.source.searchForField()?.let {
 					println("TREFFER!")
 					val copy = smell.copy(it)
-					return this.updateInternal(copy) }
+					return this.updateInternal(copy)
+				}
 				smell.target.searchForField()?.let {
 					println("TREFFER!")
 					val copy = smell.copyOnSecond(it)
-					return this.updateInternal(copy) }
+					return this.updateInternal(copy)
+				}
 			}
 //			chunks.asSequence().map { it.nodeByFieldSignature(smell.signature()) }
 //					.find { it != null }
@@ -175,6 +174,3 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 	}
 
 }
-
-fun Node.toSignature(): String = toString(Printer.NO_COMMENTS)
-fun ClassOrInterfaceDeclaration.toSignature(): String = ClassHelper.createFullSignature(this)
