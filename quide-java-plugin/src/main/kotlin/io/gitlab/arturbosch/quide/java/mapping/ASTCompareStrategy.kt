@@ -12,4 +12,7 @@ class ASTCompareStrategy : SmellCompareStrategy<JavaCodeSmell> {
 		return first.compare(second)
 	}
 
+	fun matchesRelocated(first: JavaCodeSmell, second: JavaCodeSmell): Boolean {
+		return first.compareWithoutPath(second)
+	}
 }

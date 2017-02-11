@@ -35,6 +35,16 @@ class JavaCodeSmell(private val type: Smell, var smell: DetectionResult) : BaseC
 		return compareString == second.compareString
 	}
 
+	fun compareWithoutPath(second: JavaCodeSmell): Boolean {
+		return signatureWithoutPath() == second.signatureWithoutPath()
+	}
+
+	private fun JavaCodeSmell.signatureWithoutPath(): String {
+		val wholeSplit = compareString.split("\$")
+		val smellAreaSize = smell.positions.endLine - smell.positions.startLine + 1
+		return wholeSplit[0] + "\$$smellAreaSize\$" + wholeSplit.subList(2, wholeSplit.size).joinToString("\$")
+	}
+
 }
 
 class JavaSmellContainer(smells: SmellResult? = null) : SmellContainer<JavaCodeSmell> {
