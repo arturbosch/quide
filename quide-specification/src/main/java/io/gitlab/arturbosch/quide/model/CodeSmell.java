@@ -5,6 +5,7 @@ import io.gitlab.arturbosch.quide.vcs.Versionable;
 
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Interface for smells which can be connected to a version.
@@ -89,4 +90,8 @@ public interface CodeSmell {
 	 */
 	String sourcePath();
 
+	/**
+	 * @return a set of paths this smell was relocated to
+	 */
+	Set<String> relocations();
 }
