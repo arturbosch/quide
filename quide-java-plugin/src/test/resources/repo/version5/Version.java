@@ -1,7 +1,7 @@
 @SuppressWarnings("ALL")
 class Version {
 
-	private int deadInt;
+	private int deadInt;// i'm new!
 
 	class FeatureEnvy {
 		String string;
@@ -17,7 +17,7 @@ class Version {
 	}
 
 	/**
-	 * CommentSmell still dead but again a LM.
+	 * Just changed places with lpl
 	 * @param type sss
 	 * @param <T> sss
 	 * @return sss
@@ -48,7 +48,7 @@ class Version {
 	}
 
 	/**
-	 * No LPL anymore, all dead parameters disappear.
+	 * Just changed places with lm
 	 */
 	public void lpl() {
 		FeatureEnvy envy = new FeatureEnvy();
