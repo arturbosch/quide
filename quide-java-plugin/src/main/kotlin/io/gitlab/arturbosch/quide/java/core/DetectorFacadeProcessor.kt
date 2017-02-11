@@ -1,5 +1,8 @@
-package io.gitlab.arturbosch.quide.java
+package io.gitlab.arturbosch.quide.java.core
 
+import io.gitlab.arturbosch.quide.java.FACADE
+import io.gitlab.arturbosch.quide.java.JavaPluginData
+import io.gitlab.arturbosch.quide.java.UPDATABLE_FACADE
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -28,6 +31,6 @@ class DetectorFacadeProcessor : Processor {
 	}
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {
-		return ControlFlow.InjectionPoint.BeforeAnalysis
+		return io.gitlab.arturbosch.quide.platform.ControlFlow.InjectionPoint.BeforeAnalysis
 	}
 }

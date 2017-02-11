@@ -1,4 +1,4 @@
-package io.gitlab.arturbosch.quide.java
+package io.gitlab.arturbosch.quide.java.core
 
 import io.gitlab.arturbosch.quide.model.BaseCodeSmell
 import io.gitlab.arturbosch.quide.model.SmellContainer

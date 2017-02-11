@@ -2,6 +2,7 @@ package io.gitlab.arturbosch.quide.java
 
 import io.gitlab.arturbosch.jpal.ast.source.SourcePath
 import io.gitlab.arturbosch.jpal.ast.source.SourceRange
+import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
 import io.gitlab.arturbosch.quide.java.mapping.ASTDiffTool
 import io.gitlab.arturbosch.smartsmells.config.Smell
 import io.gitlab.arturbosch.smartsmells.smells.CycleSpecific

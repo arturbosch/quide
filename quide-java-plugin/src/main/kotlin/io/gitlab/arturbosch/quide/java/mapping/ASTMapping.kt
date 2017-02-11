@@ -1,7 +1,7 @@
 package io.gitlab.arturbosch.quide.java.mapping
 
-import io.gitlab.arturbosch.quide.java.JavaCodeSmell
-import io.gitlab.arturbosch.quide.java.JavaSmellContainer
+import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
+import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.quide.mapping.SmellCompareStrategy
 import io.gitlab.arturbosch.quide.mapping.SmellMapping
 import io.gitlab.arturbosch.quide.model.SmellContainer

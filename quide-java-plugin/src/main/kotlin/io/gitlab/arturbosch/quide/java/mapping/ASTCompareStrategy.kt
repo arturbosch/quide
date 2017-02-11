@@ -1,6 +1,6 @@
 package io.gitlab.arturbosch.quide.java.mapping
 
-import io.gitlab.arturbosch.quide.java.JavaCodeSmell
+import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
 import io.gitlab.arturbosch.quide.mapping.SmellCompareStrategy
 
 /**

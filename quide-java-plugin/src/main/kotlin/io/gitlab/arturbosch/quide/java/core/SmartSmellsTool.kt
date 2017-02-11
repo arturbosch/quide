@@ -1,6 +1,8 @@
-package io.gitlab.arturbosch.quide.java
+package io.gitlab.arturbosch.quide.java.core
 
 import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.java.JavaPluginData
+import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import io.gitlab.arturbosch.smartsmells.api.SmellResult

@@ -1,5 +1,6 @@
-package io.gitlab.arturbosch.quide.java
+package io.gitlab.arturbosch.quide.java.core
 
+import io.gitlab.arturbosch.quide.java.JavaPluginData
 import io.gitlab.arturbosch.quide.java.mapping.ASTMapping
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
@@ -20,6 +21,6 @@ class MappingProcessor : Processor {
 	}
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {
-		return ControlFlow.InjectionPoint.AfterDetection
+		return io.gitlab.arturbosch.quide.platform.ControlFlow.InjectionPoint.AfterDetection
 	}
 }

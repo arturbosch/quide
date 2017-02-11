@@ -2,6 +2,7 @@
 
 package io.gitlab.arturbosch.quide.java
 
+import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.smartsmells.api.DetectorFacade
 import java.nio.file.Files
 import java.nio.file.Path

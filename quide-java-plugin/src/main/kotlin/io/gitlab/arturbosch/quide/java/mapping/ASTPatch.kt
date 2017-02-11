@@ -6,7 +6,7 @@ import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.expr.Expression
 import com.github.javaparser.ast.stmt.Statement
 import difflib.Delta
-import io.gitlab.arturbosch.quide.java.JavaCodeSmell
+import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
 import io.gitlab.arturbosch.quide.vcs.Patch
 import io.gitlab.arturbosch.smartsmells.smells.ClassSpecific
 import io.gitlab.arturbosch.smartsmells.smells.CycleSpecific

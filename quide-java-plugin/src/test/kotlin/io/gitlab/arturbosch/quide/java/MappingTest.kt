@@ -1,5 +1,7 @@
 package io.gitlab.arturbosch.quide.java
 
+import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
+import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.quide.java.mapping.ASTMapping
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.vcs.FileChange

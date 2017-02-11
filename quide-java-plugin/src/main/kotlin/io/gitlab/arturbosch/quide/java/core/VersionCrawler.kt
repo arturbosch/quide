@@ -1,4 +1,4 @@
-package io.gitlab.arturbosch.quide.java
+package io.gitlab.arturbosch.quide.java.core
 
 import com.github.javaparser.utils.Pair
 import io.gitlab.arturbosch.quide.vcs.FileChange
