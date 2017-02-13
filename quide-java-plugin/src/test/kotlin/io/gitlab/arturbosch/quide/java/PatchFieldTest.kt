@@ -29,6 +29,24 @@ class PatchFieldTest {
 		assert(smell.signature() == "private int myInt;")
 	}
 
+	@Test
+	fun patchMovedField() {
+		val file2 = File(javaClass.getResource("/patch/FieldMoved.java").path)
+
+		val smell = patch(file1, file2, deadCode)
+
+		assert(smell.signature() == "private int value;")
+	}
+
+	@Test
+	fun patchUnnamedAndMovedField() {
+		val file2 = File(javaClass.getResource("/patch/FieldRenamedAndMoved.java").path)
+
+		val smell = patch(file1, file2, deadCode)
+
+		assert(smell.signature() == "private int myInt;")
+	}
+
 	private fun patch(file1: File, file2: File, deadCode: FieldSpecific): FieldSpecific {
 		val patch = ASTDiffTool().createPatchFor(MappingTest.SFile(file1), MappingTest.SFile(file2))
 		val patched = patch.patchSmell(JavaCodeSmell(Smell.DEAD_CODE, deadCode))
