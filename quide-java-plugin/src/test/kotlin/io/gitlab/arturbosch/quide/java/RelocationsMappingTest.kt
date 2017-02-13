@@ -5,78 +5,47 @@ import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.quide.java.mapping.ASTMapping
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.vcs.FileChange
-import io.gitlab.arturbosch.quide.vcs.Revision
-import io.gitlab.arturbosch.quide.vcs.SourceFile
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import io.gitlab.arturbosch.smartsmells.smells.longparam.LongParameterList
 import org.junit.Test
-import java.io.File
 
 /**
  * @author Artur Bosch
  */
-class MappingTest {
+class RelocationsMappingTest {
 
-	// Building mapping version provider test data
+	private val storage = object : UserData() {}
 
-	val storage = object : UserData() {}
-
-	data class SFile(val path: String, val content: String) : SourceFile {
-		override fun path() = path
-		override fun content() = content
-
-		constructor(file: File) : this(file.canonicalPath, file.readText())
-	}
-
-	data class SFileChange(val type: FileChange.Type, val oldFile: SFile, val newFile: SFile) : FileChange {
-		override fun type(): FileChange.Type = type
-		override fun oldFile(): SourceFile = oldFile
-		override fun newFile(): SourceFile = newFile
-	}
-
-	data class SVersion(val number: Int, val changes: MutableList<FileChange>) : Versionable {
-		override fun versionNumber(): Int = number
-		override fun revision(): Revision {
-			throw UnsupportedOperationException("not implemented")
-		}
-
-		override fun fileChanges(): MutableList<FileChange> = changes
-	}
+	private fun currentContainer() = storage.currentContainer<JavaSmellContainer, JavaCodeSmell>().get()
 
 	companion object {
 		private var number = 1
 		private var fileChanges = mutableListOf<FileChange>()
-		val samePathForAllVersion = "repo/version/Version.java".asResourceStringPath()
-
-		private fun JavaSmellContainer.replacePath(): JavaSmellContainer {
-			return this.apply { codeSmells.forEach { it.overridePathTestOnly(samePathForAllVersion) } }
-		}
 
 		private fun nextVersion(): Versionable {
 			if (number == 1) {
-				return SVersion(number++, fileChanges)
+				return MappingTest.SVersion(number++, fileChanges)
 			} else {
 				val lastVersion = "repo/version${number - 1}/Version.java"
 				val thisVersion = "repo/version$number/Version.java"
-				fileChanges = mutableListOf(SFileChange(FileChange.Type.MODIFICATION,
-						SFile(samePathForAllVersion, lastVersion.content()),
-						SFile(samePathForAllVersion, thisVersion.content())
+				fileChanges = mutableListOf(MappingTest.SFileChange(FileChange.Type.RELOCATION,
+						MappingTest.SFile(lastVersion.asResourceStringPath(), lastVersion.content()),
+						MappingTest.SFile(thisVersion.asResourceStringPath(), thisVersion.content())
 				))
 			}
-			return SVersion(number++, fileChanges.toMutableList())
+			return MappingTest.SVersion(number++, fileChanges.toMutableList())
 		}
 	}
 
-	// Versions are loaded from /resources/repo/*, each versionX/Version.java describes new test cases
-	// eg. new smells appear, smells get deleted, smells move within the file, resurrection of smells etc
 
 	@Test
 	fun test() {
+
 		val mapping = ASTMapping()
 
 		// Version 1 - baseline with 12 smells
 		println("Version $number")
-		val containerOne = "repo/version$number/Version.java".lint().replacePath()
+		val containerOne = "repo/version$number/Version.java".lint()
 		val versionOne = nextVersion()
 		storage.put(UserData.CURRENT_VERSION, versionOne)
 		storage.put(UserData.CURRENT_CONTAINER, containerOne)
@@ -88,7 +57,7 @@ class MappingTest {
 
 		// Version 2 - simple case, everything stays the same - mapping by signature
 		println("Version $number")
-		val containerTwo = "repo/version$number/Version.java".lint().replacePath()
+		val containerTwo = "repo/version$number/Version.java".lint()
 		val versionTwo = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionOne)
 		storage.put(UserData.LAST_CONTAINER, mapOne)
@@ -102,7 +71,7 @@ class MappingTest {
 
 		// Version 3 - mark smells as dead, containers also contain data about dead smells
 		println("Version $number")
-		val containerThree = "repo/version$number/Version.java".lint().replacePath()
+		val containerThree = "repo/version$number/Version.java".lint()
 		val versionThree = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionTwo)
 		storage.put(UserData.LAST_CONTAINER, mapTwo)
@@ -117,7 +86,7 @@ class MappingTest {
 
 		// Version 4 - new smells and resurrected smells get mapped
 		println("Version $number")
-		val containerFour = "repo/version$number/Version.java".lint().replacePath()
+		val containerFour = "repo/version$number/Version.java".lint()
 		val versionFour = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionThree)
 		storage.put(UserData.LAST_CONTAINER, mapThree)
@@ -134,7 +103,7 @@ class MappingTest {
 
 		// Version 5 - smells are moved in file, one new smell
 		println("Version $number")
-		val containerFive = "repo/version$number/Version.java".lint().replacePath()
+		val containerFive = "repo/version$number/Version.java".lint()
 		val versionFive = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionFour)
 		storage.put(UserData.LAST_CONTAINER, mapFour)
@@ -151,7 +120,7 @@ class MappingTest {
 
 		// Version 6 - moved field dead code smell, +1 resurrect, +1 again killed
 		println("Version $number")
-		val containerSix = "repo/version$number/Version.java".lint().replacePath()
+		val containerSix = "repo/version$number/Version.java".lint()
 		val versionSix = nextVersion()
 		storage.put(UserData.LAST_VERSION, versionFive)
 		storage.put(UserData.LAST_CONTAINER, mapFive)
@@ -166,7 +135,4 @@ class MappingTest {
 		assert(mapSix.alive().find { it.compareString.contains("CommentSmell") }!!.revivedInVersions()[6]!!.versionNumber() == 6)
 		assert(mapSix.alive().size == 5)
 	}
-
-	private fun currentContainer() = storage.currentContainer<JavaSmellContainer, JavaCodeSmell>().get()
 }
-

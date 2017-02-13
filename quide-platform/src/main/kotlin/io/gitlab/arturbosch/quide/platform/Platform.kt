@@ -1,55 +1,57 @@
 package io.gitlab.arturbosch.quide.platform
 
 import io.gitlab.arturbosch.kutils.awaitAll
+import io.gitlab.arturbosch.kutils.cores
 import io.gitlab.arturbosch.kutils.runAsync
 import io.gitlab.arturbosch.kutils.withExecutor
 import io.gitlab.arturbosch.kutils.withNamedThreadPoolExecutor
+import io.gitlab.arturbosch.quide.model.CodeSmell
+import io.gitlab.arturbosch.quide.model.SmellContainer
 import io.gitlab.arturbosch.quide.vcs.VersionProvider
 import io.gitlab.arturbosch.quide.vcs.Versionable
+import java.nio.file.Files
+import java.util.concurrent.ExecutorService
 
 /**
  * @author Artur Bosch
  */
-interface Platform {
-	fun analyze()
-}
-
-class QuidePlatform(vcsLoader: VCSLoader,
-					platform: BasePlatform) : Platform {
+class QuidePlatform(analysis: Analysis,
+					vcsLoader: VCSLoader,
+					pluginLoader: PluginLoader) {
 
 	private val logger by logFactory()
-	private val executablePlatform: Platform
+
+	private val executablePlatform: BasePlatform
 
 	init {
 		val provider = vcsLoader.load()
-
-		if (provider != null) {
-			executablePlatform = MultiPlatform(platform, provider)
-		} else {
-			executablePlatform = platform
-		}
+		val multiPlatform = provider?.let { MultiPlatform(provider) }
+		executablePlatform = BasePlatform(analysis, pluginLoader, multiPlatform)
 	}
 
-	override fun analyze() {
+	fun analyze() {
 		logger.info("Starting $QUIDE ...")
 		executablePlatform.analyze()
 	}
 }
 
-class MultiPlatform(private val platform: BasePlatform,
-					private val versionProvider: VersionProvider) : Platform {
+class MultiPlatform(private val versionProvider: VersionProvider) {
 
 	private val logger by logFactory()
 
-	override fun analyze() {
+	fun registerVersionProvider(plugins: List<Plugin>) {
+		plugins.forEach { it.userData().put(VersionAware.VERSION_PROVIDER, versionProvider) }
+	}
+
+	fun analyze(plugins: List<Plugin>, runBlock: () -> Unit) {
 		var lastVersion: Versionable? = null
 		var currentVersion = versionProvider.nextVersion()
 		while (currentVersion.isPresent) {
 			val current = currentVersion.get()
 			logger.info("${current.versionNumber()} - ${current.revision().date()} - ${current.revision().message()}")
-			platform.plugins().forEach { it.userData().put(UserData.LAST_VERSION, lastVersion) }
-			platform.plugins().forEach { it.userData().put(UserData.CURRENT_VERSION, current) }
-			platform.analyze()
+			plugins.forEach { it.userData().put(UserData.LAST_VERSION, lastVersion) }
+			plugins.forEach { it.userData().put(UserData.CURRENT_VERSION, current) }
+			runBlock()
 			lastVersion = current
 			currentVersion = versionProvider.nextVersion()
 		}
@@ -57,33 +59,62 @@ class MultiPlatform(private val platform: BasePlatform,
 }
 
 class BasePlatform(private val analysis: Analysis,
-				   private val pluginLoader: PluginLoader) : ControlFlow, Platform {
+				   private val pluginLoader: PluginLoader,
+				   private val multiPlatform: MultiPlatform? = null) : ControlFlow {
 
 	private val logger by logFactory()
 
-	private val _plugins = lazy {
-		pluginLoader.load()
-	}
+	private val _plugins = lazy { pluginLoader.load() }
 
-	override fun plugins(): List<Plugin> {
-		return _plugins.value
-	}
+	private val cpuCores: Int = Math.min(plugins().size, cores)
 
-	override fun analyze() {
-		val cores = plugins().size
-		if (cores < 1) {
+	private val isDebugMode = "debug".asProperty()?.toBoolean() ?: false
+
+	override fun plugins(): List<Plugin> = _plugins.value
+
+	fun analyze() {
+		if (cpuCores < 1) {
 			logger.info("No plugins available...shutting down!")
 			return
 		}
-		withExecutor(withNamedThreadPoolExecutor(QUIDE, cores)) {
-			val futures = plugins().map { plugin ->
-				runAsync {
-					execute(plugin, analysis)
-				}.exceptionally {
-					logger.error("An error occurred while executing ${plugin.name()}", it)
-				}
+		run(analysis)
+	}
+
+	override fun run(context: AnalysisContext) {
+		multiPlatform?.registerVersionProvider(plugins())
+		beforeAnalysis(context)
+		withExecutor(withNamedThreadPoolExecutor(QUIDE, cpuCores)) {
+			multiPlatform?.analyze(plugins()) { runPlugins() } ?: runPlugins()
+		}
+		afterAnalysis()
+		if (isDebugMode) debugOutput()
+	}
+
+	private fun ExecutorService.runPlugins() {
+		val futures = plugins().map { plugin ->
+			runAsync {
+				execute(plugin)
+			}.exceptionally {
+				logger.error("An error occurred while executing ${plugin.name()}", it)
 			}
-			awaitAll(futures)
+		}
+		awaitAll(futures)
+	}
+
+	private fun debugOutput() {
+
+		fun List<CodeSmell>.smellsToBytes() = map { it.toString() }.sorted().joinToString("\n").toByteArray()
+
+		plugins().forEach {
+			it.userData().currentContainer<SmellContainer<CodeSmell>, CodeSmell>().ifPresent {
+				println()
+				logger.info("#All: " + it.all().size)
+				logger.info("#Alive: " + it.alive().size)
+				logger.info("#Dead: " + it.dead().size)
+				Files.write(HomeFolder.resolve("alltestrun.txt"), it.all().smellsToBytes())
+				Files.write(HomeFolder.resolve("alivetestrun.txt"), it.alive().smellsToBytes())
+				Files.write(HomeFolder.resolve("deadtestrun.txt"), it.dead().smellsToBytes())
+			}
 		}
 	}
 

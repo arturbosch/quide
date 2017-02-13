@@ -4,6 +4,8 @@ import io.gitlab.arturbosch.quide.validation.Validate;
 import io.gitlab.arturbosch.quide.vcs.Versionable;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Implements the default behaviour of a code smell.
@@ -20,6 +22,7 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	protected boolean alive = true;
 	protected HashMap<Integer, Versionable> revivedInVersions = new HashMap<>();
 	protected HashMap<Integer, Versionable> killedInVersions = new HashMap<>();
+	protected Set<String> relocations = new HashSet<>();
 
 	/**
 	 * Copies all version related information from given other smell.
@@ -35,6 +38,14 @@ public abstract class BaseCodeSmell implements CodeSmell {
 		alive = other.isAlive();
 		revivedInVersions = other.revivedInVersions();
 		killedInVersions = other.killedInVersions();
+		if (!sourcePath.equals(other.sourcePath())) {
+			relocations.add(other.sourcePath());
+		}
+	}
+
+	@Override
+	public Set<String> relocations() {
+		return relocations;
 	}
 
 	@Override
@@ -107,8 +118,8 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	@Override
 	public String toString() {
 		return "VersionInfo{" +
-				"startVersion=" + startVersion.versionNumber() +
-				", endVersion=" + endVersion.versionNumber() +
+				"startVersion=" + (startVersion == null ? "-1" : startVersion.versionNumber()) +
+				", endVersion=" + (startVersion == null ? "-1" : endVersion.versionNumber()) +
 				", consistent=" + consistent +
 				", weight=" + weight +
 				", alive=" + alive +

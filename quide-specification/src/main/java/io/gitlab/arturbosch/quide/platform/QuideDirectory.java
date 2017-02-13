@@ -22,6 +22,10 @@ public interface QuideDirectory {
 		return path;
 	}
 
+	default Path resolve(String subPath) {
+		return home().resolve(subPath);
+	}
+
 	default Path home() {
 		return checkDir(Paths.get(System.getProperty("user.home"), ".quide"));
 	}

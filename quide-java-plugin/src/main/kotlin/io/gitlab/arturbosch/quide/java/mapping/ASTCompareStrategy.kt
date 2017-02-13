@@ -1,6 +1,6 @@
 package io.gitlab.arturbosch.quide.java.mapping
 
-import io.gitlab.arturbosch.quide.java.JavaCodeSmell
+import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
 import io.gitlab.arturbosch.quide.mapping.SmellCompareStrategy
 
 /**
@@ -9,7 +9,10 @@ import io.gitlab.arturbosch.quide.mapping.SmellCompareStrategy
 class ASTCompareStrategy : SmellCompareStrategy<JavaCodeSmell> {
 
 	override fun matches(first: JavaCodeSmell, second: JavaCodeSmell): Boolean {
-		return first.asXmlContent == second.asXmlContent
+		return first.compare(second)
 	}
 
+	fun matchesRelocated(first: JavaCodeSmell, second: JavaCodeSmell): Boolean {
+		return first.compareWithoutPath(second)
+	}
 }
