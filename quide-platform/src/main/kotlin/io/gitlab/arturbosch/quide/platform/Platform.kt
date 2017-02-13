@@ -9,6 +9,7 @@ import io.gitlab.arturbosch.quide.model.CodeSmell
 import io.gitlab.arturbosch.quide.model.SmellContainer
 import io.gitlab.arturbosch.quide.vcs.VersionProvider
 import io.gitlab.arturbosch.quide.vcs.Versionable
+import java.nio.file.Files
 import java.util.concurrent.ExecutorService
 
 /**
@@ -67,6 +68,8 @@ class BasePlatform(private val analysis: Analysis,
 
 	private val cpuCores: Int = Math.min(plugins().size, cores)
 
+	private val isDebugMode = "debug".asProperty()?.toBoolean() ?: false
+
 	override fun plugins(): List<Plugin> = _plugins.value
 
 	fun analyze() {
@@ -84,11 +87,7 @@ class BasePlatform(private val analysis: Analysis,
 			multiPlatform?.analyze(plugins()) { runPlugins() } ?: runPlugins()
 		}
 		afterAnalysis()
-		plugins().forEach {
-			it.userData().currentContainer<SmellContainer<CodeSmell>, CodeSmell>().ifPresent {
-				it.all().forEach(::println)
-			}
-		}
+		if (isDebugMode) debugOutput()
 	}
 
 	private fun ExecutorService.runPlugins() {
@@ -101,4 +100,22 @@ class BasePlatform(private val analysis: Analysis,
 		}
 		awaitAll(futures)
 	}
+
+	private fun debugOutput() {
+
+		fun List<CodeSmell>.smellsToBytes() = map { it.toString() }.sorted().joinToString("\n").toByteArray()
+
+		plugins().forEach {
+			it.userData().currentContainer<SmellContainer<CodeSmell>, CodeSmell>().ifPresent {
+				println()
+				logger.info("#All: " + it.all().size)
+				logger.info("#Alive: " + it.alive().size)
+				logger.info("#Dead: " + it.dead().size)
+				Files.write(HomeFolder.resolve("alltestrun.txt"), it.all().smellsToBytes())
+				Files.write(HomeFolder.resolve("alivetestrun.txt"), it.alive().smellsToBytes())
+				Files.write(HomeFolder.resolve("deadtestrun.txt"), it.dead().smellsToBytes())
+			}
+		}
+	}
+
 }
