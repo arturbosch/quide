@@ -20,9 +20,14 @@ class DetectorFacadeProcessor : Processor {
 		val pluginData = data as JavaPluginData
 		val configPath = data.quideDirectory().configurationsDir().resolve("smartsmells.yml")
 		val facade = if (Files.exists(configPath)) {
-			DetectorFacade.fromConfig(DetectorConfig.load(configPath))
+			DetectorFacade.builder()
+					.withFilters(".*/test/.*,.*/resources/.*")
+					.fromConfig(DetectorConfig.load(configPath))
+					.build()
 		} else {
-			DetectorFacade.fullStackFacade()
+			DetectorFacade.builder()
+					.withFilters(".*/test/.*,.*/resources/.*")
+					.fullStackFacade()
 		}
 		if (pluginData.isEvolutionaryAnalysis()) {
 			data.put(UPDATABLE_FACADE, UpdatableDetectorFacade(facade))
