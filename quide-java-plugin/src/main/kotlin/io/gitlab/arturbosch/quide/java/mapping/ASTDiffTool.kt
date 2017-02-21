@@ -26,7 +26,6 @@ class ASTDiffTool : DiffTool<ASTPatch> {
 						  private val newUnit: CompilationUnit,
 						  diffPatch: difflib.Patch<String>) {
 
-
 		val chunks = diffPatch.deltas
 				.map { ASTChunk(it.type, it.original.astElements(oldUnit), it.revised.astElements(newUnit)) }
 

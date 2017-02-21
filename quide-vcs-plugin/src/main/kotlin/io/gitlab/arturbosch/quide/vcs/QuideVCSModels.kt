@@ -7,7 +7,6 @@ import java.nio.file.Path
 import java.time.ZonedDateTime
 import java.util.concurrent.atomic.AtomicInteger
 
-
 private val idGenerator = AtomicInteger()
 private val nextVersion: Int
 	get() = idGenerator.incrementAndGet()

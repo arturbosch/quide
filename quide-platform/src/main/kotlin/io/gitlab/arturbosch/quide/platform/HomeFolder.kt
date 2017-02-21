@@ -20,7 +20,7 @@ object QuideProperties {
 		}
 	}
 
-	fun getOrNull(key: String): String?  {
+	fun getOrNull(key: String): String? {
 		return properties.getProperty(key)
 	}
 }

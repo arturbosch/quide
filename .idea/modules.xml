@@ -21,6 +21,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" group="quide-vcs-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" group="quide-vcs-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" group="quide-vcs-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_main.iml" group="quide" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_test.iml" group="quide" />
     </modules>
   </component>
 </project>
