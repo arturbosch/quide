@@ -15,6 +15,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" group="quide-platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" group="quide-platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" group="quide-platform" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell.iml" group="quide-shell" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_main.iml" group="quide-shell" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_test.iml" group="quide-shell" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" group="quide-specification" />
