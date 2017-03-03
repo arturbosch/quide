@@ -1,6 +1,7 @@
 package io.gitlab.arturbosch.quide.shell
 
 import org.jline.reader.EndOfFileException
+import org.jline.reader.LineReader
 import org.jline.reader.LineReaderBuilder
 import org.jline.reader.UserInterruptException
 import org.jline.terminal.TerminalBuilder
@@ -10,20 +11,26 @@ import org.jline.terminal.TerminalBuilder
  */
 
 fun main(args: Array<String>) {
-	val reader = LineReaderBuilder.builder()
-			.appName("quide")
-			.terminal(TerminalBuilder.terminal())
-			.build()
-	val prompt = "quide>"
+	val reader = reader()
 	while (true) {
 		var line: String?
 		try {
-			line = reader.readLine(prompt)
-			println(line)
+			line = reader.readLine(QuideState.prompt)
+			CommandoManager.choose(line)
+		} catch (e: QuideShellException) {
+			e.message?.let { println(e.message) }
+			e.cause?.let { println(e.cause) }
 		} catch (e: UserInterruptException) {
 			// Ignore
 		} catch (e: EndOfFileException) {
 			return
 		}
 	}
+}
+
+private fun reader(): LineReader {
+	return LineReaderBuilder.builder()
+			.appName(QuideState.DEFAULT_PROMPT)
+			.terminal(TerminalBuilder.terminal())
+			.build()
 }
