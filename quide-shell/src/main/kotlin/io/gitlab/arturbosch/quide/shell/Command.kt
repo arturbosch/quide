@@ -1,4 +1,4 @@
-package io.gitlab.arturbosch.quide.shell.commands
+package io.gitlab.arturbosch.quide.shell
 
 /**
  * @author Artur Bosch

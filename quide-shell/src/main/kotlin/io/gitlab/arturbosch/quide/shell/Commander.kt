@@ -1,7 +1,5 @@
 package io.gitlab.arturbosch.quide.shell
 
-import io.gitlab.arturbosch.quide.shell.commands.Command
-
 /**
  * @author Artur Bosch
  */

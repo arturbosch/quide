@@ -1,7 +1,6 @@
 package io.gitlab.arturbosch.quide.shell
 
 import io.gitlab.arturbosch.quide.platform.logFactory
-import io.gitlab.arturbosch.quide.shell.commands.Command
 import java.util.ServiceLoader
 
 /**

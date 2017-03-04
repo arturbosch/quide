@@ -1,6 +1,7 @@
 package io.gitlab.arturbosch.quide.shell.commands
 
 import io.gitlab.arturbosch.quide.platform.processors.ResultConsoleProcessor
+import io.gitlab.arturbosch.quide.shell.Command
 import io.gitlab.arturbosch.quide.shell.QuideState
 
 /**
