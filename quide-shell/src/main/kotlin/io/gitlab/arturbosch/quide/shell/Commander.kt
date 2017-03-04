@@ -12,7 +12,7 @@ class Commander(loader: CommandLoader) {
 	fun choose(line: String) {
 		if (line.isNullOrBlank()) return
 		commands.keys.find { line.startsWith(it) }
-				?.let { commands[it]?.run(line.substring(it.length)) }
+				?.let { println(commands[it]?.run(line.substring(it.length))) }
 				?: throw QuideShellException("No matching command found!")
 	}
 }
