@@ -41,7 +41,7 @@ public class JavaCommandLoader implements CommandLoader {
 			Map<String, byte[]> compile = compiler.compile(scriptsAsStrings);
 
 			return scriptsAsStrings.keySet().stream()
-					.map(javaName -> javaName.substring(0, javaName.lastIndexOf("")))
+					.map(javaName -> javaName.substring(0, javaName.lastIndexOf(".")))
 					.map(fileName -> loadClass(fileName, compile))
 					.map(this::transformToCommand)
 					.filter(Objects::nonNull)
@@ -67,7 +67,7 @@ public class JavaCommandLoader implements CommandLoader {
 		try {
 			return compiler.loadClass(className, classData);
 		} catch (ClassNotFoundException | IOException e) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("Error trying to load class " + className);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class JavaCommandLoader implements CommandLoader {
 		try {
 			return new String(Files.readAllBytes(path));
 		} catch (IOException e) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("Error trying to read file " + path);
 		}
 	}
 }
