@@ -45,7 +45,8 @@ public class AdditionalCommandLoader implements CommandLoader {
 					.map(this::transformToCommand)
 					.filter(Objects::nonNull)
 					.collect(Collectors.toMap(Command::getId, Function.identity()));
-		} catch (IOException e) {
+		} catch (IOException ignored) {
+			logger.error("Error while reading commands from file", ignored);
 			return Collections.emptyMap();
 		}
 	}
