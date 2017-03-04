@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
 		var line: String?
 		try {
 			line = reader.readLine(QuideState.prompt)
-			CommandoManager.choose(line)
+			Commander.choose(line)
 		} catch (e: QuideShellException) {
 			e.message?.let { println(e.message) }
 			e.cause?.let { println(e.cause) }

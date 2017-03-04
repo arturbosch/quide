@@ -6,7 +6,7 @@ import io.gitlab.arturbosch.quide.shell.commands.SetProject
 /**
  * @author Artur Bosch
  */
-object CommandoManager {
+object Commander {
 
 	private val commands = mapOf(
 			SetProject.id to SetProject,
