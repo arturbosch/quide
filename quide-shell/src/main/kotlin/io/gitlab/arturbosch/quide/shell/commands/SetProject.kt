@@ -7,16 +7,14 @@ import java.nio.file.Paths
 /**
  * @author Artur Bosch
  */
-class SetProject(val path: Path) : Commando {
+class SetProject(val path: Path) : Command {
 
-	override fun run() {
+	override val id: String = "project"
+
+	override fun run(line: String): String {
+		Paths.get(line.trim())
 		QuideState.projectPath = path
-		println(path)
-	}
-
-	companion object : Parsable {
-		override val id: String = "project"
-		override fun parse(line: String) = SetProject(Paths.get(line.trim()))
+		return "Project path set to: " + path
 	}
 
 }
