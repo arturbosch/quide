@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.shell
 
+import io.gitlab.arturbosch.quide.platform.logFactory
 import java.util.LinkedHashMap
 
 /**
@@ -7,8 +8,12 @@ import java.util.LinkedHashMap
  */
 class Commander(vararg loaders: CommandLoader) {
 
+	private val logger by logFactory()
+
 	private val commands: Map<String, Command> = loaders.map { it.load() }
-			.reduce { map, map2 -> map.mergeReduce(map2) }
+			.reduce { map, map2 -> map.mergeReduce(map2) }.apply {
+		logger.info("Loaded Commands: " + keys.joinToString(", "))
+	}
 
 	fun choose(line: String) {
 		if (line.isNullOrBlank()) return
