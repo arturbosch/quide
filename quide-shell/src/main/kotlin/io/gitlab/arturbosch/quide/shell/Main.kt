@@ -12,11 +12,12 @@ import org.jline.terminal.TerminalBuilder
 
 fun main(args: Array<String>) {
 	val reader = reader()
+	val commander = Commander(CommandLoader)
 	while (true) {
 		var line: String?
 		try {
 			line = reader.readLine(QuideState.prompt)
-			Commander.choose(line)
+			commander.choose(line)
 		} catch (e: QuideShellException) {
 			e.message?.let { println(e.message) }
 			e.cause?.let { println(e.cause) }

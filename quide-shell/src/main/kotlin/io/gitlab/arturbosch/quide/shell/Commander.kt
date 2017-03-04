@@ -5,9 +5,9 @@ import io.gitlab.arturbosch.quide.shell.commands.Command
 /**
  * @author Artur Bosch
  */
-object Commander {
+class Commander(loader: CommandLoader) {
 
-	private val commands = mapOf<String, Command>()
+	private val commands: Map<String, Command> = loader.load()
 
 	fun choose(line: String) {
 		if (line.isNullOrBlank()) return
