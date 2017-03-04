@@ -1,5 +1,6 @@
-package io.gitlab.arturbosch.quide.shell
+package io.gitlab.arturbosch.quide.shell.loaders
 
+import io.gitlab.arturbosch.quide.shell.Command
 import java.util.ServiceLoader
 
 /**

@@ -1,5 +1,7 @@
 package io.gitlab.arturbosch.quide.shell
 
+import io.gitlab.arturbosch.quide.shell.loaders.DefaultCommandLoader
+import io.gitlab.arturbosch.quide.shell.loaders.JavaCommandLoader
 import org.jline.reader.EndOfFileException
 import org.jline.reader.LineReader
 import org.jline.reader.LineReaderBuilder
@@ -12,7 +14,7 @@ import org.jline.terminal.TerminalBuilder
 
 fun main(args: Array<String>) {
 	val reader = reader()
-	val commander = Commander(DefaultCommandLoader, AdditionalCommandLoader())
+	val commander = Commander(DefaultCommandLoader, JavaCommandLoader())
 	while (true) {
 		var line: String?
 		try {

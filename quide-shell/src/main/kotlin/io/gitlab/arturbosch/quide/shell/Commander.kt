@@ -1,6 +1,7 @@
 package io.gitlab.arturbosch.quide.shell
 
 import io.gitlab.arturbosch.quide.platform.logFactory
+import io.gitlab.arturbosch.quide.shell.loaders.CommandLoader
 import java.util.LinkedHashMap
 
 /**
