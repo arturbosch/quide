@@ -12,7 +12,7 @@ import org.jline.terminal.TerminalBuilder
 
 fun main(args: Array<String>) {
 	val reader = reader()
-	val commander = Commander(CommandLoader)
+	val commander = Commander(DefaultCommandLoader, AdditionalCommandLoader())
 	while (true) {
 		var line: String?
 		try {
