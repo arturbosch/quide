@@ -17,5 +17,6 @@ object CommandoManager {
 		if (line.isNullOrBlank()) return
 		commands.keys.find { line.startsWith(it) }
 				?.let { commands[it]?.parse(line.substring(it.length))?.run() }
+				?: throw QuideShellException("No matching command found!")
 	}
 }
