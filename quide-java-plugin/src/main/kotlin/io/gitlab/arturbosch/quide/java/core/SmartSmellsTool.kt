@@ -2,7 +2,6 @@ package io.gitlab.arturbosch.quide.java.core
 
 import io.gitlab.arturbosch.quide.detection.Detector
 import io.gitlab.arturbosch.quide.java.JavaPluginData
-import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import io.gitlab.arturbosch.smartsmells.api.SmellResult
@@ -44,9 +43,17 @@ class SmartSmellsTool : Detector<JavaSmellContainer> {
 			!currentVersion.isPresent && !lastVersion.isPresent
 
 	private fun <U : UserData> generateReport(data: U, smellResult: SmellResult) {
+		if (skipResultFile(data)) return
+
 		val outputPath = data.outputPath().orElse(data.projectPath())
 		val xml = XMLWriter.toXml(smellResult)
 		Files.write(outputPath.resolve("smartsmells_${LocalDateTime.now()}.xml"), xml.toByteArray())
+	}
+
+	private fun <U : UserData> skipResultFile(data: U): Boolean {
+		val property = data.quideDirectory().getProperty("printResultFile")
+		if (!property.toBoolean()) return true
+		return false
 	}
 
 }
