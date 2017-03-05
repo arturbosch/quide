@@ -31,7 +31,7 @@ object BasePluginDetector : PluginDetector {
 	private fun ignoredPlugin(path: Path): Boolean {
 		val filename = path.fileName.toString().substringBeforeLast(".")
 		val property = IGNORE_PLUGINS.asProperty() ?: ""
-		val toIgnore = property.split(",")
+		val toIgnore = property.split(",").map(String::trim)
 		return filename in toIgnore
 	}
 
