@@ -21,7 +21,7 @@ public class ResultConsoleProcessor implements Processor {
 			String result = container.alive().stream()
 					.map(Object::toString)
 					.collect(Collectors.joining("\n"));
-			LOGGER.info("Analysis result: \n\n" + result + "\n");
+			LOGGER.info("Analysis result of " + u.toolName() + ": \n\n" + result + "\n");
 		});
 	}
 
