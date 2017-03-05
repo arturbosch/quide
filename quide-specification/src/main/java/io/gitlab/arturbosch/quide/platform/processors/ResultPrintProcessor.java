@@ -21,6 +21,9 @@ public class ResultPrintProcessor implements Processor {
 
 	@Override
 	public <U extends UserData> void execute(U data) {
+		String property = data.quideDirectory().getProperty("printResultFile");
+		if (!Boolean.getBoolean(property)) return;
+
 		data.currentContainer().ifPresent(container -> {
 			Path outputPath = data.outputPath().orElse(data.projectPath());
 
