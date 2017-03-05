@@ -15,7 +15,7 @@ plugins {
 }
 
 allprojects {
-	
+
 	group 'io.gitlab.arturbosch'
 	version "$quideVersion"
 
