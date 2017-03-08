@@ -13,15 +13,7 @@ Work in progress.
 Quide uses gradle as the build tool.
 
 Use `gradle build install fatjar shadow` to build all modules - including the executable platform jar -
- and package the plugins into fatjar's.
-
-### Modules
-
-- `quide-specification` - the api, specifies how the platform and plugins should interact with each other.
-- `quide-platform` - implements the platform-specification, knows how to handle plugins und provides an CLI for users
-- `quide-xxx-plugin` - official supported plugins for quide
-- `quide-shell` - interactive and extensible shell, allows to run __commands__ against projcts
-- `codesmell-baseline-format` - xml format to note down false positives or baselines, where only new smells get displayed
+and package the plugins into fatjar's.
 
 ### Run
 
@@ -34,6 +26,35 @@ Official supported quide plugins are:
 - _quide-java-plugin_ - code smell detection for Java (uses [SmartSmells](https://github.com/arturbosch/SmartSmells))
 - _quide-detekt-plugin_ - code smell detection for Kotlin (uses [Detekt](https://github.com/arturbosch/detekt))
 - _quide-vcs-plugin_ - git repository mining for evolutionary analysis (uses [vcs-reader](https://github.com/dkandalov/vcs-reader))
+
+### Modules
+
+- `quide-specification` - the api, specifies how the platform and plugins should interact with each other.
+- `quide-platform` - implements the platform-specification, knows how to handle plugins und provides an CLI for users
+- `quide-xxx-plugin` - official supported plugins for quide
+- `quide-shell` - interactive and extensible shell, allows to run __commands__ against projcts
+- `codesmell-baseline-format` - xml format to note down false positives or baselines, where only new smells get displayed
+
+### Plugins
+
+Quide uses the ServiceLoader pattern to be expendable with plugins. 
+A plugin must implement the `Plugin` interface and include a file `META-INF/services/io.gitlab.arturbosch.quide.platform.Plugin` with the 
+fully qualified name of your plugin class:
+```java
+public interface Plugin extends Nameable {
+
+	Detector detector();
+
+	List<Processor> processors();
+
+	UserData userData();
+}
+```
+
+A `Detector`should implement the detection logic and return a smell container on each execution.
+`Processors` can implement additional processing steps on containers like mapping, xml data creation or uploading the container to a
+server application. They can be injected into different injection points (beforeAnalysis, beforeDetection, afterDetection, after Analysis)
+and be prioritized. The `UserData` is a container holding the state of a plugin and additional analysis specific parameters.
 
 ### Shell
 
