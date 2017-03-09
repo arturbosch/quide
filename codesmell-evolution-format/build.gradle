@@ -1,0 +1,12 @@
+apply plugin: 'groovy'
+
+version = "1.0.0"
+
+configurations {
+	compile.extendsFrom spock
+}
+
+dependencies {
+	compile 'org.codehaus.groovy:groovy-all:2.4.8'
+	compile project(':quide-specification')
+}
