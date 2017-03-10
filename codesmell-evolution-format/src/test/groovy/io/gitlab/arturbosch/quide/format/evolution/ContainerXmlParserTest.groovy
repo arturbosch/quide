@@ -21,28 +21,32 @@ class ContainerXmlParserTest extends Specification {
 		def container = new TestContainer()
 		def version = new TestVersion(1)
 		def version2 = new TestVersion(2)
-		def parser = new ContainerXmlParser(new CodeSmellXmlParser(new TestSpecificParser()))
+		def parser = ContainerXmlParser.create(new TestSpecificParser())
+		container.all().each { it.startVersion = version }
+		container.all().each { it.endVersion = version2 }
 
 		when:
-		parser.toXml(version, container)
-		parser.toXml(version2, container)
+		def xml = parser.toXml(version, container)
+		def xml2 = parser.toXml(version2, container)
 
 		then:
-		true
-
-
+		xml.contains("Quide")
+		xml.contains("Version")
+		xml.contains("VersionedCodeSmell")
+		xml.contains("CodeSmellInfo")
+		xml2.contains("Quide")
+		xml2.contains("Version")
+		xml2.contains("VersionedCodeSmell")
+		xml2.contains("CodeSmellInfo")
 	}
 
-	private container() {
-
-	}
 }
 
 class TestSpecificParser implements SpecificCodeSmellParser<TestSmell> {
 
 	@Override
-	String toXml(TestSmell smell, MarkupBuilder mb) {
-		return "nope"
+	toXml(TestSmell smell, MarkupBuilder mb) {
+		mb.CodeSmellInfo('smellType': smell.name, 'author': smell.severity)
 	}
 
 }
@@ -62,7 +66,7 @@ class TestVersion implements Versionable {
 
 	@Override
 	Revision revision() {
-		return null
+		return new TestRevision()
 	}
 
 	@Override
@@ -105,10 +109,12 @@ class TestRevision implements Revision {
 }
 
 class TestContainer implements SmellContainer<TestSmell> {
+	private List<TestSmell> smells =
+			[new TestSmell("LongMethod", "high"), new TestSmell("GodClass", "medium"), new TestSmell("DeadCode", "low")]
 
 	@Override
 	List<TestSmell> all() {
-		return [new TestSmell("LongMethod", "Artur"), new TestSmell("GodClass", "Artur"), new TestSmell("DeadCode", "Artur")]
+		return smells
 	}
 
 }
@@ -116,5 +122,10 @@ class TestContainer implements SmellContainer<TestSmell> {
 @Canonical
 class TestSmell extends BaseCodeSmell {
 	String name
-	String author
+	String severity
+
+	@Override
+	String sourcePath() {
+		return "/this/that/path"
+	}
 }

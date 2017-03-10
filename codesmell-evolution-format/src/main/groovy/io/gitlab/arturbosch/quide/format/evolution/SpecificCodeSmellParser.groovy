@@ -8,6 +8,6 @@ import io.gitlab.arturbosch.quide.model.CodeSmell
  */
 interface SpecificCodeSmellParser<T extends CodeSmell> {
 
-	String toXml(T smell, MarkupBuilder mb)
+	def toXml(T smell, MarkupBuilder mb)
 
 }

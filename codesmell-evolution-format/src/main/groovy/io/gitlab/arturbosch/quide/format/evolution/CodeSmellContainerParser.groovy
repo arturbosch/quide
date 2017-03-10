@@ -11,4 +11,5 @@ interface CodeSmellContainerParser {
 
 	String toXml(Versionable versionable, SmellContainer<CodeSmell> container)
 
+	void toXmlFile(File file, Versionable versionable, SmellContainer<CodeSmell> container)
 }
