@@ -11,7 +11,7 @@ import io.gitlab.arturbosch.smartsmells.smells.DetectionResult
 class JavaCodeSmellXmlParser implements SpecificCodeSmellParser<JavaCodeSmell> {
 
 	@Override
-	toXml(JavaCodeSmell smell, MarkupBuilder mb) {
+	void toXml(JavaCodeSmell smell, MarkupBuilder mb) {
 		def name = smell.smell.class.simpleName
 		def attributes = toAttributeMap(smell.smell)
 		mb.JavaCodeSmell('smellType': name) {
