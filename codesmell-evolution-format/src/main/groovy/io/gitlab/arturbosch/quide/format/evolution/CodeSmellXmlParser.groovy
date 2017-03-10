@@ -16,7 +16,7 @@ class CodeSmellXmlParser implements CodeSmellParser {
 	}
 
 	@Override
-	toXml(CodeSmell smell, MarkupBuilder mb) {
+	void toXml(CodeSmell smell, MarkupBuilder mb) {
 		Validate.notNull(smell)
 		Validate.notNull(mb)
 

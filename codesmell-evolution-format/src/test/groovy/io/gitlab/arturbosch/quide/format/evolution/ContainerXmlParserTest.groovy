@@ -45,7 +45,7 @@ class ContainerXmlParserTest extends Specification {
 class TestSpecificParser implements SpecificCodeSmellParser<TestSmell> {
 
 	@Override
-	toXml(TestSmell smell, MarkupBuilder mb) {
+	void toXml(TestSmell smell, MarkupBuilder mb) {
 		mb.CodeSmellInfo('smellType': smell.name, 'author': smell.severity)
 	}
 
