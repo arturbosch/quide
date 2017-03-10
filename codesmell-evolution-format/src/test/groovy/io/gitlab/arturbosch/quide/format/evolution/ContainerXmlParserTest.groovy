@@ -1,6 +1,7 @@
 package io.gitlab.arturbosch.quide.format.evolution
 
 import groovy.transform.Canonical
+import groovy.xml.MarkupBuilder
 import io.gitlab.arturbosch.quide.model.BaseCodeSmell
 import io.gitlab.arturbosch.quide.model.SmellContainer
 import io.gitlab.arturbosch.quide.vcs.FileChange
@@ -23,8 +24,8 @@ class ContainerXmlParserTest extends Specification {
 		def parser = new ContainerXmlParser(new CodeSmellXmlParser(new TestSpecificParser()))
 
 		when:
-		parser.to(version, container)
-		parser.to(version2, container)
+		parser.toXml(version, container)
+		parser.toXml(version2, container)
 
 		then:
 		true
@@ -40,14 +41,10 @@ class ContainerXmlParserTest extends Specification {
 class TestSpecificParser implements SpecificCodeSmellParser<TestSmell> {
 
 	@Override
-	String to(TestSmell smell) {
+	String toXml(TestSmell smell, MarkupBuilder mb) {
 		return "nope"
 	}
 
-	@Override
-	TestSmell from(String smell) {
-		return null
-	}
 }
 
 class TestVersion implements Versionable {

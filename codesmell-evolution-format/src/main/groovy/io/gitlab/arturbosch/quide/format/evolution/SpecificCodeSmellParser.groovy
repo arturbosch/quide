@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.format.evolution
 
+import groovy.xml.MarkupBuilder
 import io.gitlab.arturbosch.quide.model.CodeSmell
 
 /**
@@ -7,8 +8,6 @@ import io.gitlab.arturbosch.quide.model.CodeSmell
  */
 interface SpecificCodeSmellParser<T extends CodeSmell> {
 
-	String to(T smell)
-
-	T from(String smell)
+	String toXml(T smell, MarkupBuilder mb)
 
 }
