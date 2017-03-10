@@ -9,7 +9,7 @@ import io.gitlab.arturbosch.quide.vcs.Versionable
  */
 interface CodeSmellContainerParser {
 
-	String toXml(Versionable versionable, SmellContainer<CodeSmell> container)
+	def <T extends SmellContainer<? extends CodeSmell>> String toXml(Versionable versionable, T container)
 
-	void toXmlFile(File file, Versionable versionable, SmellContainer<CodeSmell> container)
+	def <T extends SmellContainer<? extends CodeSmell>> void toXmlFile(File file, Versionable versionable, T container)
 }

@@ -8,7 +8,8 @@ configurations {
 }
 
 dependencies {
-	compile group: 'com.googlecode.java-diff-utils', name: 'diffutils', version: '1.3.0'
+	compile "com.googlecode.java-diff-utils:diffutils:1.3.0"
 	compile project(":quide-specification")
+	compile project(":codesmell-evolution-format")
 	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:$smartsmellsVersion"
 }

@@ -25,13 +25,13 @@ class ContainerXmlParser implements CodeSmellContainerParser {
 	}
 
 	@Override
-	String toXml(Versionable versionable, SmellContainer<CodeSmell> container) {
+	<T extends SmellContainer<? extends CodeSmell>> String toXml(Versionable versionable, T container) {
 		def writer = new StringBuilderWriter()
 		toXmlInternal(writer, versionable, container)
 		return writer.toString()
 	}
 
-	private void toXmlInternal(Writer writer, Versionable versionable, SmellContainer<CodeSmell> container) {
+	def <T extends SmellContainer<? extends CodeSmell>> void toXmlInternal(Writer writer, Versionable versionable, T container) {
 		Validate.notNull(versionable)
 		Validate.notNull(container)
 
@@ -49,9 +49,10 @@ class ContainerXmlParser implements CodeSmellContainerParser {
 	}
 
 	@Override
-	void toXmlFile(File file, Versionable versionable, SmellContainer<CodeSmell> container) {
+	<T extends SmellContainer<? extends CodeSmell>> void toXmlFile(File file, Versionable versionable, T container) {
 		IOGroovyMethods.withCloseable(new PrintWriter(file)) {
 			toXmlInternal(it, versionable, container)
 		}
 	}
+
 }
