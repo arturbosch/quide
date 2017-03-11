@@ -1,22 +1,28 @@
 package io.gitlab.arturbosch.quide.java.format
 
 import groovy.xml.MarkupBuilder
-import io.gitlab.arturbosch.quide.format.evolution.SpecificCodeSmellParser
-import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
+import io.gitlab.arturbosch.quide.model.BaseCodeSmell
 import io.gitlab.arturbosch.smartsmells.smells.DetectionResult
 
 /**
  * @author Artur Bosch
  */
-class JavaCodeSmellXmlParser implements SpecificCodeSmellParser<JavaCodeSmell> {
+class JavaCodeSmellXmlParser implements BaseCodeSmellParserExtension {
 
 	@Override
-	void toXml(JavaCodeSmell smell, MarkupBuilder mb) {
-		def name = smell.smell.class.simpleName
-		def attributes = toAttributeMap(smell.smell)
+	void toXml(BaseCodeSmell smell, MarkupBuilder mb) {
+		DetectionResult result = reflectionHack(smell)
+		def name = result.class.simpleName
+		def attributes = toAttributeMap(result)
 		mb.JavaCodeSmell('smellType': name) {
 			mb.CodeSmellInfo(attributes)
 		}
+	}
+
+	private static DetectionResult reflectionHack(BaseCodeSmell smell) {
+		def field = smell.class.getDeclaredField("smell")
+		field.setAccessible(true)
+		return field.get(smell) as DetectionResult
 	}
 
 	private static Map<String, String> toAttributeMap(DetectionResult smelly) {
