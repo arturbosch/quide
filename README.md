@@ -17,6 +17,8 @@ and package the plugins into fatjar's.
 
 ### Run
 
+`java -jar quide-platform-[version].jar [input/path] [output/path]?`
+
 On the first `java -jar quide-platform.jar` run, a folder `.quide` is created in your home folder.
 It contains a `plugins` folder where quide-plugins are put, a `configurations` folder where
 configurations files for the plugins are hold and a `quide.properties` file with configuration properties for quide.
