@@ -13,6 +13,7 @@ import org.jline.terminal.TerminalBuilder
  */
 
 fun main(args: Array<String>) {
+	parseArguments(args)
 	val reader = reader()
 	val commander = Commander(DefaultCommandLoader, JavaCommandLoader())
 	while (true) {

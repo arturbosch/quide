@@ -10,4 +10,5 @@ configurations {
 
 dependencies {
 	compile project(":quide-specification")
+	compile "com.beust:jcommander:1.60"
 }

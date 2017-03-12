@@ -1,7 +1,6 @@
 package io.gitlab.arturbosch.quide.platform
 
 import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.Optional
 
 /**
@@ -15,17 +14,18 @@ interface Analysis : AnalysisContext {
 
 class CliAnalysis(args: Array<String>) : Analysis {
 
-	private val projectPath: Path = Paths.get(args[0])
-	private val outputPath: Path? = if (args.size == 2) Paths.get(args[1]) else null
+	private val projectPath: Path
+	private val outputPath: Optional<Path>
 
 	init {
-		if (args.isEmpty()) throw IllegalArgumentException(
-				"To start quide specify the project path to analyze. Optionally you can specify the output path.")
+		val arguments = parseArguments(args)
+		projectPath = arguments.input
+		outputPath = Optional.ofNullable(arguments.output)
 	}
 
 	override fun projectPath(): Path = projectPath
 
-	override fun outputPath(): Optional<Path> = Optional.ofNullable(outputPath)
+	override fun outputPath(): Optional<Path> = outputPath
 
 	override fun quideDirectory(): QuideDirectory = HomeFolder
 }
