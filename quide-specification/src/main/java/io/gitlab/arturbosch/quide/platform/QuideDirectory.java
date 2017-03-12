@@ -28,7 +28,7 @@ public interface QuideDirectory {
 	}
 
 	default Path resolve(String subPath) {
-		return home().resolve(subPath);
+		return checkDir(home().resolve(subPath));
 	}
 
 	default Path home() {
