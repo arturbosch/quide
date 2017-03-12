@@ -36,6 +36,8 @@ public class JavaCommandLoader implements CommandLoader {
 					.filter(path -> path.getFileName().toString().endsWith(".java"))
 					.collect(Collectors.toList());
 
+			if (scripts.isEmpty()) return Collections.emptyMap();
+
 			Map<String, String> scriptsAsStrings = scripts.stream().collect(Collectors
 					.toMap(this::readFileName, this::readScript));
 			Map<String, byte[]> compile = compiler.compile(scriptsAsStrings);
