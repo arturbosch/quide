@@ -7,6 +7,6 @@ configurations {
 }
 
 dependencies {
-	compile 'org.codehaus.groovy:groovy-all:2.4.8'
+	compile 'org.codehaus.groovy:groovy-all:$groovyVersion'
 	compile project(':quide-specification')
 }
