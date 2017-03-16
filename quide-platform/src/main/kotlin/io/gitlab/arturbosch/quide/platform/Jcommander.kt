@@ -4,6 +4,7 @@ import com.beust.jcommander.IStringConverter
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
+import io.gitlab.arturbosch.kutils.isDirectory
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -20,7 +21,7 @@ object Args {
 	lateinit var input: Path
 	@Parameter(names = arrayOf("--output", "-o"),
 			description = "The output report folder path.",
-			converter = ExistingPathConverter::class)
+			converter = DirectoryPathConverter::class)
 	var output: Path? = null
 	@Parameter(names = arrayOf("--help", "-h"), help = true, description = "Prints the help message.")
 	var help = false
@@ -56,4 +57,14 @@ class ExistingPathConverter : IStringConverter<Path?> {
 			throw ParameterException("Provided path '$value' does not exist!")
 		return config
 	}
+}
+
+class DirectoryPathConverter : IStringConverter<Path?> {
+	override fun convert(value: String): Path? {
+		return Paths.get(value).apply {
+			Files.createDirectories(this)
+			require(this.isDirectory()) { "Output path must be a directory to store all reports!" }
+		}
+	}
+
 }
