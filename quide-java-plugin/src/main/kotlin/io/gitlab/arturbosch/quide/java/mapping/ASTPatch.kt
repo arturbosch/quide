@@ -49,12 +49,10 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 						val node = it.first
 						when (node) {
 							is Expression -> {
-								println("TREFFER!")
 								val copy = smell.copy(node)
 								return this.updateInternal(copy)
 							}
 							is Statement -> {
-								println("TREFFER!")
 								val copy = smell.copy(node)
 								return this.updateInternal(copy)
 							}
@@ -69,39 +67,22 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 		val smell = this.smell
 		if (smell is CycleSpecific) {
 			fields.find { it.toSignature() == smell.signature() }?.let {
-				println("TREFFER!")
 				val copy = smell.copy(it)
 				return this.updateInternal(copy)
 			} ?: fields.find { it.toSignature() == smell.secondSignature() }?.let {
-				println("TREFFER!")
 				val copy = smell.copyOnSecond(it)
 				return this.updateInternal(copy)
 			}
 			if (smell is Cycle) {
 				smell.source.searchForField()?.let {
-					println("TREFFER!")
 					val copy = smell.copy(it)
 					return this.updateInternal(copy)
 				}
 				smell.target.searchForField()?.let {
-					println("TREFFER!")
 					val copy = smell.copyOnSecond(it)
 					return this.updateInternal(copy)
 				}
 			}
-//			chunks.asSequence().map { it.nodeByFieldSignature(smell.signature()) }
-//					.find { it != null }
-//					?.let {
-//						println("TREFFER!")
-//						val copy = smell.copy(it)
-//						return this.updateInternal(copy)
-//					} ?: chunks.asSequence().map { it.nodeByFieldSignature(smell.secondSignature()) }
-//					.find { it != null }
-//					?.let {
-//						println("TREFFER!")
-//						val copy = smell.copyOnSecond(it)
-//						return this.updateInternal(copy)
-//					}
 		}
 		return this
 	}
@@ -110,7 +91,6 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 		val smell = this.smell
 		if (smell is FieldSpecific) {
 			fields.find { it.toSignature() == smell.signature() }?.let {
-				println("TREFFER!")
 				val copy = smell.copy(it)
 				return this.updateInternal(copy)
 			}
@@ -138,14 +118,12 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 		val smell = this.smell
 		if (smell is MethodSpecific) {
 			methods.find { it.declarationAsString == smell.signature() }?.let {
-				println("TREFFER!")
 				val copy = smell.copy(it)
 				return this.updateInternal(copy)
 			}
 			chunks.asSequence().map { it.nodeByMethodSignature(smell.signature()) }
 					.find { it != null }
 					?.let {
-						println("TREFFER!")
 						val copy = smell.copy(it)
 						return this.updateInternal(copy)
 					}
@@ -158,14 +136,12 @@ class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCo
 		if (smell is ClassSpecific) {
 			types.find { it.toSignature() == smell.signature() }
 					?.let {
-						println("TREFFER!")
 						val copy = smell.copy(it)
 						return this.updateInternal(copy)
 					}
 			chunks.asSequence().map { it.nodeByClassSignature(smell.signature()) }
 					.find { it != null }
 					?.let {
-						println("TREFFER!")
 						val copy = smell.copy(it)
 						return this.updateInternal(copy)
 					}

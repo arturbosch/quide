@@ -52,8 +52,7 @@ class SmartSmellsTool : Detector<JavaSmellContainer> {
 
 	private fun <U : UserData> skipResultFile(data: U): Boolean {
 		val property = data.quideDirectory().getProperty("printResultFile")
-		if (!property.toBoolean()) return true
-		return false
+		return !property.toBoolean()
 	}
 
 }

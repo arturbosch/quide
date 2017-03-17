@@ -16,7 +16,6 @@ class ASTDiffTool : DiffTool<ASTPatch> {
 		val oldUnit = JavaParser.parse(oldFile.content())
 		val newUnit = JavaParser.parse(newFile.content())
 		val diffPatch = textDiff(oldFile.content(), newFile.content())
-		diffPatch.deltas.forEach(::println)
 		return ASTDiffer(oldUnit, newUnit, diffPatch).patch().apply {
 			chunks.forEach(::println)
 		}
