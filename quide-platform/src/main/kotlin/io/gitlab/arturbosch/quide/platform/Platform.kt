@@ -83,7 +83,7 @@ class BasePlatform(private val analysis: Analysis,
 	override fun run(context: AnalysisContext) {
 		multiPlatform?.registerVersionProvider(plugins())
 		beforeAnalysis(context)
-		withExecutor(withNamedThreadPoolExecutor(QUIDE, cpuCores)) {
+		withExecutor(withNamedThreadPoolExecutor(QUIDE + "-", cpuCores)) {
 			multiPlatform?.analyze(plugins()) { runPlugins() } ?: runPlugins()
 		}
 		afterAnalysis()
