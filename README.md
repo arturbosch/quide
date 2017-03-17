@@ -1,6 +1,7 @@
 # Quide - Quality-Centric Inspection (and) Detection Environment
 
 [![build status](https://gitlab.com/arturbosch/jpal/badges/master/build.svg)](https://gitlab.com/arturbosch/quide/commits/master)
+
 ![quide in action](img/quide.png "quide in action")
 
 Umbrella project for static code analysis tools. 

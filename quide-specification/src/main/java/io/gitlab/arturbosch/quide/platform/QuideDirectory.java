@@ -9,6 +9,8 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -44,16 +46,16 @@ public interface QuideDirectory {
 	}
 
 	default String getProperty(String key) {
-		return getProperties().getProperty(key);
+		return getProperties().get(key);
 	}
 
-	Properties getProperties();
+	Map<String, String> getProperties();
 
 	class DefaultQuideDirectory implements QuideDirectory {
 
 		private static final Logger LOGGER = LoggerFactory.getLogger(QuideDirectory.class.getSimpleName());
 
-		private Properties properties = new Properties();
+		protected Map<String, String> properties;
 
 		{
 			Path propertiesPath = home().resolve("quide.properties");
@@ -62,7 +64,10 @@ public interface QuideDirectory {
 					Files.createFile(propertiesPath);
 				}
 				try (InputStream is = Files.newInputStream(propertiesPath)) {
-					properties.load(is);
+					Properties props = new Properties();
+					props.load(is);
+					//noinspection unchecked,RedundantCast
+					properties = new HashMap<>((Map) props);
 				}
 				LOGGER.info("Properties loaded");
 			} catch (IOException e) {
@@ -71,7 +76,7 @@ public interface QuideDirectory {
 		}
 
 		@Override
-		public Properties getProperties() {
+		public Map<String, String> getProperties() {
 			return properties;
 		}
 	}
