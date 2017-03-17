@@ -33,9 +33,10 @@ data class QuideRevision(private val commit: VcsCommit) : Revision {
 	override fun isMerge(): Boolean = false
 }
 
-data class QuideSourceFile(private val path: String, private val content: String) : SourceFile {
+data class QuideSourceFile(private val path: String, private val lazyFileContent: () -> String) : SourceFile {
+	private val _content = lazy { lazyFileContent.invoke() }
 	override fun path(): String = path
-	override fun content(): String = content
+	override fun content(): String = _content.value
 }
 
 data class QuideFileChange(private val path: Path, private val vcsChange: VcsChange) : FileChange {
@@ -48,8 +49,8 @@ data class QuideFileChange(private val path: Path, private val vcsChange: VcsCha
 		else -> throw UnsupportedOperationException("No other types are supported!")
 	}
 
-	private val oldFile = QuideSourceFile(path.resolve(vcsChange.filePathBefore).toString(), vcsChange.fileContentBefore().value)
-	private val newFile = QuideSourceFile(path.resolve(vcsChange.filePath).toString(), vcsChange.fileContent().value)
+	private val oldFile = QuideSourceFile(path.resolve(vcsChange.filePathBefore).toString()) { vcsChange.fileContentBefore().value }
+	private val newFile = QuideSourceFile(path.resolve(vcsChange.filePath).toString()) { vcsChange.fileContent().value }
 	private var patch: Patch<*>? = null
 
 	override fun type(): FileChange.Type = type
