@@ -15,15 +15,40 @@ Work in progress.
 Quide uses gradle as the build tool.
 
 Use `gradle build install fatjar shadow` to build all modules - including the executable platform jar -
-and package the plugins into fatjar's.
+and package the plugins.
 
 ### Run
 
-`java -jar quide-platform-[version].jar [input/path] [output/path]?`
+Quide uses `jcommander` as the argument parser.
 
-On the first `java -jar quide-platform.jar` run, a folder `.quide` is created in your home folder.
-It contains a `plugins` folder where quide-plugins are put, a `configurations` folder where
-configurations files for the plugins are hold and a `quide.properties` file with configuration properties for quide.
+```
+Usage: quide [options]
+  Options:
+    --help, -h
+      Prints the help message.
+      Default: false
+  * --input, -i
+      The input project path.
+    --output, -o
+      The output report folder path.
+    --properties, -p
+      Additional properties as key=value pairs.
+    --propertyPaths, -pp
+      Additional property paths separated by comma's.
+```
+
+Usage:
+
+`java -jar quide-platform-[version].jar -i [input/path] [-o output/path]?`
+
+On the first `java -jar quide-platform.jar` run, quide creates its folder structure and 
+the `quide.properties` file in your home folder (`~/.quide`).
+
+- put the plugins into the `~/quide/plugins` folder
+- put the configurations for the plugins into the `~/quide/configurations` folder
+- properties used by quide and additional properties (for selfmade plugins) can be placed into the `quide.properties` file
+- additional property files can be referenced from the `quide.properties` file by using the 
+`platform.additional.properties=my,comma,separated,paths` property or given quide at runtime with the `-p` and `-pp` parameters
 
 Official supported quide plugins are:
 
