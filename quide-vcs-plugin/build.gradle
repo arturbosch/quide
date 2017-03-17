@@ -1,9 +1,9 @@
 configurations {
-	compile.extendsFrom kotlin
-	testCompil.extendsFrom kotlinTest
+	compileOnly.extendsFrom kotlin
+	testCompile.extendsFrom kotlinTest
 }
 
 dependencies {
-	compile project(":quide-specification")
+	compileOnly project(":quide-specification")
 	compile 'org.vcsreader:vcsreader:1.0.0'
 }

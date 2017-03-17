@@ -1,10 +1,10 @@
 configurations {
-	compile.extendsFrom log
+	compileOnly.extendsFrom log
 	compileOnly.extendsFrom kotlin
 	testCompile.extendsFrom spock
 }
 
 dependencies {
-	compile project(":quide-specification")
+	compileOnly project(":quide-specification")
 	compile "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
 }
