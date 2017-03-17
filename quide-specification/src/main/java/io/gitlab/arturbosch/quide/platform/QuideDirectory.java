@@ -74,13 +74,17 @@ public interface QuideDirectory {
 		}
 
 		private void loadAdditionalProperties() {
-			String additional = getProperty("additional.properties");
+			String additional = getProperty("platform.additional.properties");
 			if (additional != null) {
-				Arrays.stream(additional.split(","))
-						.map(String::trim)
-						.map(Paths::get)
-						.forEach(this::loadProperties);
+				loadPropertiesFromString(additional);
 			}
+		}
+
+		protected void loadPropertiesFromString(String commaSeparatedPaths) {
+			Arrays.stream(commaSeparatedPaths.split(","))
+					.map(String::trim)
+					.map(Paths::get)
+					.forEach(this::loadProperties);
 		}
 
 		protected void loadProperties(Path propertiesPath) {

@@ -23,6 +23,10 @@ object Args {
 			description = "The output report folder path.",
 			converter = DirectoryPathConverter::class)
 	var output: Path? = null
+	@Parameter(names = arrayOf("--properties", "-p"), description = "Additional properties as key=value pairs.")
+	var properties: String? = null
+	@Parameter(names = arrayOf("--propertyPaths", "-pp"), description = "Additional property paths separated by comma's.")
+	var propertyPaths: String? = null
 	@Parameter(names = arrayOf("--help", "-h"), help = true, description = "Prints the help message.")
 	var help = false
 }
@@ -47,7 +51,19 @@ fun parseArguments(args: Array<String>): Args {
 		System.exit(-1)
 	}
 
+	parseAdditionalProperties()
+
 	return Args
+}
+
+private fun parseAdditionalProperties() {
+	Args.properties?.let {
+		HomeFolder.addPropertyPairs(it)
+	}
+
+	Args.propertyPaths?.let {
+		HomeFolder.addPropertiesFromString(it)
+	}
 }
 
 class ExistingPathConverter : IStringConverter<Path?> {
