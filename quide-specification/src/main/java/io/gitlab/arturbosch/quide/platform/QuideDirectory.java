@@ -9,6 +9,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -51,11 +52,12 @@ public interface QuideDirectory {
 
 	Map<String, String> getProperties();
 
+	@SuppressWarnings("unchecked")
 	class DefaultQuideDirectory implements QuideDirectory {
 
 		private static final Logger LOGGER = LoggerFactory.getLogger(QuideDirectory.class.getSimpleName());
 
-		protected Map<String, String> properties;
+		protected Map<String, String> properties = new HashMap<>();
 
 		{
 			Path propertiesPath = home().resolve("quide.properties");
@@ -63,15 +65,31 @@ public interface QuideDirectory {
 				if (Files.notExists(propertiesPath)) {
 					Files.createFile(propertiesPath);
 				}
-				try (InputStream is = Files.newInputStream(propertiesPath)) {
-					Properties props = new Properties();
-					props.load(is);
-					//noinspection unchecked,RedundantCast
-					properties = new HashMap<>((Map) props);
-				}
+				loadProperties(propertiesPath);
+				loadAdditionalProperties();
 				LOGGER.info("Properties loaded");
 			} catch (IOException e) {
 				throw new UncheckedIOException("Error loading quide properties", e);
+			}
+		}
+
+		private void loadAdditionalProperties() {
+			String additional = getProperty("additional.properties");
+			if (additional != null) {
+				Arrays.stream(additional.split(","))
+						.map(String::trim)
+						.map(Paths::get)
+						.forEach(this::loadProperties);
+			}
+		}
+
+		protected void loadProperties(Path propertiesPath) {
+			try (InputStream is = Files.newInputStream(propertiesPath)) {
+				Properties props = new Properties();
+				props.load(is);
+				properties.putAll((Map) props);
+			} catch (IOException e) {
+				throw new UncheckedIOException("Error loading quide properties in " + propertiesPath, e);
 			}
 		}
 
