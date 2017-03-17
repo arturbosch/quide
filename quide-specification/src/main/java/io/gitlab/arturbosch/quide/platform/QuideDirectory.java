@@ -23,7 +23,7 @@ public interface QuideDirectory {
 			try {
 				Files.createDirectories(path);
 			} catch (IOException e) {
-				throw new UncheckedIOException(e);
+				throw new UncheckedIOException("Error creating directories for " + path, e);
 			}
 		}
 		return path;
@@ -71,7 +71,7 @@ public interface QuideDirectory {
 				}
 				LOGGER.info("Properties loaded");
 			} catch (IOException e) {
-				LOGGER.error("Error loading quide properties", e);
+				throw new UncheckedIOException("Error loading quide properties", e);
 			}
 		}
 
