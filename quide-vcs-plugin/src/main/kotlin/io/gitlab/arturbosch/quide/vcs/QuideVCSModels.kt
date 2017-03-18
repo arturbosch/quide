@@ -12,10 +12,17 @@ private val nextVersion: Int
 	get() = idGenerator.incrementAndGet()
 
 data class QuideVersion(private val commit: VcsCommit,
+						private val projectPath: Path,
 						private val relativePath: Path,
 						private val versionId: Int = nextVersion) : Versionable {
 
-	private val changes = commit.changes.map { change -> QuideFileChange(relativePath, change) }.toMutableList()
+	private val changes = commit.changes
+			.filter { it.isWithinRelativePath() }
+			.map { change -> QuideFileChange(relativePath, change) }.toMutableList()
+
+	private fun VcsChange.isWithinRelativePath() = projectPath.resolve(filePath).toString().contains(relativePath.toString()) ||
+			projectPath.resolve(filePathBefore).toString().contains(relativePath.toString())
+
 	private val revision = QuideRevision(commit)
 
 	override fun versionNumber(): Int = versionId
