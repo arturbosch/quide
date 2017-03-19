@@ -14,15 +14,17 @@ import org.codenarc.results.Results
 class CodeNarcTool implements Detector<GroovySmellContainer> {
 
 	private static final CodeNarcRunner runner = new CodeNarcRunner()
+	private static final FilesystemSourceAnalyzer analyzer = new FilesystemSourceAnalyzer()
 
 	static {
-		runner.sourceAnalyzer = new FilesystemSourceAnalyzer()
+		runner.sourceAnalyzer = analyzer
 	}
 
 	@Override
 	<U extends UserData> GroovySmellContainer execute(U data) {
 		def path = data.quideDirectory().configurationsDir().resolve("codenarc.groovy")
-		runner.ruleSetFiles = path.toString()
+		analyzer.baseDirectory = data.projectPath().toString()
+		runner.ruleSetFiles = "file://" + path.toString()
 		Results results = runner.execute()
 		return new GroovySmellContainer(results)
 	}

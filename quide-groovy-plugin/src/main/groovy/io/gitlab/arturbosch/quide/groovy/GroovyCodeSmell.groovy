@@ -10,7 +10,7 @@ import org.codenarc.rule.Violation
 @CompileStatic
 class GroovyCodeSmell extends BaseCodeSmell {
 
-	private Violation violation
+	private final Violation violation
 
 	GroovyCodeSmell(Violation violation) {
 		this.violation = violation

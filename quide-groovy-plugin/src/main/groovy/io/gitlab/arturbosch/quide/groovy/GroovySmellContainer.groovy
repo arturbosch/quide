@@ -11,8 +11,8 @@ import org.codenarc.rule.Violation
 @CompileStatic
 class GroovySmellContainer implements SmellContainer<GroovyCodeSmell> {
 
-	private List<GroovyCodeSmell> smells = []
-	private Results results
+	private final Results results
+	private final List<GroovyCodeSmell> smells
 
 	GroovySmellContainer(Results results) {
 		this.results = results
