@@ -8,6 +8,7 @@ import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.UserData
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.util.Optional
 
 /**
  * @author Artur Bosch
@@ -43,4 +44,4 @@ class ContainerToXmlProcessor : Processor {
 	}
 }
 
-private fun UserData.safeContainer() = currentContainer<JavaSmellContainer, JavaCodeSmell>()
+fun UserData.safeContainer(): Optional<JavaSmellContainer> = currentContainer<JavaSmellContainer, JavaCodeSmell>()
