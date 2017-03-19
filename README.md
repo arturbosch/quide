@@ -44,7 +44,7 @@ Usage: quide [options]
 
 Usage:
 
-`java -jar quide-platform-[version].jar -i [input/path] [-o output/path]?`
+`java -jar quide-platform-[version]-all.jar -i [input/path] [-o output/path]?`
 
 On the first `java -jar quide-platform.jar` run, quide creates its folder structure and 
 the `quide.properties` file in your home folder (`~/.quide`).

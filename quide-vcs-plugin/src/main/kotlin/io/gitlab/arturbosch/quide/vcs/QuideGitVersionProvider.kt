@@ -23,7 +23,7 @@ class QuideGitVersionProvider(var root: Path? = null,
 	override fun initialize(context: AnalysisContext) {
 		this.root = context.projectPath()
 		val relativePath = context.quideDirectory().getProperty("vcs.relative.path")
-		this.relative = root?.resolve(relativePath) ?: root
+		this.relative = relativePath?.let { root?.resolve(relativePath) } ?: root
 	}
 
 	private val since = LocalDate.of(2005, 1, 1).toDate()
