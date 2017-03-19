@@ -50,6 +50,11 @@ public interface QuideDirectory {
 		return getProperties().get(key);
 	}
 
+	default String getPropertyOrDefault(String key, String defaultValue) {
+		String property = getProperties().get(key);
+		return property == null ? defaultValue : property;
+	}
+
 	Map<String, String> getProperties();
 
 	@SuppressWarnings("unchecked")

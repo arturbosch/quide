@@ -38,8 +38,8 @@ class DetectorFacadeProcessor : Processor {
 	}
 
 	private fun loadFiltersFromProperties(quideDirectory: QuideDirectory): List<String> {
-		val globalFilters = quideDirectory.getProperty("path.filters.global").trim()
-		val javaFilters = quideDirectory.getProperty("path.filters.java").trim()
+		val globalFilters = quideDirectory.getPropertyOrDefault("path.filters.global", "").trim()
+		val javaFilters = quideDirectory.getPropertyOrDefault("path.filters.java", "").trim()
 		return globalFilters.split(',').plus(javaFilters.split(',')).filterNot(String::isNullOrBlank)
 	}
 
