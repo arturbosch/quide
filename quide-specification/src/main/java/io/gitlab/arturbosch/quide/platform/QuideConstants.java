@@ -3,9 +3,9 @@ package io.gitlab.arturbosch.quide.platform;
 /**
  * @author Artur Bosch
  */
-public final class Constants {
+public final class QuideConstants {
 
-	private Constants() {
+	private QuideConstants() {
 	}
 
 	// PLATFORM

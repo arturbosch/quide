@@ -2,6 +2,7 @@ package io.gitlab.arturbosch.quide.vcs
 
 import io.gitlab.arturbosch.kutils.toDate
 import io.gitlab.arturbosch.quide.platform.AnalysisContext
+import io.gitlab.arturbosch.quide.platform.QuideConstants
 import org.slf4j.LoggerFactory
 import org.vcsreader.VcsCommit
 import org.vcsreader.VcsProject
@@ -22,7 +23,7 @@ class QuideGitVersionProvider(var root: Path? = null,
 
 	override fun initialize(context: AnalysisContext) {
 		this.root = context.projectPath()
-		val relativePath = context.quideDirectory().getProperty("vcs.relative.path")
+		val relativePath = context.quideDirectory().getProperty(QuideConstants.VCS_RELATIVE_PATH)
 		this.relative = relativePath?.let { root?.resolve(relativePath) } ?: root
 	}
 
