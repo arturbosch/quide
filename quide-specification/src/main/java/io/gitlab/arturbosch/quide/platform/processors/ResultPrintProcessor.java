@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.platform.processors;
 
+import io.gitlab.arturbosch.quide.model.Printable;
 import io.gitlab.arturbosch.quide.platform.ControlFlow;
 import io.gitlab.arturbosch.quide.platform.Processor;
 import io.gitlab.arturbosch.quide.platform.QuideConstants;
@@ -33,7 +34,7 @@ public class ResultPrintProcessor implements Processor {
 			if (fileOutput || consoleOutput) {
 
 				String smellString = container.all().stream()
-						.map(Object::toString)
+						.map(Printable::asPrintable)
 						.collect(Collectors.joining("\n"));
 
 				if (fileOutput) new ResultFilePrinter().print(smellString, data);

@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.platform.processors;
 
+import io.gitlab.arturbosch.quide.model.Printable;
 import io.gitlab.arturbosch.quide.platform.ControlFlow;
 import io.gitlab.arturbosch.quide.platform.Processor;
 import io.gitlab.arturbosch.quide.platform.UserData;
@@ -19,7 +20,7 @@ public class ResultConsoleProcessor implements Processor {
 	public <U extends UserData> void execute(U u) {
 		u.currentContainer().ifPresent(container -> {
 			String result = container.alive().stream()
-					.map(Object::toString)
+					.map(Printable::asPrintable)
 					.collect(Collectors.joining("\n"));
 			LOGGER.info("Analysis result of " + u.toolName() + ": \n\n" + result + "\n");
 		});
