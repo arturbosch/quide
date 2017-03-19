@@ -79,7 +79,7 @@ public interface QuideDirectory {
 		}
 
 		private void loadAdditionalProperties() {
-			String additional = getProperty("platform.additional.properties");
+			String additional = getProperty(QuideConstants.PLATFORM_ADDITIONAL_PROPERTIES);
 			if (additional != null) {
 				loadPropertiesFromString(additional);
 			}
