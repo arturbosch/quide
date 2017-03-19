@@ -7,4 +7,5 @@ include 'codesmell-baseline-format'
 include 'quide-vcs-plugin'
 include 'quide-shell'
 include 'codesmell-evolution-format'
+include 'quide-groovy-plugin'
 

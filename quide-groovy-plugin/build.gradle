@@ -1,0 +1,10 @@
+configurations {
+	compileOnly.extendsFrom log
+	testCompile.extendsFrom spock
+}
+
+dependencies {
+	compile "org.codenarc:CodeNarc:0.27.0"
+	compileOnly project(":quide-specification")
+	compile "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
+}
