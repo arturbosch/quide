@@ -68,6 +68,7 @@ Take a look at the `quide.properties` file for some of the supported properties.
 
 - _quide-java-plugin_ - code smell detection for Java (uses [SmartSmells](https://github.com/arturbosch/SmartSmells))
 - _quide-detekt-plugin_ - code smell detection for Kotlin (uses [Detekt](https://github.com/arturbosch/detekt))
+- _quide-groovy-plugin_ - code smell detection for groovy (uses [CodeNarc](https://github.com/CodeNarc/CodeNarc))
 - _quide-vcs-plugin_ - git repository mining for evolutionary analysis (uses [vcs-reader](https://github.com/dkandalov/vcs-reader))
 
 ### Modules
@@ -75,8 +76,9 @@ Take a look at the `quide.properties` file for some of the supported properties.
 - `quide-specification` - the api, specifies how the platform and plugins should interact with each other.
 - `quide-platform` - implements the platform-specification, knows how to handle plugins und provides an CLI for users
 - `quide-xxx-plugin` - official supported plugins for quide
-- `quide-shell` - interactive and extensible shell, allows to run __commands__ against projcts
+- `quide-shell` - interactive and extensible shell, allows to run __commands__ against projects
 - `codesmell-baseline-format` - xml format to note down false positives or baselines, where only new smells get displayed
+- `codesmell-evolution-format` - xml format which wraps the java plugin xml format to include version data
 
 ### Plugins
 
