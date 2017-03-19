@@ -7,7 +7,6 @@ import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.File
 
 /**
  * @author Artur Bosch
@@ -26,7 +25,7 @@ class ContainerToXmlProcessor : Processor {
 				if (currentVersion.isPresent && currentContainer.isPresent) {
 					val (version, container) = currentVersion.get() to currentContainer.get()
 					val project = data.projectPath().fileName.toString()
-					val file = File("output/$project.${version.versionNumber()}.xml")
+					val file = output.resolve("$project.${version.versionNumber()}.xml").toFile()
 					logger.info("Container saved to $file")
 					parser.toXmlFile(file, version, container)
 				}
