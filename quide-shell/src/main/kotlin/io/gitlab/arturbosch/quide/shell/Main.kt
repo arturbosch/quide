@@ -1,5 +1,7 @@
 package io.gitlab.arturbosch.quide.shell
 
+import io.gitlab.arturbosch.quide.platform.HomeFolder
+import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.shell.loaders.DefaultCommandLoader
 import io.gitlab.arturbosch.quide.shell.loaders.JavaCommandLoader
 import org.jline.reader.EndOfFileException
@@ -14,6 +16,7 @@ import org.jline.terminal.TerminalBuilder
 
 fun main(args: Array<String>) {
 	parseArguments(args)
+	overrideOutputProperties()
 	val reader = reader()
 	val commander = Commander(DefaultCommandLoader, JavaCommandLoader())
 	while (true) {
@@ -30,6 +33,10 @@ fun main(args: Array<String>) {
 			return
 		}
 	}
+}
+
+private fun overrideOutputProperties() {
+	HomeFolder.addPropertyPairs("${QuideConstants.OUTPUT_CONSOLE}=false,${QuideConstants.OUTPUT_FILE}=false")
 }
 
 private fun reader(): LineReader {
