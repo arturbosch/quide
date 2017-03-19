@@ -17,6 +17,11 @@ Quide uses gradle as the build tool.
 Use `gradle build install fatjar shadow` to build all modules - including the executable platform jar -
 and package the plugins.
 
+- Use `gradle build` to check for compilation errors and for all tests pass
+- Use `gradle shadow` to build `[platform|shell].[Version]-all.jar`, which is executable
+- Use `gradle fatjar` to package the plugins with all needed dependencies
+- Use `gradle install` to move all `quide` jars into your local maven, this is needed for plugin development
+
 ### Run
 
 Quide uses `jcommander` as the argument parser.
@@ -101,7 +106,7 @@ headers, formatting, providing metrics etc.
 ##### Write your own commands
 
 The __quide-shell__ is highly extensible through __commands__. A command needs to implement
-an interface quide-shell is aware of. This interface looks like this:
+an interface __quide-shell__ is aware of. This interface looks like this:
 
 ```kotlin
 interface Command {
@@ -129,5 +134,9 @@ public class HelloWorld implements Command {
     
 }
 ```
+
+The `line` parameter is just what you entered in the shell minus the command itself.
+
+TODO use annotations to parse __line__ into different parameters.
 
 TODO: Support kotlin, groovy scripts and jar files with commands
