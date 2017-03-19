@@ -15,15 +15,17 @@ import io.gitlab.arturbosch.quide.platform.processors.ResultPrintProcessor
 class GroovyPlugin implements Plugin {
 
 	private UserData container = new UserData() {}
+	private CodeNarcTool tool = new CodeNarcTool()
+	private List<Processor> processors = [new NumberOfSmellsProcessor(), new ResultPrintProcessor()]
 
 	@Override
 	Detector detector() {
-		return new CodeNarcTool()
+		return tool
 	}
 
 	@Override
 	List<Processor> processors() {
-		return [new NumberOfSmellsProcessor(), new ResultPrintProcessor()]
+		return processors
 	}
 
 	@Override
