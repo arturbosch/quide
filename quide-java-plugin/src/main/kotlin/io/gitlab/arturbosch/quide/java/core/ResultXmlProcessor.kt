@@ -1,15 +1,15 @@
 package io.gitlab.arturbosch.quide.java.core
 
+import io.gitlab.arturbosch.quide.java.OUTPUT_JAVA_XML
+import io.gitlab.arturbosch.quide.java.safeContainer
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.UserData
-import io.gitlab.arturbosch.quide.vcs.Versionable
 import io.gitlab.arturbosch.smartsmells.api.SmellResult
 import io.gitlab.arturbosch.smartsmells.out.XMLWriter
 import java.nio.file.Files
 import java.time.LocalDateTime
-import java.util.Optional
 
 /**
  * @author Artur Bosch
@@ -17,17 +17,11 @@ import java.util.Optional
 class ResultXmlProcessor : Processor {
 
 	override fun <U : UserData> execute(data: U) {
-		val currentVersion = data.currentVersion()
-		val lastVersion = data.lastVersion()
-		data.safeContainer().ifPresent {
-			if (isReportWanted(currentVersion, lastVersion)) {
-				generateReport(data, it.smells)
-			}
-		}
+		data.safeContainer().filter { data.isReportWanted() }
+				.ifPresent { generateReport(data, it.smells) }
 	}
 
-	private fun isReportWanted(currentVersion: Optional<Versionable>, lastVersion: Optional<Versionable>) =
-			!currentVersion.isPresent && !lastVersion.isPresent
+	private fun UserData.isReportWanted() = quideDirectory().getProperty(OUTPUT_JAVA_XML).toBoolean()
 
 	private fun <U : UserData> generateReport(data: U, smellResult: SmellResult) {
 		if (skipResultFile(data)) return
