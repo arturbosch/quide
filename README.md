@@ -42,7 +42,7 @@ Usage: quide [options]
       Additional property paths separated by comma's.
 ```
 
-Usage:
+##### Usage:
 
 `java -jar quide-platform-[version]-all.jar -i [input/path] [-o output/path]?`
 
@@ -55,7 +55,16 @@ the `quide.properties` file in your home folder (`~/.quide`).
 - additional property files can be referenced from the `quide.properties` file by using the 
 `platform.additional.properties=my,comma,separated,paths` property or given quide at runtime with the `-p` and `-pp` parameters
 
-Official supported quide plugins are:
+##### Properties
+
+Take a look at the `quide.properties` file for some of the supported properties. The most important are:
+
+- `platform.ignore.plugins=full-plugin-name.jar, plugin.jar, ...` - ignore plugins in `.quide/plugins` folder
+- `output.console=true` - prints the result of a plugin to console
+- `output.file=true` - prints the result of a plugin to a file if `--output` parameter is used
+- `input.paths.filters.global=.*/test/.*,.*/resources/.*` - ignores paths specified by regex
+
+##### Official supported quide plugins are:
 
 - _quide-java-plugin_ - code smell detection for Java (uses [SmartSmells](https://github.com/arturbosch/SmartSmells))
 - _quide-detekt-plugin_ - code smell detection for Kotlin (uses [Detekt](https://github.com/arturbosch/detekt))
