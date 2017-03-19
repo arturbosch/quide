@@ -10,6 +10,7 @@ import io.gitlab.arturbosch.quide.platform.Plugin
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.platform.processors.NumberOfSmellsProcessor
+import io.gitlab.arturbosch.quide.platform.processors.ResultPrintProcessor
 import io.gitlab.arturbosch.quide.platform.reflect.TypeToken
 import io.gitlab.arturbosch.smartsmells.api.DetectorFacade
 import io.gitlab.arturbosch.smartsmells.api.UpdatableDetectorFacade
@@ -26,7 +27,8 @@ class JavaPlugin : Plugin {
 	}
 
 	override fun processors(): MutableList<Processor> {
-		return mutableListOf(DetectorFacadeProcessor(), MappingProcessor(), NumberOfSmellsProcessor(), ContainerToXmlProcessor())
+		return mutableListOf(DetectorFacadeProcessor(), MappingProcessor(),
+				NumberOfSmellsProcessor(), ContainerToXmlProcessor(), ResultPrintProcessor())
 	}
 
 	override fun userData(): UserData {
