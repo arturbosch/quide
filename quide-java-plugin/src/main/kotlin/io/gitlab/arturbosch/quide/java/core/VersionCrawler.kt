@@ -62,4 +62,4 @@ class VersionCrawler(private val projectPath: Path,
 
 }
 
-private val JAVA = ".java"
+private const val JAVA = ".java"

@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.quide.format.evolution.ContainerXmlParser
 import io.gitlab.arturbosch.quide.java.format.JavaCodeSmellXmlParser
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
+import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.UserData
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -18,7 +19,7 @@ class ContainerToXmlProcessor : Processor {
 	private val parser = ContainerXmlParser.create(JavaCodeSmellXmlParser())
 
 	override fun <U : UserData> execute(data: U) {
-		data.quideDirectory().getProperty("printVersionedXml")?.let {
+		data.quideDirectory().getProperty(QuideConstants.VCS_OUTPUT)?.let {
 			data.outputPath().ifPresent { output ->
 				val currentVersion = data.currentVersion()
 				val currentContainer = data.safeContainer()

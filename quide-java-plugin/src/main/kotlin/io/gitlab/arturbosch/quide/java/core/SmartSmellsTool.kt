@@ -2,6 +2,7 @@ package io.gitlab.arturbosch.quide.java.core
 
 import io.gitlab.arturbosch.quide.detection.Detector
 import io.gitlab.arturbosch.quide.java.JavaPluginData
+import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import io.gitlab.arturbosch.smartsmells.api.SmellResult
@@ -51,7 +52,7 @@ class SmartSmellsTool : Detector<JavaSmellContainer> {
 	}
 
 	private fun <U : UserData> skipResultFile(data: U): Boolean {
-		val property = data.quideDirectory().getProperty("printResultFile")
+		val property = data.quideDirectory().getProperty(QuideConstants.OUTPUT_FILE)
 		return !property.toBoolean()
 	}
 

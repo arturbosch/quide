@@ -5,6 +5,7 @@ import io.gitlab.arturbosch.quide.java.JavaPluginData
 import io.gitlab.arturbosch.quide.java.UPDATABLE_FACADE
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
+import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.QuideDirectory
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.smartsmells.api.DetectorFacade
@@ -38,8 +39,8 @@ class DetectorFacadeProcessor : Processor {
 	}
 
 	private fun loadFiltersFromProperties(quideDirectory: QuideDirectory): List<String> {
-		val globalFilters = quideDirectory.getPropertyOrDefault("path.filters.global", "").trim()
-		val javaFilters = quideDirectory.getPropertyOrDefault("path.filters.java", "").trim()
+		val globalFilters = quideDirectory.getPropertyOrDefault(QuideConstants.PATHS_FILTERS_GLOBAL, "").trim()
+		val javaFilters = quideDirectory.getPropertyOrDefault(PATHS_FILTERS_JAVA, "").trim()
 		return globalFilters.split(',').plus(javaFilters.split(',')).filterNot(String::isNullOrBlank)
 	}
 
@@ -47,3 +48,5 @@ class DetectorFacadeProcessor : Processor {
 		return io.gitlab.arturbosch.quide.platform.ControlFlow.InjectionPoint.BeforeAnalysis
 	}
 }
+
+private const val PATHS_FILTERS_JAVA = "path.filters.java"

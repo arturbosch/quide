@@ -68,7 +68,7 @@ class BasePlatform(private val analysis: Analysis,
 
 	private val cpuCores: Int = Math.min(plugins().size, cores)
 
-	private val isDebugMode = "debug".asProperty()?.toBoolean() ?: false
+	private val isDebugMode = QuideConstants.DEBUG.asProperty()?.toBoolean() ?: false
 
 	override fun plugins(): List<Plugin> = _plugins.value
 

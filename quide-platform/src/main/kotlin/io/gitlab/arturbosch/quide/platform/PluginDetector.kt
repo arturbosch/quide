@@ -16,8 +16,6 @@ object BasePluginDetector : PluginDetector {
 
 	private val logger by logFactory()
 
-	private const val IGNORE_PLUGINS = "ignorePlugins"
-
 	private val lazyPlugins = lazy {
 		Files.list(HomeFolder.pluginsDir())
 				.filter { it.toString().endsWith(".jar") }
@@ -30,7 +28,7 @@ object BasePluginDetector : PluginDetector {
 
 	private fun ignoredPlugin(path: Path): Boolean {
 		val filename = path.fileName.toString().substringBeforeLast(".")
-		val property = IGNORE_PLUGINS.asProperty() ?: ""
+		val property = QuideConstants.PLATFORM_IGNORE_PLUGINS.asProperty() ?: ""
 		val toIgnore = property.split(",").map(String::trim)
 		return filename in toIgnore
 	}
