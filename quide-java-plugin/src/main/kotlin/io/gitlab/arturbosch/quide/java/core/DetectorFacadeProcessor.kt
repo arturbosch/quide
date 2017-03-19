@@ -2,6 +2,7 @@ package io.gitlab.arturbosch.quide.java.core
 
 import io.gitlab.arturbosch.quide.java.FACADE
 import io.gitlab.arturbosch.quide.java.JavaPluginData
+import io.gitlab.arturbosch.quide.java.PATHS_FILTERS_JAVA
 import io.gitlab.arturbosch.quide.java.UPDATABLE_FACADE
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
@@ -48,5 +49,3 @@ class DetectorFacadeProcessor : Processor {
 		return io.gitlab.arturbosch.quide.platform.ControlFlow.InjectionPoint.BeforeAnalysis
 	}
 }
-
-private const val PATHS_FILTERS_JAVA = "path.filters.java"

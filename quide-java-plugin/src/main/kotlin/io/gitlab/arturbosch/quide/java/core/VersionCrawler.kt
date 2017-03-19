@@ -1,6 +1,7 @@
 package io.gitlab.arturbosch.quide.java.core
 
 import com.github.javaparser.utils.Pair
+import io.gitlab.arturbosch.quide.java.JAVA
 import io.gitlab.arturbosch.quide.vcs.FileChange
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import io.gitlab.arturbosch.smartsmells.api.SmellResult
@@ -61,5 +62,3 @@ class VersionCrawler(private val projectPath: Path,
 	}
 
 }
-
-private const val JAVA = ".java"

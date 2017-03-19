@@ -54,6 +54,3 @@ class JavaPluginData : UserData() {
 	}
 
 }
-
-const val FACADE: String = "FACADE"
-const val UPDATABLE_FACADE: String = "UPDATABLE_FACADE"

@@ -2,13 +2,13 @@ package io.gitlab.arturbosch.quide.java.core
 
 import io.gitlab.arturbosch.quide.format.evolution.ContainerXmlParser
 import io.gitlab.arturbosch.quide.java.format.JavaCodeSmellXmlParser
+import io.gitlab.arturbosch.quide.java.safeContainer
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.UserData
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.Optional
 
 /**
  * @author Artur Bosch
@@ -43,5 +43,3 @@ class ContainerToXmlProcessor : Processor {
 		return io.gitlab.arturbosch.quide.platform.ControlFlow.InjectionPoint.AfterDetection
 	}
 }
-
-fun UserData.safeContainer(): Optional<JavaSmellContainer> = currentContainer<JavaSmellContainer, JavaCodeSmell>()
