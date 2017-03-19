@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author Artur Bosch
  */
-public interface CodeSmell {
+public interface CodeSmell extends Printable {
 
 	default boolean isLocatedAt(Path path) {
 		Validate.notNull(path);
@@ -94,4 +94,5 @@ public interface CodeSmell {
 	 * @return a set of paths this smell was relocated to
 	 */
 	Set<String> relocations();
+
 }
