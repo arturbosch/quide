@@ -23,9 +23,10 @@ class ResultXmlProcessor : Processor {
 	private fun UserData.isReportWanted() = quideDirectory().getProperty(OUTPUT_JAVA_XML).toBoolean()
 
 	private fun <U : UserData> generateReport(data: U, smellResult: SmellResult) {
-		val outputPath = data.outputPath().orElse(data.projectPath())
-		val xml = XMLWriter.toXml(smellResult)
-		Files.write(outputPath.resolve("smartsmells_${LocalDateTime.now()}.xml"), xml.toByteArray())
+		data.outputPath().ifPresent {
+			val xml = XMLWriter.toXml(smellResult)
+			Files.write(it.resolve("smartsmells_${LocalDateTime.now()}.xml"), xml.toByteArray())
+		}
 	}
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {
