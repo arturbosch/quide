@@ -23,6 +23,8 @@ class JavaCodeSmell(private val type: Smell, var smell: DetectionResult) : BaseC
 
 	override fun toString(): String = smell.toString() + "\n\t" + super.toString()
 
+	override fun asPrintable(): String = smell.toString()
+
 	fun updateInternal(updated: DetectionResult): JavaCodeSmell {
 		return this.apply {
 			smell = updated
