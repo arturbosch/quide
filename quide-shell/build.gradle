@@ -11,5 +11,5 @@ configurations {
 dependencies {
 	compile project(":quide-platform")
 	compile 'org.jline:jline:3.1.2'
-	compile "com.beust:jcommander:1.60"
+	compile "com.beust:jcommander:$jcommanderVersion"
 }

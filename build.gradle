@@ -107,6 +107,7 @@ allprojects {
 		kotlin "io.gitlab.arturbosch:kutils:$kutilsVersion"
 		kotlinTest "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"
 		kotlinTest "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+		kotlinTest "org.assertj:assertj-core:$assertjVersion"
 		spock "org.spockframework:spock-core:$spockVersion"
 		spock "org.codehaus.groovy:groovy-all:$groovyVersion"
 	}

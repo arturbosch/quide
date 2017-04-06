@@ -6,6 +6,9 @@ configurations {
 }
 
 dependencies {
-	compile "org.codenarc:CodeNarc:0.27.0"
+	compile("org.codenarc:CodeNarc:$codenarcVersion") { transitive = false }
+	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+	compile('org.gmetrics:GMetrics:0.7') { transitive = false }
+	compile 'log4j:log4j:1.2.14'
 	compileOnly project(":quide-specification")
 }
