@@ -1,6 +1,7 @@
-//mainClassName = 'io.gitlab.arturbosch.quide.platform.MainKt'
-
 apply plugin: 'groovy'
+apply plugin: 'application'
+
+mainClassName = 'io.gitlab.arturbosch.quide.crawler.MainKt'
 
 configurations {
 	compile.extendsFrom kotlin

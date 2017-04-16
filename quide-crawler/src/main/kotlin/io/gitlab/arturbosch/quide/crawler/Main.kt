@@ -1,33 +1,30 @@
 package io.gitlab.arturbosch.quide.crawler
 
-import io.gitlab.arturbosch.quide.crawler.ui.ContentView
-import io.gitlab.arturbosch.quide.crawler.ui.MenuView
-import io.gitlab.arturbosch.quide.crawler.ui.ProgressView
+import io.gitlab.arturbosch.kutils.notNull
+import io.gitlab.arturbosch.quide.crawler.cli.CLI
+import io.gitlab.arturbosch.quide.crawler.cli.parse
+import io.gitlab.arturbosch.quide.crawler.ui.RootView
 import javafx.application.Application
 import tornadofx.App
 import tornadofx.View
-import tornadofx.borderpane
 import kotlin.reflect.KClass
 
 /**
  * @author Artur Bosch
  */
-class Viewer : App() {
+class CrawlerApp : App() {
 	override val primaryView: KClass<out View> = RootView::class
 }
 
 fun main(args: Array<String>) {
-	Application.launch(Viewer::class.java, *args)
-}
+	with(args.parse()) {
 
-class RootView : View("") {
+		val ioNull = input == null && output == null
+		if (ioNull && withGUI == null || withGUI.notNull() && withGUI!!) {
+			Application.launch(CrawlerApp::class.java, *args)
+		} else {
+			CLI.run(this)
+		}
 
-	override val root: javafx.scene.Parent = borderpane {
-		prefWidth = 1200.0
-		prefHeight = 800.0
-		top = find<MenuView>().root
-		bottom = find<ProgressView>().root
-		center = find<ContentView>().root
 	}
-
 }
