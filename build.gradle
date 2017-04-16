@@ -42,7 +42,7 @@ allprojects {
 		}
 	}
 
-	if (projectName == "quide-platform" || projectName == "quide-shell") {
+	if (projectName == "quide-platform" || projectName == "quide-shell" || projectName == "quide-crawler") {
 		apply plugin: 'application'
 		apply plugin: 'com.github.johnrengelman.shadow'
 	}

@@ -11,7 +11,6 @@ import java.nio.file.Path
  */
 object Args {
 	@Parameter(names = arrayOf("--input", "-i"),
-			required = true,
 			description = "The input git list in a file.",
 			converter = ExistingPathConverter::class)
 	var input: Path? = null
@@ -19,13 +18,15 @@ object Args {
 			description = "The output report folder path.",
 			converter = DirectoryPathConverter::class)
 	var output: Path? = null
-
 	@Parameter(names = arrayOf("--gui"), description = "Use graphical interface?")
 	var withGUI: Boolean? = null
 }
 
-fun Array<String>.parse(): Args = with(JCommander()) {
-	setProgramName("quide-crawler")
-	addObject(Args)
-	parse(*this@parse)
-}.run { Args }
+fun Array<String>.parse(): Args {
+	with(JCommander()) {
+		setProgramName("quide-crawler")
+		addObject(Args)
+		parse(*this@parse)
+	}
+	return Args
+}

@@ -1,5 +1,4 @@
 apply plugin: 'groovy'
-apply plugin: 'application'
 
 mainClassName = 'io.gitlab.arturbosch.quide.crawler.MainKt'
 
@@ -12,7 +11,7 @@ configurations {
 dependencies {
 	compile project(":quide-platform")
 	compile project(":quide-vcs-plugin")
-	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:1.0.0.RC4"
+	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:$smartsmellsVersion"
 	compile 'no.tornado:tornadofx:1.7.0'
 	compile 'com.jfoenix:jfoenix:1.1.0'
 	compile "com.beust:jcommander:$jcommanderVersion"
