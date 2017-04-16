@@ -9,6 +9,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_main.iml" group="codesmell-evolution-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" group="codesmell-evolution-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide.iml" filepath="$PROJECT_DIR$/.idea/modules/quide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" group="quide-crawler" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" group="quide-crawler" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" group="quide-crawler" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" group="quide-detekt-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" group="quide-detekt-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_test.iml" group="quide-detekt-plugin" />

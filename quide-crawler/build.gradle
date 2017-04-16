@@ -1,0 +1,18 @@
+//mainClassName = 'io.gitlab.arturbosch.quide.platform.MainKt'
+
+apply plugin: 'groovy'
+
+configurations {
+	compile.extendsFrom kotlin
+	compile.extendsFrom log
+	testCompile.extendsFrom spock
+}
+
+dependencies {
+	compile project(":quide-platform")
+	compile project(":quide-vcs-plugin")
+	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:1.0.0.RC4"
+	compile 'no.tornado:tornadofx:1.7.0'
+	compile 'com.jfoenix:jfoenix:1.1.0'
+	compile "com.beust:jcommander:$jcommanderVersion"
+}
