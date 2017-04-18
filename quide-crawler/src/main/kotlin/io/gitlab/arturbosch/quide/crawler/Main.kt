@@ -1,6 +1,6 @@
 package io.gitlab.arturbosch.quide.crawler
 
-import io.gitlab.arturbosch.kutils.notNull
+import io.gitlab.arturbosch.kutils.notNullOrFalse
 import io.gitlab.arturbosch.quide.crawler.cli.CLI
 import io.gitlab.arturbosch.quide.crawler.cli.parse
 import io.gitlab.arturbosch.quide.crawler.ui.RootView
@@ -20,7 +20,13 @@ fun main(args: Array<String>) {
 	with(args.parse()) {
 
 		val ioNull = input == null && output == null
-		if (ioNull && withGUI == null || withGUI.notNull() && withGUI!!) {
+
+		if (ioNull && !withGUI.notNullOrFalse()) {
+			println(usage)
+			return
+		}
+
+		if (withGUI.notNullOrFalse()) {
 			Application.launch(CrawlerApp::class.java, *args)
 		} else {
 			CLI.run(this)
