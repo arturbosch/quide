@@ -14,6 +14,8 @@ object Analyze {
 	fun start(path: Path) {
 		val result = facade.run(path)
 		val averages = MetricFacade.average(result)
-		Console.write("Results for ${path.fileName}:\n\t" + averages.joinToString("\n\t"))
+		val resultString = averages.joinToString("\n\t")
+		Console.write("Results for ${path.fileName}:\n\t" + resultString)
+		Write.toFile(path, resultString)
 	}
 }

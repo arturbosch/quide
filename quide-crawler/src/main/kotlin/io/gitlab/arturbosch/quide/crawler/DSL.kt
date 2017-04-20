@@ -23,7 +23,6 @@ data class Liste(val list: MutableList<String> = mutableListOf()) {
 	}
 }
 
-
 fun configuration(dsl: Config.() -> Unit): Config {
 	val config = Config()
 	dsl.invoke(config)

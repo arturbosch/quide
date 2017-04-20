@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.crawler.pipe
 
+import io.gitlab.arturbosch.kutils.Try
 import io.gitlab.arturbosch.kutils.asPath
 import io.gitlab.arturbosch.kutils.exists
 import io.gitlab.arturbosch.quide.crawler.Console
@@ -29,13 +30,17 @@ object GitPipe : Pipe {
 		val filePath = project.localPath.asPath()
 		val fileName = filePath.fileName.toString()
 
-		if (filePath.exists()) {
-			Update.git(fileName, project)
-		} else {
-			Clone.git(fileName, project)
+		Try {
+			if (filePath.exists()) {
+				Update.git(fileName, project)
+			} else {
+				Clone.git(fileName, project)
+			}
+		} onSuccess {
+			Console.write("Collect metrics for $fileName...")
+			Analyze.start(filePath)
+		} onError {
+			Console.write("Error for $fileName: \n${it.message}")
 		}
-
-		Console.write("Collect metrics for $fileName...")
-		Analyze.start(filePath)
 	}
 }
