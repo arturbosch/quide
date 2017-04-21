@@ -9,7 +9,9 @@ import java.nio.file.Path
  */
 object Analyze {
 
-	private val facade = MetricFacade(null, listOf(".*/src/test/.*"))
+	private val facade = MetricFacade.builder()
+			.withFilters(listOf(".*/src/test/.*"))
+			.fullStackFacade()
 
 	fun start(path: Path) {
 		val result = facade.run(path)
