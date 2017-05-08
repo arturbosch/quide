@@ -13,15 +13,17 @@ import io.gitlab.arturbosch.quide.platform.processors.ResultPrintProcessor
 class DetektPlugin : Plugin {
 
 	private val storage = object : UserData() {}
+	private val tool = DetektTool()
+	private val processors = mutableListOf(NumberOfSmellsProcessor(), ResultPrintProcessor())
 
 	override fun name(): String = "KotlinPlugin"
 
 	override fun detector(): Detector<DetektSmellContainer> {
-		return DetektTool()
+		return tool
 	}
 
 	override fun processors(): MutableList<Processor> {
-		return mutableListOf(NumberOfSmellsProcessor(), ResultPrintProcessor())
+		return processors
 	}
 
 	override fun userData(): UserData {

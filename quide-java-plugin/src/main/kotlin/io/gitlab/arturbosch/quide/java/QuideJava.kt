@@ -16,4 +16,6 @@ const val JAVA = ".java"
 const val PATHS_FILTERS_JAVA = "path.filters.java"
 const val OUTPUT_JAVA_XML = "output.java.xml"
 
+const val PLUGIN_JAVA_CONFIG = "plugin.java.config"
+
 fun UserData.safeContainer(): Optional<JavaSmellContainer> = currentContainer<JavaSmellContainer, JavaCodeSmell>()

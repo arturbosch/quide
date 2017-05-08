@@ -22,7 +22,11 @@ class CodeNarcTool implements Detector<GroovySmellContainer> {
 
 	@Override
 	<U extends UserData> GroovySmellContainer execute(U data) {
-		def path = data.quideDirectory().configurationsDir().resolve("codenarc.groovy")
+		def quide = data.quideDirectory()
+		def config = quide.getProperty(QuideGroovy.PLUGIN_GROOVY_CONFIG)
+		if (!config) throw new IllegalStateException(
+				"A property $QuideGroovy.PLUGIN_GROOVY_CONFIG must be provided to load codenarc configurations!")
+		def path = quide.configurationsDir().resolve("codenarc.groovy")
 		analyzer.baseDirectory = data.projectPath().toString()
 		runner.ruleSetFiles = "file://" + path.toString()
 		Results results = runner.execute()
