@@ -1,6 +1,7 @@
 package io.gitlab.arturbosch.quide.java
 
 import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.java.core.AfterAnalysisContainerToXmlProcessor
 import io.gitlab.arturbosch.quide.java.core.ContainerToXmlProcessor
 import io.gitlab.arturbosch.quide.java.core.DetectorFacadeProcessor
 import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
@@ -29,7 +30,7 @@ class JavaPlugin : Plugin {
 
 	override fun processors(): MutableList<Processor> {
 		return mutableListOf(DetectorFacadeProcessor(), MappingProcessor(), NumberOfSmellsProcessor(),
-				ContainerToXmlProcessor(), ResultXmlProcessor(), ResultPrintProcessor())
+				ContainerToXmlProcessor(), ResultXmlProcessor(), ResultPrintProcessor(), AfterAnalysisContainerToXmlProcessor())
 	}
 
 	override fun userData(): UserData {

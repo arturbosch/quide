@@ -13,14 +13,17 @@ import org.slf4j.LoggerFactory
 /**
  * @author Artur Bosch
  */
-class ContainerToXmlProcessor : Processor {
+open class ContainerToXmlProcessor : Processor {
 
 	private val logger: Logger = LoggerFactory.getLogger(javaClass.simpleName)
 
 	private val parser = ContainerXmlParser.create(JavaCodeSmellXmlParser())
 
+	open fun ifPropertySet(data: UserData): Boolean = data.quideDirectory().getProperty(
+			QuideConstants.VCS_OUTPUT_PER_VERSION)?.toBoolean() ?: false
+
 	override fun <U : UserData> execute(data: U) {
-		data.quideDirectory().getProperty(QuideConstants.VCS_OUTPUT)?.let {
+		if (ifPropertySet(data)) {
 			data.outputPath().ifPresent { output ->
 				val currentVersion = data.currentVersion()
 				val currentContainer = data.safeContainer()

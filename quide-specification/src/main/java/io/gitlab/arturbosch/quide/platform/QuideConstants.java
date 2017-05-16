@@ -28,5 +28,6 @@ public final class QuideConstants {
 	public static final String VCS_BRANCH = "vcs.branch";
 	public static final String VCS_RELATIVE_PATH = "vcs.relative.path";
 	public static final String VCS_OUTPUT = "vcs.output";
+	public static final String VCS_OUTPUT_PER_VERSION = "vcs.output.perversion";
 }
 
