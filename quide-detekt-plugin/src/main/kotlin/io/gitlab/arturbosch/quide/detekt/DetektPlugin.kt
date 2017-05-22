@@ -18,16 +18,10 @@ class DetektPlugin : Plugin {
 
 	override fun name(): String = "KotlinPlugin"
 
-	override fun detector(): Detector<DetektSmellContainer> {
-		return tool
-	}
+	override fun detector(): Detector<DetektSmellContainer> = tool
 
-	override fun processors(): MutableList<Processor> {
-		return processors
-	}
+	override fun processors(): MutableList<Processor> = processors
 
-	override fun userData(): UserData {
-		return storage
-	}
+	override fun userData(): UserData = storage
 
 }

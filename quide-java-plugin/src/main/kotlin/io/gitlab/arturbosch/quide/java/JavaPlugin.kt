@@ -22,27 +22,21 @@ import io.gitlab.arturbosch.smartsmells.api.UpdatableDetectorFacade
  */
 class JavaPlugin : Plugin {
 
+	private val tool = SmartSmellsTool()
 	private val storage = JavaPluginData()
+	private val processors = mutableListOf(DetectorFacadeProcessor(), MappingProcessor(), NumberOfSmellsProcessor(),
+			ContainerToXmlProcessor(), ResultXmlProcessor(), ResultPrintProcessor(), AfterAnalysisContainerToXmlProcessor())
 
-	override fun detector(): Detector<JavaSmellContainer> {
-		return SmartSmellsTool()
-	}
+	override fun detector(): Detector<JavaSmellContainer> = tool
 
-	override fun processors(): MutableList<Processor> {
-		return mutableListOf(DetectorFacadeProcessor(), MappingProcessor(), NumberOfSmellsProcessor(),
-				ContainerToXmlProcessor(), ResultXmlProcessor(), ResultPrintProcessor(), AfterAnalysisContainerToXmlProcessor())
-	}
+	override fun processors(): MutableList<Processor> = processors
 
-	override fun userData(): UserData {
-		return storage
-	}
+	override fun userData(): UserData = storage
 }
 
 class JavaPluginData : UserData() {
 
-	fun isEvolutionaryAnalysis(): Boolean {
-		return versionProvider().isPresent
-	}
+	fun isEvolutionaryAnalysis(): Boolean = versionProvider().isPresent
 
 	fun updatableFacade(): UpdatableDetectorFacade = get(UPDATABLE_FACADE,
 			TypeToken.get(UpdatableDetectorFacade::class.java)).orElseThrow {
