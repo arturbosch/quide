@@ -68,11 +68,15 @@ public interface QuideDirectory {
 			Path propertiesPath = home().resolve("quide.properties");
 			try {
 				if (Files.notExists(propertiesPath)) {
-					Files.createFile(propertiesPath);
+					try (InputStream in = getClass().getResourceAsStream("/quide.properties")) {
+						Files.copy(in, propertiesPath);
+						LOGGER.info("Created default properties set.");
+					}
+				} else {
+					loadProperties(propertiesPath);
+					loadAdditionalProperties();
+					LOGGER.info("Properties loaded.");
 				}
-				loadProperties(propertiesPath);
-				loadAdditionalProperties();
-				LOGGER.info("Properties loaded");
 			} catch (IOException e) {
 				throw new UncheckedIOException("Error loading quide properties", e);
 			}
