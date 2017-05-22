@@ -136,7 +136,8 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 		val deletedPaths = changes.filter { it.isOfType(FileChange.Type.REMOVAL) }
 				.map { it.oldFile() }
 				.map { it.path() }
-		val deletedSmells = deletedPaths.map { before.findBySourcePath(it) }
+		val deletedSmells = deletedPaths
+				.map { before.findBySourcePath(it).filter { it.isAlive } }
 				.flatMap { it }
 		deletedSmells.forEach { it.killedIn(versionable) }
 		return deletedSmells
