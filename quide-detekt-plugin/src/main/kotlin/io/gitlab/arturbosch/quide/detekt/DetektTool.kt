@@ -1,10 +1,12 @@
 package io.gitlab.arturbosch.quide.detekt
 
+import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.YamlConfig
 import io.gitlab.arturbosch.detekt.core.Detekt
 import io.gitlab.arturbosch.detekt.core.PathFilter
 import io.gitlab.arturbosch.detekt.core.ProcessingSettings
 import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.QuideDirectory
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -19,14 +21,18 @@ class DetektTool : Detector<DetektSmellContainer> {
 	override fun <U : UserData> execute(data: U): DetektSmellContainer {
 		val projectPath = data.projectPath()
 		val quide = data.quideDirectory()
-		val configSuffix = quide.getProperty(PLUGIN_KOTLIN_CONFIG) ?:
-				throw IllegalStateException("A property $PLUGIN_KOTLIN_CONFIG must be provided to load detekt configurations!")
-		val configPath = quide.configurationsDir().resolve(configSuffix)
-		val config = YamlConfig.load(configPath)
+		val configSuffix = quide.getProperty(PLUGIN_KOTLIN_CONFIG)
+
+		val config = configSuffix?.let {
+			val configPath = quide.configurationsDir().resolve(configSuffix)
+			YamlConfig.load(configPath)
+		} ?: Config.empty.apply {
+			ControlFlow.LOGGER.warn("The detekt configuration property '$PLUGIN_KOTLIN_CONFIG' was not provided!")
+		}
+
 		val filters = loadFiltersFromProperties(quide).map(::PathFilter)
-		val detektion = Detekt(projectPath, config, emptyList(),
-				ProcessingSettings(filters, true, emptyList())
-		).run()
+		val detektion = Detekt(projectPath, config, emptyList(), ProcessingSettings(filters, true, emptyList()))
+				.run()
 		return DetektSmellContainer(detektion.findings
 				.flatMap { it.value }
 				.map(::DetektCodeSmell))
