@@ -2,7 +2,7 @@ package io.gitlab.arturbosch.quide.detekt
 
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.YamlConfig
-import io.gitlab.arturbosch.detekt.core.Detekt
+import io.gitlab.arturbosch.detekt.core.DetektFacade
 import io.gitlab.arturbosch.detekt.core.PathFilter
 import io.gitlab.arturbosch.detekt.core.ProcessingSettings
 import io.gitlab.arturbosch.quide.detection.Detector
@@ -31,8 +31,8 @@ class DetektTool : Detector<DetektSmellContainer> {
 		}
 
 		val filters = loadFiltersFromProperties(quide).map(::PathFilter)
-		val detektion = Detekt(projectPath, config, emptyList(), ProcessingSettings(filters, true, emptyList()))
-				.run()
+		val settings = ProcessingSettings(projectPath, config, filters, true, false, emptyList(), emptyList())
+		val detektion = DetektFacade.instance(settings).run()
 		return DetektSmellContainer(detektion.findings
 				.flatMap { it.value }
 				.map(::DetektCodeSmell))

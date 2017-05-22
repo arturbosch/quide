@@ -13,7 +13,7 @@ import org.jline.terminal.TerminalBuilder
 /**
  * @author Artur Bosch
  */
-
+@Suppress("EmptyCatchBlock")
 fun main(args: Array<String>) {
 	parseArguments(args)
 	overrideOutputProperties()

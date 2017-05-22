@@ -1,6 +1,7 @@
 buildscript {
 	repositories {
 		mavenCentral()
+		maven { url "http://dl.bintray.com/arturbosch/code-analysis" }
 	}
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -11,6 +12,7 @@ plugins {
 	id "com.jfrog.bintray" version "1.7.3"
 	id 'com.github.ben-manes.versions' version '0.13.0'
 	id "com.github.johnrengelman.shadow" version "1.2.3"
+	id "io.gitlab.arturbosch.detekt" version "1.0.0.M10.2"
 //		id "com.github.hierynomus.license" version "0.13.1"
 }
 
@@ -117,24 +119,13 @@ allprojects {
 		main.java.srcDirs += 'src/main/groovy'
 	}
 
+	compileKotlin {
+		kotlinOptions.jvmTarget = "1.8"
+	}
+
 }
 
-configurations {
-	detekt
-}
-
-dependencies {
-	detekt 'io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.M8'
-	detekt 'io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0.M8'
-}
-
-task detekt(type: JavaExec) {
-	main = "io.gitlab.arturbosch.detekt.cli.Main"
-	classpath = configurations.detekt
-	def input = "$project.projectDir.absolutePath"
-	def config = "$project.projectDir/detekt.yml"
-	def filters = ".*test.*"
-	def rulesets = ""
-	def params = ['-p', input, '-c', config, '-f', filters, '-r', rulesets]
-	args(params)
+detekt {
+	config = "$project.projectDir/detekt.yml"
+	filters = '.*/test/.*, .*/resources/.*'
 }
