@@ -3,6 +3,7 @@ package io.gitlab.arturbosch.quide.java.format
 import groovy.xml.MarkupBuilder
 import io.gitlab.arturbosch.quide.model.BaseCodeSmell
 import io.gitlab.arturbosch.smartsmells.smells.DetectionResult
+import io.gitlab.arturbosch.smartsmells.smells.cycle.Cycle
 
 /**
  * @author Artur Bosch
@@ -13,9 +14,17 @@ class JavaCodeSmellXmlParser implements BaseCodeSmellParserExtension {
 	void toXml(BaseCodeSmell smell, MarkupBuilder mb) {
 		DetectionResult result = reflectionHack(smell)
 		def name = result.class.simpleName
-		def attributes = toAttributeMap(result)
 		mb.JavaCodeSmell('smellType': name) {
-			mb.CodeSmellInfo(attributes)
+			if (result instanceof Cycle) {
+				def cycle = result as Cycle
+				mb.CodeSmellInfo {
+					mb.Source(toAttributeMap(cycle.source))
+					mb.Target(toAttributeMap(cycle.target))
+				}
+			} else {
+				def attributes = toAttributeMap(result)
+				mb.CodeSmellInfo(attributes)
+			}
 		}
 	}
 
@@ -40,8 +49,12 @@ class JavaCodeSmellXmlParser implements BaseCodeSmellParserExtension {
 	private static Map<String, String> extractPositions(DetectionResult smelly) {
 		smelly.class.getDeclaredField("sourceRange").with {
 			setAccessible(true)
-			def pos = get(smelly).toString().replace("SourceRange(", "").replace(")", "").split(',').collect { it.trim() }
-			["startLine": pos[0], "startColumn": pos[1], "endLine": pos[2], "endColumn": pos[3]]
+			def pos = get(smelly).toString()
+					.replace("SourceRange(", "")
+					.replace(")", "")
+					.split(',')
+					.collect { it.trim() }
+			["startLine": pos[0], "endLine": pos[1], "startColumn": pos[2], "endColumn": pos[3]]
 		}
 	}
 
