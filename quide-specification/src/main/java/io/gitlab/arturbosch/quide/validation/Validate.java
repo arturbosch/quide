@@ -13,4 +13,8 @@ public class Validate {
 		if (reference == null) throw new NullPointerException("Provided argument was null!");
 		return reference;
 	}
+
+	public static boolean isEmpty(String content) {
+		return content == null || content.isEmpty();
+	}
 }

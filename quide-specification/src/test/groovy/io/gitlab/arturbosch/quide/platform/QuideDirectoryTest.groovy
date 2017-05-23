@@ -11,7 +11,7 @@ class QuideDirectoryTest extends Specification {
 
 	def "load additional properties"() {
 		given:
-		def dir = new QuideDirectory.DefaultQuideDirectory()
+		def dir = new DefaultQuideDirectory()
 		def path = Paths.get(getClass().getResource("/additional.properties").path)
 		when:
 		dir.loadProperties(path)

@@ -3,7 +3,7 @@ package io.gitlab.arturbosch.quide.platform
 /**
  * @author Artur Bosch
  */
-object HomeFolder : QuideDirectory.DefaultQuideDirectory() {
+object HomeFolder : DefaultQuideDirectory() {
 
 	fun addPropertiesFromString(props: String) {
 		loadPropertiesFromString(props)
