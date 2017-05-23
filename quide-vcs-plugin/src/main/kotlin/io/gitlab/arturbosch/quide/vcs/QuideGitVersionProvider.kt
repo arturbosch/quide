@@ -9,6 +9,8 @@ import org.vcsreader.VcsProject
 import org.vcsreader.vcs.git.GitVcsRoot
 import java.nio.file.Path
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Optional
 
 /**
@@ -20,15 +22,27 @@ class QuideGitVersionProvider(var root: Path? = null,
 	private val logger = LoggerFactory.getLogger(javaClass.simpleName)
 
 	private var index: Int = 0
+	private val format = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+	private var since = LocalDate.of(2005, 1, 1).toDate()
+	private var until = LocalDate.now().toDate()
 
 	override fun initialize(context: AnalysisContext) {
-		this.root = context.projectPath()
-		val relativePath = context.quideDirectory().getProperty(QuideConstants.VCS_RELATIVE_PATH)
-		this.relative = relativePath?.let { root?.resolve(relativePath) } ?: root
-	}
+		val quide = context.quideDirectory()
 
-	private val since = LocalDate.of(2005, 1, 1).toDate()
-	private val until = LocalDate.now().toDate()
+		root = context.projectPath()
+		val relativePath = quide.getProperty(QuideConstants.VCS_RELATIVE_PATH)
+		relative = relativePath?.let { root?.resolve(relativePath) } ?: root
+
+		quide.getProperty(QuideConstants.VCS_START_COMMIT)?.let {
+			index = it.toInt() - 1 // for array index
+		}
+		quide.getProperty(QuideConstants.VCS_RANGE_SINCE)?.let {
+			since = LocalDateTime.from(format.parse(it)).toDate()
+		}
+		quide.getProperty(QuideConstants.VCS_RANGE_UNTIL)?.let {
+			until = LocalDateTime.from(format.parse(it)).toDate()
+		}
+	}
 
 	private val commits: List<VcsCommit> by lazy {
 		assert(root != null) { "VCS root was not initialized!" }
@@ -46,7 +60,7 @@ class QuideGitVersionProvider(var root: Path? = null,
 	override fun nextVersion(): Optional<Versionable> {
 		if (index <= commits.size - 1) {
 			val commit = commits[index]
-			val version = QuideVersion(commit = commit, projectPath = root!!, relativePath = relative!!)
+			val version = QuideVersion(versionId = index + 1, commit = commit, projectPath = root!!, relativePath = relative!!)
 			index++
 			return Optional.of(version)
 		}

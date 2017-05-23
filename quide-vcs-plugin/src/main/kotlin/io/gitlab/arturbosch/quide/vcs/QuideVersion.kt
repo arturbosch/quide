@@ -3,12 +3,11 @@ package io.gitlab.arturbosch.quide.vcs
 import org.vcsreader.VcsChange
 import org.vcsreader.VcsCommit
 import java.nio.file.Path
-import java.util.concurrent.atomic.AtomicInteger
 
-data class QuideVersion(private val commit: VcsCommit,
+data class QuideVersion(private val versionId: Int,
+						private val commit: VcsCommit,
 						private val projectPath: Path,
-						private val relativePath: Path,
-						private val versionId: Int = nextVersion) : Versionable {
+						private val relativePath: Path) : Versionable {
 
 	private val changes = commit.changes
 			.filter { it.isWithinRelativePath() }
@@ -24,8 +23,3 @@ data class QuideVersion(private val commit: VcsCommit,
 	override fun fileChanges(): List<FileChange> = changes
 
 }
-
-private val idGenerator = AtomicInteger()
-private val nextVersion: Int
-	get() = idGenerator.incrementAndGet()
-
