@@ -48,7 +48,7 @@ class MultiPlatform(private val versionProvider: VersionProvider) {
 		var currentVersion = versionProvider.nextVersion()
 		while (currentVersion.isPresent) {
 			val current = currentVersion.get()
-			logger.info("${current.versionNumber()} - ${current.revision().date()} - ${current.revision().message()}")
+			logger.info(current.asPrintable())
 			plugins.forEach { it.userData().put(UserData.LAST_VERSION, lastVersion) }
 			plugins.forEach { it.userData().put(UserData.CURRENT_VERSION, current) }
 			runBlock()

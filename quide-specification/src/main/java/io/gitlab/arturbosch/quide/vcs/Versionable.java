@@ -1,5 +1,7 @@
 package io.gitlab.arturbosch.quide.vcs;
 
+import io.gitlab.arturbosch.quide.model.Printable;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  *
  * @author Artur Bosch
  */
-public interface Versionable extends Comparable<Versionable> {
+public interface Versionable extends Comparable<Versionable>, Printable {
 
 	int versionNumber();
 

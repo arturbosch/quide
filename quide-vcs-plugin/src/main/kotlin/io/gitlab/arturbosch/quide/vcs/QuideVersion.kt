@@ -22,4 +22,5 @@ data class QuideVersion(private val versionId: Int,
 	override fun revision(): Revision = revision
 	override fun fileChanges(): List<FileChange> = changes
 
+	override fun asPrintable(): String = "$versionId - ${revision.versionHash()} - ${revision.date()} - ${revision.message()}"
 }
