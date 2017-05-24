@@ -7,7 +7,7 @@ import io.gitlab.arturbosch.smartsmells.smells.DetectionResult
 /**
  * @author Artur Bosch
  */
-class JavaCodeSmell(private val type: Smell, var smell: DetectionResult) : BaseCodeSmell() {
+class JavaCodeSmell(val type: Smell, var smell: DetectionResult) : BaseCodeSmell() {
 
 	init {
 		sourcePath = smell.pathAsString

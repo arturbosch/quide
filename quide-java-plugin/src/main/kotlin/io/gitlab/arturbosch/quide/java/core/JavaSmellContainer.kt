@@ -15,8 +15,4 @@ class JavaSmellContainer(val smells: SmellResult) : SmellContainer<JavaCodeSmell
 	override fun all(): MutableList<JavaCodeSmell> {
 		return codeSmells
 	}
-
-	override fun findBySourcePath(path: String): MutableList<JavaCodeSmell> {
-		return codeSmells.filter { it.isLocatedAt(path) }.toMutableList()
-	}
 }
