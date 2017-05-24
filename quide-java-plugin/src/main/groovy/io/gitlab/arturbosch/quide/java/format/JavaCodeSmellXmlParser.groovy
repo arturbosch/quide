@@ -5,6 +5,8 @@ import io.gitlab.arturbosch.quide.model.BaseCodeSmell
 import io.gitlab.arturbosch.smartsmells.smells.DetectionResult
 import io.gitlab.arturbosch.smartsmells.smells.cycle.Cycle
 
+import java.lang.reflect.Modifier
+
 /**
  * @author Artur Bosch
  */
@@ -38,6 +40,7 @@ class JavaCodeSmellXmlParser implements BaseCodeSmellParserExtension {
 		def positions = extractPositions(smelly)
 		return smelly.class.declaredFields
 				.grep { !it.synthetic }
+				.grep { !Modifier.isStatic(it.modifiers as int) }
 				.grep { it.name != "sourceRange" }
 				.grep { it.name != "sourcePath" }
 				.collectEntries() {
