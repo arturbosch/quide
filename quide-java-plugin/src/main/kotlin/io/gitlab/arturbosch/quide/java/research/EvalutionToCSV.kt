@@ -47,17 +47,19 @@ private inline fun StringBuilder.appendTotalSurvivalRatio(container: JavaSmellCo
 	val deadPercentage = dead / allSize
 	val ratio = alivePercentage / deadPercentage
 	content("All, Alive, Dead, %Alive, %Dead, Ratio")
-	content("$allSize,$alive,$dead,$alivePercentage,$deadPercentage,$ratio")
+	val content = "$allSize,$alive,$dead,$alivePercentage,$deadPercentage,$ratio"
+	content(content.replace("Infinity", "0.0"))
 	comment("END Survival Ratio")
 }
 
 private inline fun StringBuilder.appendSurvivalPerType(codeSmells: Map<Smell, List<JavaCodeSmell>>) {
 	comment("Type Survival")
-	val result = smellTypes.map { type -> codeSmells[type] }
+	val result = smellTypes.asSequence()
+			.map { type -> codeSmells[type] }
 			.map { it ?: emptyList() }
 			.map { calculateDeadPerAliveRatio(it) }
-			.joinToString(",")
-	content(result)
+			.toRoundedString()
+	content(result.replace("Infinity", "0.0"))
 }
 
 private inline fun calculateDeadPerAliveRatio(smells: List<JavaCodeSmell>): Double {
@@ -71,7 +73,9 @@ private inline fun calculateDeadPerAliveRatio(smells: List<JavaCodeSmell>): Doub
 
 private fun StringBuilder.appendOccurrencePerType(codeSmells: Map<Smell, List<JavaCodeSmell>>) {
 	comment("Type Occurrence")
-	val occurrences = smellTypes.map { codeSmells[it]?.size ?: 0 }.joinToString(",")
+	val occurrences = smellTypes.asSequence()
+			.map { codeSmells[it]?.size ?: 0 }
+			.joinToString(",")
 	content(occurrences)
 }
 
@@ -80,7 +84,7 @@ private fun StringBuilder.appendLifespanPerType(codeSmells: Map<Smell, List<Java
 	val occurrences = smellTypes.asSequence()
 			.map { codeSmells[it] }
 			.map { it?.meanBy { it.lifespanInDays() } ?: 0.0 }
-			.joinToString(",")
+			.toRoundedString()
 	content(occurrences)
 }
 
@@ -89,7 +93,7 @@ private fun StringBuilder.appendChangesPerType(codeSmells: Map<Smell, List<JavaC
 	val changes = smellTypes.asSequence()
 			.map { codeSmells[it] }
 			.map { it?.meanBy { it.weight() } ?: 0.0 }
-			.joinToString(",")
+			.toRoundedString()
 	content(changes)
 }
 
@@ -98,7 +102,7 @@ private fun StringBuilder.appendRelocationsPerType(codeSmells: Map<Smell, List<J
 	val relocations = smellTypes.asSequence()
 			.map { codeSmells[it] }
 			.map { it?.meanBy { it.relocations().size } ?: 0.0 }
-			.joinToString(",")
+			.toRoundedString()
 	content(relocations)
 }
 
@@ -107,8 +111,17 @@ private fun StringBuilder.appendRevivalsPerType(codeSmells: Map<Smell, List<Java
 	val relocations = smellTypes.asSequence()
 			.map { codeSmells[it] }
 			.map { it?.meanBy { it.revivedInVersions().size } ?: 0.0 }
-			.joinToString(",")
+			.toRoundedString()
 	content(relocations)
+}
+
+val ROUND_CONSTANT = 5
+
+private fun Sequence<Double>.toRoundedString() = joinToString(",") {
+	val content = it.toString()
+	val after = content.substringAfter(".")
+	val before = content.substringBefore(".")
+	before + "." + if (after.length <= ROUND_CONSTANT) after else after.substring(0, ROUND_CONSTANT)
 }
 
 private fun List<JavaCodeSmell>.meanBy(by: (JavaCodeSmell) -> Int): Double = if (isEmpty()) 0.0
