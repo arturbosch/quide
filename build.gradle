@@ -126,6 +126,7 @@ allprojects {
 }
 
 detekt {
+	version = "1.0.0.M10.2"
 	config = "$project.projectDir/detekt.yml"
 	filters = '.*/test/.*, .*/resources/.*'
 }
