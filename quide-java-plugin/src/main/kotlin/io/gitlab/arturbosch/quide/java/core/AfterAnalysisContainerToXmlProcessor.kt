@@ -9,7 +9,7 @@ import io.gitlab.arturbosch.quide.platform.UserData
  */
 class AfterAnalysisContainerToXmlProcessor : ContainerToXmlProcessor() {
 
-	override fun ifPropertySet(data: UserData): Boolean = data.quideDirectory().getProperty(
+	override fun <U : UserData> isActive(data: U) = data.quideDirectory().getProperty(
 			QuideConstants.VCS_OUTPUT)?.toBoolean() ?: false
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {

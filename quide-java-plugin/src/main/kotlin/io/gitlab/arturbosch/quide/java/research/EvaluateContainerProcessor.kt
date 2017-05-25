@@ -32,5 +32,3 @@ class EvaluateContainerProcessor : ConditionalProcessor {
 	}
 
 }
-
-class InvalidContainerError(msg: String) : RuntimeException(msg)

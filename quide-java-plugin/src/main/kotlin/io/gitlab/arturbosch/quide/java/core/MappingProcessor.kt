@@ -21,6 +21,6 @@ class MappingProcessor : Processor {
 	}
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {
-		return io.gitlab.arturbosch.quide.platform.ControlFlow.InjectionPoint.AfterDetection
+		return ControlFlow.InjectionPoint.AfterDetection
 	}
 }
