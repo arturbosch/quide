@@ -1,22 +1,26 @@
 package io.gitlab.arturbosch.quide.java.research
 
-import io.gitlab.arturbosch.quide.java.safeContainer
+import io.gitlab.arturbosch.kutils.write
+import io.gitlab.arturbosch.quide.java.JavaPluginData
+import io.gitlab.arturbosch.quide.java.withOutputPath
 import io.gitlab.arturbosch.quide.platform.ControlFlow
-import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
+import io.gitlab.arturbosch.quide.platform.processors.ConditionalProcessor
 
 /**
  * @author Artur Bosch
  */
-class EvaluateContainerProcessor : Processor {
+class EvaluateContainerProcessor : ConditionalProcessor {
 
-	override fun <U : UserData> execute(data: U) {
-		val container = data.safeContainer().orElseThrow {
-			InvalidContainerError("No container could be retrieved for evaluation!")
+	override fun <U : UserData> isActive(data: U) = (data as JavaPluginData).isEvolutionaryAnalysis()
+
+	override fun <U : UserData> doIfActive(data: U) {
+		data.withOutputPath { output, _, container ->
+			val result = evaluateToCSV(container)
+			val project = data.projectPath().fileName.toString()
+			val file = output.resolve("$project.evaluation.txt")
+			file.write(result)
 		}
-
-		val result = evaluateToCSV(container)
-		println(result)
 	}
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {
