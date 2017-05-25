@@ -8,6 +8,7 @@ import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.quide.java.core.MappingProcessor
 import io.gitlab.arturbosch.quide.java.core.ResultXmlProcessor
 import io.gitlab.arturbosch.quide.java.core.SmartSmellsTool
+import io.gitlab.arturbosch.quide.java.research.EvaluateContainerProcessor
 import io.gitlab.arturbosch.quide.platform.Plugin
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -24,8 +25,15 @@ class JavaPlugin : Plugin {
 
 	private val tool = SmartSmellsTool()
 	private val storage = JavaPluginData()
-	private val processors = mutableListOf(DetectorFacadeProcessor(), MappingProcessor(), NumberOfSmellsProcessor(),
-			ContainerToXmlProcessor(), ResultXmlProcessor(), ResultPrintProcessor(), AfterAnalysisContainerToXmlProcessor())
+	private val processors = mutableListOf(
+			DetectorFacadeProcessor(),
+			MappingProcessor(),
+			NumberOfSmellsProcessor(),
+			ContainerToXmlProcessor(),
+			ResultXmlProcessor(),
+			ResultPrintProcessor(),
+			AfterAnalysisContainerToXmlProcessor(),
+			EvaluateContainerProcessor())
 
 	override fun detector(): Detector<JavaSmellContainer> = tool
 
