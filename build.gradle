@@ -94,6 +94,7 @@ allprojects {
 	}
 
 	configurations {
+		kotlinConf
 		kotlinTest
 		spock
 		log
@@ -105,8 +106,8 @@ allprojects {
 		log "org.apache.logging.log4j:log4j-slf4j-impl:$loggerVersion"
 		log "org.apache.logging.log4j:log4j-api:$loggerVersion"
 		log "org.apache.logging.log4j:log4j-core:$loggerVersion"
-		kotlin "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-		kotlin "io.gitlab.arturbosch:kutils:$kutilsVersion"
+		kotlinConf "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+		kotlinConf "io.gitlab.arturbosch:kutils:$kutilsVersion"
 		kotlinTest "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"
 		kotlinTest "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 		kotlinTest "org.assertj:assertj-core:$assertjVersion"

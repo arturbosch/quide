@@ -1,6 +1,6 @@
 configurations {
 	compileOnly.extendsFrom log
-	compileOnly.extendsFrom kotlin
+	compileOnly.extendsFrom kotlinConf
 	testCompile.extendsFrom spock
 }
 

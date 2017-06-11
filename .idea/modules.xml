@@ -3,37 +3,69 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format.iml" group="codesmell-baseline-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format.iml" group="codesmell-baseline-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_main.iml" group="codesmell-baseline-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_main.iml" group="codesmell-baseline-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_test.iml" group="codesmell-baseline-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-baseline-format/codesmell-baseline-format_test.iml" group="codesmell-baseline-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format.iml" group="codesmell-evolution-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format.iml" group="codesmell-evolution-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_main.iml" group="codesmell-evolution-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_main.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_main.iml" group="codesmell-evolution-format" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" group="codesmell-evolution-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" group="codesmell-evolution-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide.iml" filepath="$PROJECT_DIR$/.idea/modules/quide.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" group="quide-crawler" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" group="quide-crawler" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" group="quide-crawler" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" group="quide-crawler" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" group="quide-crawler" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" group="quide-crawler" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" group="quide-detekt-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin.iml" group="quide-detekt-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" group="quide-detekt-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_main.iml" group="quide-detekt-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_test.iml" group="quide-detekt-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-detekt-plugin/quide-detekt-plugin_test.iml" group="quide-detekt-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin.iml" group="quide-groovy-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin.iml" group="quide-groovy-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_main.iml" group="quide-groovy-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_main.iml" group="quide-groovy-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_test.iml" group="quide-groovy-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-groovy-plugin/quide-groovy-plugin_test.iml" group="quide-groovy-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin.iml" group="quide-java-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin.iml" group="quide-java-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_main.iml" group="quide-java-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_main.iml" group="quide-java-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_test.iml" group="quide-java-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-java-plugin/quide-java-plugin_test.iml" group="quide-java-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" group="quide-platform" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform.iml" group="quide-platform" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" group="quide-platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_main.iml" group="quide-platform" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" group="quide-platform" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-platform/quide-platform_test.iml" group="quide-platform" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell.iml" group="quide-shell" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell.iml" group="quide-shell" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_main.iml" group="quide-shell" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_main.iml" group="quide-shell" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_test.iml" group="quide-shell" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-shell/quide-shell_test.iml" group="quide-shell" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" group="quide-specification" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification.iml" group="quide-specification" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_main.iml" group="quide-specification" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" group="quide-specification" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-specification/quide-specification_test.iml" group="quide-specification" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" group="quide-vcs-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin.iml" group="quide-vcs-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" group="quide-vcs-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_main.iml" group="quide-vcs-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" group="quide-vcs-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-vcs-plugin/quide-vcs-plugin_test.iml" group="quide-vcs-plugin" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_main.iml" group="quide" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_main.iml" group="quide" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_test.iml" group="quide" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide_test.iml" group="quide" />
     </modules>
   </component>

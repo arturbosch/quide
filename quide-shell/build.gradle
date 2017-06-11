@@ -3,13 +3,13 @@ mainClassName = 'io.gitlab.arturbosch.quide.shell.MainKt'
 apply plugin: 'groovy'
 
 configurations {
-	compile.extendsFrom kotlin
+	compile.extendsFrom kotlinConf
 	compile.extendsFrom log
 	testCompile.extendsFrom spock
 }
 
 dependencies {
 	compile project(":quide-platform")
-	compile 'org.jline:jline:3.1.2'
+	compile "org.jline:jline:$jlineVersion"
 	compile "com.beust:jcommander:$jcommanderVersion"
 }

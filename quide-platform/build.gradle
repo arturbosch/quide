@@ -3,7 +3,7 @@ mainClassName = 'io.gitlab.arturbosch.quide.platform.MainKt'
 apply plugin: 'groovy'
 
 configurations {
-	compile.extendsFrom kotlin
+	compile.extendsFrom kotlinConf
 	compile.extendsFrom log
 	testCompile.extendsFrom spock
 }

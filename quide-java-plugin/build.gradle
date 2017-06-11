@@ -2,7 +2,7 @@ apply plugin: 'groovy'
 
 configurations {
 	compileOnly.extendsFrom log
-	compileOnly.extendsFrom kotlin
+	compileOnly.extendsFrom kotlinConf
 	testCompile.extendsFrom kotlinTest
 	testCompile.extendsFrom spock
 }
@@ -17,4 +17,4 @@ dependencies {
 compileGroovy.dependsOn = compileGroovy.taskDependencies.values - 'compileJava'
 compileKotlin.dependsOn compileGroovy
 compileKotlin.classpath += files(compileGroovy.destinationDir)
-classes.dependsOn compileKotlin
+classes.dependsOn(tasks.getByName("compileKotlin"))
