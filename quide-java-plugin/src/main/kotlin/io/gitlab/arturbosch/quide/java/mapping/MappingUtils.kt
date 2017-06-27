@@ -2,10 +2,17 @@ package io.gitlab.arturbosch.quide.java.mapping
 
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.body.FieldDeclaration
+import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.body.Parameter
+import com.github.javaparser.ast.stmt.ExpressionStmt
+import com.github.javaparser.ast.stmt.Statement
 import difflib.DiffUtils
 import difflib.Patch
 import io.gitlab.arturbosch.jpal.ast.ClassHelper
 import io.gitlab.arturbosch.jpal.internal.Printer
+import io.gitlab.arturbosch.smartsmells.smells.DetectionResult
+import io.gitlab.arturbosch.smartsmells.smells.ElementTarget
 import java.util.ArrayList
 
 /**
@@ -28,3 +35,16 @@ fun <N : Node> Node.nodesByType(clazz: Class<N>): List<N> {
 
 fun Node.toSignature(): String = toString(Printer.NO_COMMENTS)
 fun ClassOrInterfaceDeclaration.toSignature(): String = ClassHelper.createFullSignature(this)
+
+fun ASTChunk.containsSmell(smell: DetectionResult): Boolean {
+	val candidates = originalNodes.filter { it.containsSmell(smell) }
+	val result = when (smell.elementTarget()) {
+		ElementTarget.LOCAL -> candidates.filter { it is ExpressionStmt || it is Statement }
+		ElementTarget.FIELD -> candidates.filter { it is FieldDeclaration }
+		ElementTarget.METHOD -> candidates.filter { it is MethodDeclaration }
+		ElementTarget.CLASS -> candidates.filter { it is ClassOrInterfaceDeclaration }
+		ElementTarget.PARAMETER -> candidates.filter { it is Parameter }
+		else -> emptyList()
+	}
+	return result.isNotEmpty()
+}

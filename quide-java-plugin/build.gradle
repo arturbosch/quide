@@ -12,6 +12,7 @@ dependencies {
 	compileOnly project(":quide-specification")
 	compile project(":codesmell-evolution-format")
 	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:$smartsmellsVersion"
+	testCompile "io.gitlab.arturbosch:kutils:$kutilsVersion"
 }
 
 compileGroovy.dependsOn = compileGroovy.taskDependencies.values - 'compileJava'
