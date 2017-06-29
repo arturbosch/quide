@@ -1,0 +1,9 @@
+configurations {
+	compileOnly.extendsFrom log
+	compileOnly.extendsFrom kotlinConf
+	testCompile.extendsFrom kotlinTest
+}
+
+dependencies {
+	compileOnly project(":quide-specification")
+}

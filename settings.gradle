@@ -9,4 +9,5 @@ include 'quide-shell'
 include 'codesmell-evolution-format'
 include 'quide-groovy-plugin'
 include 'quide-crawler'
+include 'quide-hotspot-plugin'
 
