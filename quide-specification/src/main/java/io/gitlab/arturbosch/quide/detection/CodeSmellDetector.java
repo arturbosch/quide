@@ -7,7 +7,7 @@ import io.gitlab.arturbosch.quide.platform.UserData;
 /**
  * @author Artur Bosch
  */
-public interface Detector<S extends SmellContainer> extends Nameable {
+public interface CodeSmellDetector<S extends SmellContainer> extends Nameable {
 
 	<U extends UserData> S execute(U data);
 }

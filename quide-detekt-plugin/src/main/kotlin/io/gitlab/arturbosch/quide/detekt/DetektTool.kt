@@ -5,7 +5,7 @@ import io.gitlab.arturbosch.detekt.api.YamlConfig
 import io.gitlab.arturbosch.detekt.core.DetektFacade
 import io.gitlab.arturbosch.detekt.core.PathFilter
 import io.gitlab.arturbosch.detekt.core.ProcessingSettings
-import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.detection.CodeSmellDetector
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.QuideDirectory
@@ -14,7 +14,7 @@ import io.gitlab.arturbosch.quide.platform.UserData
 /**
  * @author Artur Bosch
  */
-class DetektTool : Detector<DetektSmellContainer> {
+class DetektTool : CodeSmellDetector<DetektSmellContainer> {
 
 	override fun name(): String = "Detekt"
 

@@ -1,6 +1,6 @@
 package io.gitlab.arturbosch.quide.java
 
-import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.detection.CodeSmellDetector
 import io.gitlab.arturbosch.quide.java.core.AfterAnalysisContainerToXmlProcessor
 import io.gitlab.arturbosch.quide.java.core.ContainerToXmlProcessor
 import io.gitlab.arturbosch.quide.java.core.DetectorFacadeProcessor
@@ -35,7 +35,7 @@ class JavaPlugin : Plugin {
 			AfterAnalysisContainerToXmlProcessor(),
 			EvaluateContainerProcessor())
 
-	override fun detector(): Detector<JavaSmellContainer> = tool
+	override fun detector(): CodeSmellDetector<JavaSmellContainer> = tool
 
 	override fun processors(): MutableList<Processor> = processors
 
@@ -43,8 +43,6 @@ class JavaPlugin : Plugin {
 }
 
 class JavaPluginData : UserData() {
-
-	fun isEvolutionaryAnalysis(): Boolean = versionProvider().isPresent
 
 	fun updatableFacade(): UpdatableDetectorFacade = get(UPDATABLE_FACADE,
 			TypeToken.get(UpdatableDetectorFacade::class.java)).orElseThrow {

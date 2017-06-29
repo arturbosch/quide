@@ -1,7 +1,7 @@
 package io.gitlab.arturbosch.quide.groovy
 
 import groovy.transform.CompileStatic
-import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.detection.CodeSmellDetector
 import io.gitlab.arturbosch.quide.platform.UserData
 import org.codenarc.CodeNarcRunner
 import org.codenarc.analyzer.FilesystemSourceAnalyzer
@@ -11,7 +11,7 @@ import org.codenarc.results.Results
  * @author Artur Bosch
  */
 @CompileStatic
-class CodeNarcTool implements Detector<GroovySmellContainer> {
+class CodeNarcTool implements CodeSmellDetector<GroovySmellContainer> {
 
 	private static final CodeNarcRunner runner = new CodeNarcRunner()
 	private static final FilesystemSourceAnalyzer analyzer = new FilesystemSourceAnalyzer()

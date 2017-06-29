@@ -1,13 +1,13 @@
 package io.gitlab.arturbosch.quide.java.core
 
-import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.detection.CodeSmellDetector
 import io.gitlab.arturbosch.quide.java.JavaPluginData
 import io.gitlab.arturbosch.quide.platform.UserData
 
 /**
  * @author Artur Bosch
  */
-class SmartSmellsTool : Detector<JavaSmellContainer> {
+class SmartSmellsTool : CodeSmellDetector<JavaSmellContainer> {
 
 	override fun name(): String {
 		return "SmartSmells"

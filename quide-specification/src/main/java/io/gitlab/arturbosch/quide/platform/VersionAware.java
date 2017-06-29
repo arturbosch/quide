@@ -27,5 +27,7 @@ public interface VersionAware extends StorageAware {
 		return get(VERSION_PROVIDER, TypeToken.get(VersionProvider.class));
 	}
 
-
+	default boolean isEvolutionaryAnalysis() {
+		return versionProvider().isPresent();
+	}
 }

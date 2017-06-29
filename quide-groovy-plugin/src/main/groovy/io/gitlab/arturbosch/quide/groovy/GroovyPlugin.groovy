@@ -1,7 +1,7 @@
 package io.gitlab.arturbosch.quide.groovy
 
 import groovy.transform.CompileStatic
-import io.gitlab.arturbosch.quide.detection.Detector
+import io.gitlab.arturbosch.quide.detection.CodeSmellDetector
 import io.gitlab.arturbosch.quide.platform.Plugin
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -19,7 +19,7 @@ class GroovyPlugin implements Plugin {
 	private final List<Processor> processors = [new NumberOfSmellsProcessor(), new ResultPrintProcessor()]
 
 	@Override
-	Detector detector() {
+	CodeSmellDetector detector() {
 		return tool
 	}
 

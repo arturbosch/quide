@@ -1,6 +1,6 @@
 package io.gitlab.arturbosch.quide.platform;
 
-import io.gitlab.arturbosch.quide.detection.Detector;
+import io.gitlab.arturbosch.quide.detection.CodeSmellDetector;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface Plugin extends Nameable {
 
-	Detector detector();
+	CodeSmellDetector detector();
 
 	List<Processor> processors();
 
