@@ -2,8 +2,16 @@ configurations {
 	compileOnly.extendsFrom log
 	compileOnly.extendsFrom kotlinConf
 	testCompile.extendsFrom kotlinTest
+	testCompile.extendsFrom spekTest
+	testRuntime.extendsFrom junitPlatform
 }
 
 dependencies {
 	compileOnly project(":quide-specification")
+	testCompile project(":quide-specification")
+	testRuntime "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
+}
+
+sourceSets {
+	main.java.srcDirs += 'src/main/kotlin'
 }
