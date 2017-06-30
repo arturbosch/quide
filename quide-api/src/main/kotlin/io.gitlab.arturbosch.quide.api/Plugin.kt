@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.api
 
+import io.gitlab.arturbosch.quide.api.processors.Processor
 import io.gitlab.arturbosch.quide.model.CodeSmell
 import io.gitlab.arturbosch.quide.model.SmellContainer
 
@@ -8,14 +9,15 @@ import io.gitlab.arturbosch.quide.model.SmellContainer
  */
 interface Plugin : Nameable {
 
-	fun define(context: Context) {
-		context.register(MyCodeSmellDetector())
-	}
+	val id get() = name
+	fun define(context: Context)
 
-	object Context {
+	class Context {
 
-		private var detectorInstance: Detector<*>? = null
-		private val registeredProcessors: MutableList<Processor> = mutableListOf()
+		var detectorInstance: Detector<*>? = null
+			private set
+		val registeredProcessors get() = _registeredProcessors.toSet()
+		private val _registeredProcessors: MutableSet<Processor> = mutableSetOf()
 
 		fun <T : CodeSmell, C : SmellContainer<T>> register(detector: Detector<C>) {
 			if (detectorInstance != null) {
@@ -25,8 +27,7 @@ interface Plugin : Nameable {
 		}
 
 		fun register(vararg processors: Processor) {
-			registeredProcessors.addAll(processors)
+			_registeredProcessors.addAll(processors)
 		}
-
 	}
 }

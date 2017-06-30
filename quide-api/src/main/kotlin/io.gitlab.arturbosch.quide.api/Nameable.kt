@@ -5,7 +5,5 @@ package io.gitlab.arturbosch.quide.api
  */
 interface Nameable {
 
-	fun name(): String {
-		return javaClass.simpleName
-	}
+	val name get(): String = javaClass.simpleName
 }
