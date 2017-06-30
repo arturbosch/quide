@@ -13,6 +13,7 @@ plugins {
 	id 'com.github.ben-manes.versions' version '0.13.0'
 	id "com.github.johnrengelman.shadow" version "1.2.3"
 	id "io.gitlab.arturbosch.detekt" version "1.0.0.M10.2"
+	id "org.sonarqube" version "2.5"
 //		id "com.github.hierynomus.license" version "0.13.1"
 }
 
@@ -111,6 +112,7 @@ allprojects {
 		kotlinTest "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"
 		kotlinTest "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 		kotlinTest "org.assertj:assertj-core:$assertjVersion"
+		testCompile "io.gitlab.arturbosch:kutils:$kutilsVersion"
 		spock "org.spockframework:spock-core:$spockVersion"
 		spock "org.codehaus.groovy:groovy-all:$groovyVersion"
 	}
