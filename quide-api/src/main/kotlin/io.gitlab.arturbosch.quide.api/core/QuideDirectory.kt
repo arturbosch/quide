@@ -7,7 +7,7 @@ import java.util.HashMap
 /**
  * @author Artur Bosch
  */
-abstract class QuideDirectory(protected val properties: MutableMap<String, String> = HashMap()) {
+abstract class QuideDirectory(protected val properties: MutableMap<String, String> = HashMap()) : PropertiesAware {
 
 	companion object {
 		const val USER_HOME = "user.home"
@@ -24,11 +24,11 @@ abstract class QuideDirectory(protected val properties: MutableMap<String, Strin
 		return checkDir(home.resolve(subPath))
 	}
 
-	fun property(key: String): String? {
+	override fun property(key: String): String? {
 		return properties[key]
 	}
 
-	fun propertyOrDefault(key: String, defaultValue: String): String {
+	override fun propertyOrDefault(key: String, defaultValue: String): String {
 		return properties[key] ?: defaultValue
 	}
 
