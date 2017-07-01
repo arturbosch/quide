@@ -16,14 +16,13 @@ import java.util.HashMap
 abstract class AbstractAnalysisContext(override val pluginId: String,
 									   private val storage: Storage,
 									   override val fileSystem: FileSystem,
-									   override val quideDirectory: QuideDirectory)
-	: AnalysisContext,
+									   override val quideDirectory: QuideDirectory) : AnalysisContext,
 		StorageAware by storage,
 		VersionAware, ResourceAware,
 		PropertiesAware by quideDirectory,
 		FileSystem by fileSystem
 
-class TestContext(plugin: Plugin, context: Plugin.Context) : AbstractAnalysisContext(
+class TestContext(plugin: Plugin) : AbstractAnalysisContext(
 		plugin.id, TestStorage, TestFileSystem, TestQuideDir)
 
 object TestQuideDir : QuideDirectory()
