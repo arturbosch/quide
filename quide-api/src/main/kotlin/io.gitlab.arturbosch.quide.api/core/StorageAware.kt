@@ -10,9 +10,7 @@ interface StorageAware {
 	fun <T : Any> put(key: String, value: T)
 }
 
-abstract class Storage : StorageAware {
-
-	protected val storage: HashMap<String, Any> = HashMap()
+abstract class Storage(protected val storage: HashMap<String, Any> = HashMap()) : StorageAware {
 
 	@Suppress("UNCHECKED_CAST")
 	override operator fun <T> get(key: String): T? {
