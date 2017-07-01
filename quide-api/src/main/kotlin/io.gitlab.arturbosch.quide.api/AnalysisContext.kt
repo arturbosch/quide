@@ -2,7 +2,6 @@ package io.gitlab.arturbosch.quide.api
 
 import io.gitlab.arturbosch.quide.api.core.PropertiesAware
 import io.gitlab.arturbosch.quide.api.core.QuideDirectory
-import io.gitlab.arturbosch.quide.api.core.Storage
 import io.gitlab.arturbosch.quide.api.core.StorageAware
 import io.gitlab.arturbosch.quide.api.core.VersionAware
 import io.gitlab.arturbosch.quide.api.filesystem.FileSystem
@@ -16,13 +15,3 @@ interface AnalysisContext : StorageAware, VersionAware, ResourceAware, Propertie
 	val fileSystem: FileSystem
 	val quideDirectory: QuideDirectory
 }
-
-abstract class AbstractAnalysisContext(override val pluginId: String,
-									   private val storage: Storage,
-									   override val fileSystem: FileSystem,
-									   override val quideDirectory: QuideDirectory)
-	: AnalysisContext,
-		StorageAware by storage,
-		VersionAware, ResourceAware,
-		PropertiesAware by quideDirectory,
-		FileSystem by fileSystem
