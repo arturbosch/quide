@@ -1,5 +1,6 @@
 package io.gitlab.arturbosch.quide.api.core
 
+import io.gitlab.arturbosch.quide.api.QuideDirectory
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
