@@ -9,8 +9,9 @@ import java.nio.file.Path
 interface InputPath {
 	val relativePath: String
 	val absolutePath: String
+	val name get() = file.nameWithoutExtension
 	val file: File
 	val path: Path
-	fun isFile(): Boolean
-	fun isDir(): Boolean
+	fun isFile(): Boolean = false
+	fun isDir(): Boolean = false
 }
