@@ -18,7 +18,7 @@ class SmartSmellsTool : CodeSmellDetector<JavaSmellContainer> {
 		val currentVersion = data.currentVersion()
 		val projectPath = pluginData.projectPath()
 
-		val smellResult = if (pluginData.isEvolutionaryAnalysis()) {
+		val smellResult = if (pluginData.isEvolutionaryAnalysis) {
 			val updatableFacade = pluginData.updatableFacade()
 			val versionable = currentVersion.orElseThrow { IllegalStateException("In evolutionary analysis but no version?") }
 			VersionCrawler(projectPath, versionable, updatableFacade).run()

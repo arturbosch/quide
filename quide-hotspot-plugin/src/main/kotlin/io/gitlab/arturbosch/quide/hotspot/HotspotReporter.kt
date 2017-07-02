@@ -25,6 +25,7 @@ class HotspotReporter : EvolutionaryProcessor {
 
 		println("\nHotspot report: \n")
 		println(result.textReport())
+		println()
 	}
 
 	private fun distinctSubPackages(): List<Package> {

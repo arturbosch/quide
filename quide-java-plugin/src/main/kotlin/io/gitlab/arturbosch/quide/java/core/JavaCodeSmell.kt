@@ -21,7 +21,7 @@ class JavaCodeSmell(val type: Smell, var smell: DetectionResult) : BaseCodeSmell
 
 	override fun toString(): String = smell.toString() + "\n\t" + super.toString()
 
-	override fun asPrintable(): String = smell.toString()
+	override fun asPrintable(): String = smell.asCliRdyString()
 
 	fun updateInternal(updated: DetectionResult): JavaCodeSmell {
 		return this.apply {
