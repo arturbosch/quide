@@ -14,8 +14,9 @@ object CLI {
 			require(input != null) { "Unexpected null input file!" }
 			require(output != null) { "Unexpected null output directory!" }
 			val gitEntries = input!!.readLines()
+			val crawlerOptions = createCrawlerOptions()
 			Console.write("Start piping to $output...")
-			GitPipe.start(output!!, gitEntries)
+			GitPipe(crawlerOptions).start(output!!, gitEntries)
 			Console.write("Finished piping to $output!")
 		}
 	}

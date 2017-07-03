@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.kutils.Try
 import io.gitlab.arturbosch.kutils.asPath
 import io.gitlab.arturbosch.kutils.exists
 import io.gitlab.arturbosch.quide.crawler.Console
+import io.gitlab.arturbosch.quide.crawler.cli.CrawlerOptions
 import org.vcsreader.VcsProject
 import org.vcsreader.vcs.git.GitVcsRoot
 import java.nio.file.Path
@@ -11,7 +12,7 @@ import java.nio.file.Path
 /**
  * @author Artur Bosch
  */
-object GitPipe : Pipe {
+class GitPipe(val options: CrawlerOptions) : Pipe {
 
 	override fun start(cloneRootDir: Path, entries: List<String>) {
 		val gits = produceGitRoots(cloneRootDir, entries)
@@ -37,10 +38,18 @@ object GitPipe : Pipe {
 				Clone.git(fileName, project)
 			}
 		} onSuccess {
-			Console.write("Collect metrics for $fileName...")
-			Analyze.start(filePath)
+			optionalPreAnalysis(filePath, fileName)
 		} onError {
 			Console.write("Error for $fileName: \n${it.message}")
 		}
 	}
+
+	private fun optionalPreAnalysis(filePath: Path, fileName: String) {
+		if (options.containsOperations(ANALYZE)) {
+			Console.write("Collect metrics for $fileName...")
+			Analyze.start(filePath)
+		}
+	}
 }
+
+const val ANALYZE = "ANALYZE"

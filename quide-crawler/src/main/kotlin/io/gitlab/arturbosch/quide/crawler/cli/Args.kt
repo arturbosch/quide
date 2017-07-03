@@ -21,7 +21,17 @@ object Args {
 			description = "The output report folder path.",
 			converter = DirectoryPathConverter::class)
 	var output: Path? = null
+	@Parameter(names = arrayOf("--options", "-opt"),
+			description = "Possible values: ANALYZE (metric pre analysis).")
+	var options: String = ""
 	var usage: String = ""
+
+	fun createCrawlerOptions() = CrawlerOptions(
+			options.split(",")
+					.map { it.trim() }
+					.filterNot { it.isNullOrBlank() }
+					.map { it.toUpperCase() }
+	)
 }
 
 fun Array<String>.parse(): Args {
