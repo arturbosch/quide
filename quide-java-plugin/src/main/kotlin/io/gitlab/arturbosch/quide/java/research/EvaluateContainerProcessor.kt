@@ -1,7 +1,6 @@
 package io.gitlab.arturbosch.quide.java.research
 
 import io.gitlab.arturbosch.kutils.write
-import io.gitlab.arturbosch.quide.java.JavaPluginData
 import io.gitlab.arturbosch.quide.java.withOutputPath
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -12,7 +11,7 @@ import io.gitlab.arturbosch.quide.platform.processors.ConditionalProcessor
  */
 class EvaluateContainerProcessor : ConditionalProcessor {
 
-	override fun <U : UserData> isActive(data: U) = (data as JavaPluginData).isEvolutionaryAnalysis()
+	override fun <U : UserData> isActive(data: U) = data.isEvolutionaryAnalysis
 
 	override fun <U : UserData> doIfActive(data: U) {
 		data.withOutputPath { output, _, container ->

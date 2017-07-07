@@ -33,7 +33,7 @@ class DetectorFacadeProcessor : Processor {
 		val configPath = quide.configurationsDir().resolve(config)
 		val filters = loadFiltersFromProperties(quide)
 		val facade = buildFacade(configPath, filters)
-		if (pluginData.isEvolutionaryAnalysis()) {
+		if (pluginData.isEvolutionaryAnalysis) {
 			data.put(UPDATABLE_FACADE, UpdatableDetectorFacade(facade))
 		}
 		data.put(FACADE, facade)
