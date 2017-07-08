@@ -40,16 +40,31 @@ class DataObjectsTest {
 		Assertions.assertThat(expected.sum).isEqualTo(actual.sum)
 	}
 
+	private fun smellTypeDataFor(name: String) = SmellTypeData(name, 10,
+			SurvivalData(10, 4, 6),
+			LifespanData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+			ChangesData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+			RelocationsData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+			RevivalsData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))
+
 	@Test
 	fun convertSmellTypeData() {
-		val actual = SmellTypeData("LongMethod", 10,
-				SurvivalData(10, 4, 6),
-				LifespanData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
-				ChangesData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
-				RelocationsData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
-				RevivalsData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))
+		val actual = smellTypeDataFor("LongMethod")
 		val content = actual.toString()
 		val expected = SmellTypeData.from(content)
+
+		Assertions.assertThat(expected).isEqualTo(actual)
+	}
+
+	@Test
+	fun convertContainerEvaluationData() {
+		val survivalData = SurvivalSummaryData(SurvivalData(100, 45, 55))
+		val lmData = smellTypeDataFor("LongMethod")
+		val lplData = smellTypeDataFor("LongParameterList")
+
+		val actual = ContainerEvaluationData(survivalData, listOf(lmData, lplData))
+		val content = actual.toString()
+		val expected = ContainerEvaluationData.from(content)
 
 		Assertions.assertThat(expected).isEqualTo(actual)
 	}

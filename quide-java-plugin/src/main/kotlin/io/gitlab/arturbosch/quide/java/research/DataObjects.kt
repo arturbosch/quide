@@ -3,6 +3,36 @@ package io.gitlab.arturbosch.quide.java.research
 /**
  * @author Artur Bosch
  */
+data class ContainerEvaluationData(val summaryData: SurvivalSummaryData,
+								   val typeData: List<SmellTypeData>) {
+	override fun toString(): String =
+			with(StringBuilder()) {
+				append(summaryData.toString())
+				append(NL)
+				typeData.forEach {
+					append(it.toString())
+					append(NL)
+				}
+				toString()
+			}
+
+	companion object {
+		fun from(csv: String): ContainerEvaluationData {
+			val lines = csv.split(NL).filterNot { it.isNullOrBlank() }
+			require(lines.isNotEmpty())
+			val summaryData = SurvivalSummaryData.from(lines[0])
+			val typeData = if (lines.size > 1) {
+				lines.subList(1, lines.size)
+						.map { SmellTypeData.from(it) }
+			} else emptyList<SmellTypeData>()
+			return ContainerEvaluationData(summaryData, typeData)
+		}
+	}
+}
+
+const val TAB = "\t"
+const val COMMA = ","
+const val NL = "\n"
 
 data class SurvivalSummaryData(val survivalData: SurvivalData) {
 	override fun toString(): String = survivalData.toString()
@@ -97,9 +127,6 @@ abstract class StatisticsData(val values: List<Int>) {
 
 
 }
-
-const val TAB = "\t"
-const val COMMA = ","
 
 data class SurvivalData(val all: Int, val alive: Int, val dead: Int) {
 	val aliveRatio: Double get() = alive.toDouble() / all
