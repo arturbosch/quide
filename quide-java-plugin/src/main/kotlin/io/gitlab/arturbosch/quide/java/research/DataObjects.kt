@@ -1,10 +1,12 @@
 package io.gitlab.arturbosch.quide.java.research
 
+import io.gitlab.arturbosch.quide.model.Printable
+
 /**
  * @author Artur Bosch
  */
 data class ContainerEvaluationData(val summaryData: SurvivalSummaryData,
-								   val typeData: List<SmellTypeData>) {
+								   val typeData: List<SmellTypeData>) : Printable {
 	override fun toString(): String =
 			with(StringBuilder()) {
 				append(summaryData.toString())
@@ -15,6 +17,11 @@ data class ContainerEvaluationData(val summaryData: SurvivalSummaryData,
 				}
 				toString()
 			}
+
+	override fun asPrintable(): String {
+		return "Survival Summary: " + summaryData.asPrintable() + NL + NL +
+				typeData.joinToString(NL) { it.asPrintable() }
+	}
 
 	companion object {
 		fun from(csv: String): ContainerEvaluationData {
@@ -34,8 +41,9 @@ const val TAB = "\t"
 const val COMMA = ","
 const val NL = "\n"
 
-data class SurvivalSummaryData(val survivalData: SurvivalData) {
+data class SurvivalSummaryData(val survivalData: SurvivalData) : Printable {
 	override fun toString(): String = survivalData.toString()
+	override fun asPrintable(): String = survivalData.asPrintable()
 
 	companion object {
 		fun from(csv: String) = SurvivalSummaryData(SurvivalData.from(csv))
@@ -48,9 +56,13 @@ data class SmellTypeData(val type: String,
 						 val lifespanData: LifespanData,
 						 val changesData: ChangesData,
 						 val relocationsData: RelocationsData,
-						 val revivalsData: RevivalsData) {
+						 val revivalsData: RevivalsData) : Printable {
 	override fun toString(): String = type + TAB + occurrence + TAB + survivalData + TAB +
 			lifespanData + TAB + changesData + TAB + relocationsData + TAB + revivalsData
+
+	override fun asPrintable(): String = "$type - #$occurrence" + NL + "Survival: ${survivalData.asPrintable()}" + NL +
+			"Lifespan: ${lifespanData.asPrintable()}" + NL + "Changes: ${changesData.asPrintable()}" + NL +
+			"Relocations: ${relocationsData.asPrintable()}" + NL + "Revivals: ${revivalsData.asPrintable()}" + NL
 
 	companion object {
 		fun from(csv: String): SmellTypeData {
@@ -96,14 +108,18 @@ class RevivalsData(values: List<Int>) : StatisticsData(values) {
 	}
 }
 
-abstract class StatisticsData(val values: List<Int>) {
+abstract class StatisticsData(val values: List<Int>) : Printable {
 	private val summary = values.stream().mapToInt { it }.summaryStatistics()
 	val max get() = summary.max
 	val min get() = summary.min
 	val mean get() = summary.average
 	val sum get() = summary.sum
 	val deviation: Double get() = Math.sqrt(values.map { Math.pow(it.toDouble() - mean, 2.0) }.sum())
+
 	override fun toString(): String = values.joinToString(COMMA)
+
+	override fun asPrintable(): String = "sum=$sum, max=$max, min=$min, mean=$mean, deviation=$deviation"
+
 	override fun equals(other: Any?): Boolean {
 		if (this === other) return true
 		if (other?.javaClass != javaClass) return false
@@ -125,15 +141,17 @@ abstract class StatisticsData(val values: List<Int>) {
 		fun from(csv: String) = csv.split(COMMA).map { it.toInt() }
 	}
 
-
 }
 
-data class SurvivalData(val all: Int, val alive: Int, val dead: Int) {
+data class SurvivalData(val all: Int, val alive: Int, val dead: Int) : Printable {
 	val aliveRatio: Double get() = alive.toDouble() / all
 	val deadRatio get() = dead.toDouble() / all
 	val deadAliveRatio get() = dead.toDouble() / alive
 
 	override fun toString(): String = "$all,$alive,$dead,$aliveRatio,$deadRatio,$deadAliveRatio"
+
+	override fun asPrintable(): String = "all=$all, alive=$alive, dead=$dead, " +
+			"%alive=$aliveRatio, %dead=$deadRatio, deadForOneAlive=$deadAliveRatio"
 
 	companion object {
 		fun from(csv: String): SurvivalData {
