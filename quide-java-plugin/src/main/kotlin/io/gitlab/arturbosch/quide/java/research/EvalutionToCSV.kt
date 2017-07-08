@@ -5,12 +5,30 @@ package io.gitlab.arturbosch.quide.java.research
 import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
 import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.smartsmells.config.Smell
+import java.util.ArrayList
 
 /**
  * @author Artur Bosch
  */
 
 private val smellTypes = Smell.values().filter { it != Smell.UNKNOWN && it != Smell.CLASS_INFO }
+
+fun evaluateToDataObjects(container: JavaSmellContainer): ContainerEvaluationData {
+	val codeSmells = container.all().groupBy { it.type }
+	val summaryData = SurvivalSummaryData(SurvivalData(
+			container.all().size, container.alive().size, container.dead().size))
+	val result = ArrayList<SmellTypeData>()
+	for ((type, smells) in codeSmells) {
+		val typeData = SmellTypeData(type.name, smells.size,
+				SurvivalData(smells.size, smells.filter { it.isAlive }.size, smells.filterNot { it.isAlive }.size),
+				LifespanData(smells.map { it.lifespanInDays() }),
+				ChangesData(smells.map { it.weight() }),
+				RelocationsData(smells.map { it.relocations().size }),
+				RevivalsData(smells.map { it.revivedInVersions().size }))
+		result.add(typeData)
+	}
+	return ContainerEvaluationData(summaryData, result)
+}
 
 fun evaluateToCSV(container: JavaSmellContainer): String {
 	val codeSmells = container.all().groupBy { it.type }
