@@ -17,10 +17,15 @@ class BasePluginLoader(val pluginDetector: PluginDetector) : PluginLoader {
 	override fun load(): List<Plugin> {
 		val urls = pluginDetector.jars
 		val loader = URLClassLoader(urls, javaClass.classLoader)
-		return ServiceLoader.load(Plugin::class.java, loader)
-				.asIterable().toList().apply {
-			logger.info("Loaded Plugins: " + joinToString(transform = Plugin::name))
+		val plugins = ServiceLoader.load(Plugin::class.java, loader).asIterable().toList()
+		if (plugins.size > 1) {
+			val names = plugins.map(Plugin::name)
+			logger.info("Loaded Plugins: " + names.joinToString())
+			if (names.size != names.distinct().size) {
+				throw IllegalStateException("Two plugins with same name found!")
+			}
 		}
+		return plugins
 	}
 
 }
