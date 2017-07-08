@@ -19,29 +19,20 @@ class EvaluateContainerProcessorTest {
 		}
 
 		val content = evaluateToCSV(container)
-
 		assertEquals(content.trimIndent(), EXPECTED)
+
+		val actualContainer = evaluateToDataObjects(container)
+		val expectedContainer = ContainerEvaluationData.from(content)
+		assertEquals(actualContainer, expectedContainer)
 	}
 
 	private val EXPECTED = """
---- START Survival Ratio ---
-All, Alive, Dead, %Alive, %Dead, Ratio
-12.0,12.0,0.0,1.0,0.0,0.0
---- END Survival Ratio ---
---- START Metrics per SmellType ---
-COMMENT,COMPLEX_CONDITION,COMPLEX_METHOD,CYCLE,DATA_CLASS,DEAD_CODE,FEATURE_ENVY,GOD_CLASS,JAVADOC,LARGE_CLASS,LONG_METHOD,LONG_PARAM,MESSAGE_CHAIN,MIDDLE_MAN,NESTED_BLOCK_DEPTH,SHOTGUN_SURGERY,STATE_CHECKING
---- Type Survival ---
-0.0.Infin,0.0,0.0,0.0,0.0.Infin,0.0.Infin,0.0.Infin,0.0,0.0,0.0,0.0.Infin,0.0.Infin,0.0,0.0,0.0,0.0,0.0
---- Type Occurrence ---
-2,0,0,0,1,6,1,0,0,0,1,1,0,0,0,0,0
---- Type Lifespan ---
-4.0,0.0,0.0,0.0,4.0,4.0,4.0,0.0,0.0,0.0,4.0,4.0,0.0,0.0,0.0,0.0,0.0
---- Type Changes ---
-0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
---- Type Relocations ---
-0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
---- Type Revivals ---
-0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
---- END Metrics per SmellType ---
+12,12,0,1.0,0.0,0.0
+COMMENT	2	2,2,0,1.0,0.0,0.0	4,4	0,0	0,0	0,0
+DEAD_CODE	6	6,6,0,1.0,0.0,0.0	4,4,4,4,4,4	0,0,0,0,0,0	0,0,0,0,0,0	0,0,0,0,0,0
+LONG_METHOD	1	1,1,0,1.0,0.0,0.0	4	0	0	0
+LONG_PARAM	1	1,1,0,1.0,0.0,0.0	4	0	0	0
+DATA_CLASS	1	1,1,0,1.0,0.0,0.0	4	0	0	0
+FEATURE_ENVY	1	1,1,0,1.0,0.0,0.0	4	0	0	0
 """.trimIndent()
 }

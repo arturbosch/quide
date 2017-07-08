@@ -5,11 +5,14 @@ import io.gitlab.arturbosch.quide.java.withOutputPath
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.platform.processors.ConditionalProcessor
+import org.slf4j.LoggerFactory
 
 /**
  * @author Artur Bosch
  */
 class EvaluateContainerProcessor : ConditionalProcessor {
+
+	private val logger = LoggerFactory.getLogger(javaClass.simpleName)
 
 	override fun <U : UserData> isActive(data: U) = data.isEvolutionaryAnalysis
 
@@ -19,6 +22,7 @@ class EvaluateContainerProcessor : ConditionalProcessor {
 			val project = data.projectPath().fileName.toString()
 			val file = output.resolve("$project.evaluation.txt")
 			file.write(result)
+			logger.info("Container saved to $file")
 		}
 	}
 
