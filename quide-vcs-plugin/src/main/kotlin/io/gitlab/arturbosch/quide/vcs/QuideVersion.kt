@@ -13,8 +13,9 @@ data class QuideVersion(private val versionId: Int,
 			.filter { it.isWithinRelativePath() }
 			.map { change -> QuideFileChange(relativePath, change) }.toMutableList()
 
-	private fun VcsChange.isWithinRelativePath() = projectPath.resolve(filePath).toString().contains(relativePath.toString()) ||
-			projectPath.resolve(filePathBefore).toString().contains(relativePath.toString())
+	private fun VcsChange.isWithinRelativePath() =
+			projectPath.resolve(filePath).toString().contains(relativePath.toString()) ||
+					projectPath.resolve(filePathBefore).toString().contains(relativePath.toString())
 
 	private val revision = QuideRevision(commit)
 
@@ -22,5 +23,6 @@ data class QuideVersion(private val versionId: Int,
 	override fun revision(): Revision = revision
 	override fun fileChanges(): List<FileChange> = changes
 
-	override fun asPrintable(): String = "$versionId - ${revision.versionHash()} - ${revision.date()} - ${revision.message()}"
+	override fun asPrintable(): String
+			= "$versionId - ${revision.versionHash()} - ${revision.date()} - ${revision.message()}"
 }

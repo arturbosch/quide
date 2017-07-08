@@ -16,8 +16,14 @@ data class QuideFileChange(private val path: Path, private val vcsChange: VcsCha
 		else -> throw UnsupportedOperationException("No other types are supported!")
 	}
 
-	private val oldFile = QuideSourceFile(path.resolve(vcsChange.filePathBefore).toString()) { vcsChange.fileContentBefore().value }
-	private val newFile = QuideSourceFile(path.resolve(vcsChange.filePath).toString()) { vcsChange.fileContent().value }
+	private val oldFile = QuideSourceFile(path.resolve(vcsChange.filePathBefore).toString()) {
+		vcsChange.fileContentBefore().value
+	}
+
+	private val newFile = QuideSourceFile(path.resolve(vcsChange.filePath).toString()) {
+		vcsChange.fileContent().value
+	}
+
 	private var patch: Patch<*>? = null
 
 	override fun type(): FileChange.Type = type

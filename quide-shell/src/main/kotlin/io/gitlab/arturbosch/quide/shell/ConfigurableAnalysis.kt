@@ -11,8 +11,8 @@ import java.util.Optional
  */
 object ConfigurableAnalysis : Analysis {
 
-	override fun projectPath(): Path = QuideState.projectPath ?: throw QuideShellException("No project path specified, use 'project' " +
-			"command first!")
+	override fun projectPath(): Path = QuideState.projectPath ?:
+			throw QuideShellException("No project path specified, use 'project' command first!")
 
 	override fun outputPath(): Optional<Path> = Optional.empty()
 

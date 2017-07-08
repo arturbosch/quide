@@ -31,7 +31,8 @@ fun UserData.withOutputPath(block: (Path, Versionable, JavaSmellContainer) -> Un
 			val (version, container) = currentVersion.get() to currentContainer.get()
 			block(output, version, container)
 		} else {
-			ControlFlow.LOGGER.warn("Invalid state! Current container=${currentContainer.isPresent} and version=${currentVersion.isPresent}")
+			ControlFlow.LOGGER.warn("Invalid state! Current container=${currentContainer.isPresent} " +
+					"and version=${currentVersion.isPresent}")
 		}
 	}
 }

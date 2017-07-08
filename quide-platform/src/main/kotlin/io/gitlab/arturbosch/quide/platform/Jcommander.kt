@@ -18,7 +18,7 @@ object Args {
 			required = true,
 			description = "The input project path.",
 			converter = ExistingPathConverter::class)
-	lateinit var input: Path
+	var input: Path? = null
 	@Parameter(names = arrayOf("--output", "-o"),
 			description = "The output report folder path.",
 			converter = DirectoryPathConverter::class)

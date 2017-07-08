@@ -19,7 +19,7 @@ class CliAnalysis(args: Array<String>) : Analysis {
 
 	init {
 		val arguments = parseArguments(args)
-		projectPath = arguments.input
+		projectPath = arguments.input!!
 		outputPath = Optional.ofNullable(arguments.output)
 	}
 
