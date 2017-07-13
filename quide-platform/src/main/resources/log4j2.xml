@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
+    <Properties>
+        <Property name="fileNamePattern">${sys:user.home}/.quide/logs/platform.log-%d{yyyy-MM-dd}.log.gz</Property>
+        <Property name="fileName">${sys:user.home}/.quide/logs/platform.log</Property>
+        <Property name="patternLayout">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="${patternLayout}"/>
         </Console>
+        <File name="File" fileName="${fileName}" filePattern="${fileNamePattern}" immediateFlush="false">
+            <PatternLayout pattern="${patternLayout}"/>
+        </File>
     </Appenders>
     <Loggers>
         <Root level="info">
-            <AppenderRef ref="Console" />
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
         </Root>
+        <!--<Logger name="io.gitlab.arturbosch" level="error">-->
+        <!--<AppenderRef ref="File"/>-->
+        <!--</Logger>-->
     </Loggers>
 </Configuration>
