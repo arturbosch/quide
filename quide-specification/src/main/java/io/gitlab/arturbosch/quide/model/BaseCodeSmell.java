@@ -20,6 +20,7 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	protected boolean consistent = true;
 	protected int weight = 0;
 	protected boolean alive = true;
+	protected boolean dirty = false;
 	protected HashMap<Integer, Versionable> revivedInVersions = new HashMap<>();
 	protected HashMap<Integer, Versionable> killedInVersions = new HashMap<>();
 	protected Set<String> relocations = new HashSet<>();
@@ -66,6 +67,16 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	@Override
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+	}
+
+	@Override
+	public boolean isDirty() {
+		return dirty;
+	}
+
+	@Override
+	public void markDirty() {
+		dirty = true;
 	}
 
 	@Override

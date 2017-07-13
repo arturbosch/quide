@@ -74,6 +74,21 @@ public interface CodeSmell extends Printable {
 	void setConsistent(boolean consistent);
 
 	/**
+	 * Marked to be killed by the mapping.
+	 *
+	 * @return true if mapping failed so hard due to code block changes, that it is safer to kill this smell
+	 * than to let it live forever
+	 */
+	boolean isDirty();
+
+	/**
+	 * Marks a smell as unmappable and tells the mapping it should be marked as dead.
+	 * This happens when the smells changed to much in the new version. We mark them
+	 * as dirty, so they do not live forever in our history.
+	 */
+	void markDirty();
+
+	/**
 	 * @return weight of a smell
 	 */
 	int weight();

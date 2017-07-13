@@ -22,25 +22,35 @@ import io.gitlab.arturbosch.smartsmells.smells.deadcode.DeadCode
 import io.gitlab.arturbosch.smartsmells.smells.messagechain.MessageChain
 import io.gitlab.arturbosch.smartsmells.smells.statechecking.StateChecking
 import io.gitlab.arturbosch.smartsmells.util.Strings
+import org.apache.logging.log4j.LogManager
 
 /**
  * @author Artur Bosch
  */
-class ASTPatch(val chunks: List<ASTChunk>, unit: CompilationUnit) : Patch<JavaCodeSmell> {
+class ASTPatch(val chunks: List<ASTChunk>, val unit: CompilationUnit) : Patch<JavaCodeSmell> {
+
+	private val logger = LogManager.getLogger()
 
 	private val methods = unit.types.flatMap { it.methods }
 	private val fields = unit.types.flatMap { it.fields }
 	private val types = unit.nodesByType(ClassOrInterfaceDeclaration::class.java)
 
 	override fun patchSmell(smell: JavaCodeSmell): JavaCodeSmell {
-		return when (smell.smell.elementTarget()) {
-			ElementTarget.CLASS -> smell.patchClassLevel()
-			ElementTarget.METHOD -> smell.patchMethodLevel()
-			ElementTarget.PARAMETER -> smell.patchMethodLevel()
-			ElementTarget.TWO_CLASSES -> smell.patchCycleLevel()
-			ElementTarget.FIELD -> smell.patchFieldLevel()
-			ElementTarget.LOCAL -> smell.patchLocalLevel()
-			else -> smell
+		return try {
+			when (smell.smell.elementTarget()) {
+				ElementTarget.CLASS -> smell.patchClassLevel()
+				ElementTarget.METHOD -> smell.patchMethodLevel()
+				ElementTarget.PARAMETER -> smell.patchMethodLevel()
+				ElementTarget.TWO_CLASSES -> smell.patchCycleLevel()
+				ElementTarget.FIELD -> smell.patchFieldLevel()
+				ElementTarget.LOCAL -> smell.patchLocalLevel()
+				else -> smell
+			}
+		} catch (e: RuntimeException) {
+			logger.warn("Recover from failing mapping for $smell", e)
+			logger.warn(unit.toString())
+			smell.markDirty()
+			return smell
 		}
 	}
 

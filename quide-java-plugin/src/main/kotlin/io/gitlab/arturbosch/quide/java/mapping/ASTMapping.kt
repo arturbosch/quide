@@ -109,7 +109,11 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 						.filter { it.isAlive } // do not need to try patch dead smells which may be got resurrected
 						.map { astMapping.updateSmell(it, fileChange) } // ^^ they were not in last version, so no diff can be created
 						.toMutableList() // un-patched to patched to preserve state if patched is not mappable
-				val (removedSmells, astMappedSmells) = mapUnchangedSmells(patchedSmells, notMappedSmellsInNewFile)
+				// Smells marked as dirty changed to much to be mappable/tell that they are the same
+				val dirtySmells = patchedSmells.filter { it.isDirty }
+				dirtySmells.forEach { it.killedIn(versionable) }
+				val patchedCleanSmells = patchedSmells.minus(dirtySmells).toMutableList()
+				val (removedSmells, astMappedSmells) = mapUnchangedSmells(patchedCleanSmells, notMappedSmellsInNewFile)
 				astMappedSmells.forEach { it.addWeight(1) } // modified smells get extra weight
 				// Remaining not found smells in the AST were deleted
 				removedSmells.forEach { it.killedIn(versionable) }
