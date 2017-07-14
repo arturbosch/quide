@@ -9,6 +9,9 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${patternLayout}"/>
         </Console>
+        <File name="File" fileName="${fileName}.full" immediateFlush="false">
+            <PatternLayout pattern="${patternLayout}"/>
+        </File>
         <RollingFile name="File" fileName="${fileName}" filePattern="${fileNamePattern}" immediateFlush="false">
             <PatternLayout pattern="${patternLayout}"/>
             <Policies>
@@ -21,6 +24,7 @@
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
             <AppenderRef ref="Rolling"/>
         </Root>
     </Loggers>
