@@ -7,6 +7,23 @@ import io.gitlab.arturbosch.quide.model.Printable
  */
 data class ContainerEvaluationData(val summaryData: SurvivalSummaryData,
 								   val typeData: List<SmellTypeData>) : Printable {
+
+	operator fun plus(other: ContainerEvaluationData): ContainerEvaluationData {
+		val survivalSummaryData = summaryData + other.summaryData
+
+		val otherTypeData = other.typeData
+		val newTypeData = typeData.map { (type, occurrence, survivalData, lifespanData, changesData, relocationsData, revivalsData) ->
+			val otherData = otherTypeData.find { it.type == type }
+			SmellTypeData(type, otherData?.occurrence?.plus(occurrence) ?: occurrence,
+					otherData?.survivalData?.plus(survivalData) ?: survivalData,
+					otherData?.lifespanData?.plus(lifespanData) ?: lifespanData,
+					otherData?.changesData?.plus(changesData) ?: changesData,
+					otherData?.relocationsData?.plus(relocationsData) ?: relocationsData,
+					otherData?.revivalsData?.plus(revivalsData) ?: revivalsData)
+		}
+		return ContainerEvaluationData(survivalSummaryData, newTypeData)
+	}
+
 	override fun toString(): String =
 			with(StringBuilder()) {
 				append(summaryData.toString())
@@ -44,6 +61,8 @@ const val NL = "\n"
 data class SurvivalSummaryData(val survivalData: SurvivalData) : Printable {
 	override fun toString(): String = survivalData.toString()
 	override fun asPrintable(): String = survivalData.asPrintable()
+	operator fun plus(other: SurvivalSummaryData): SurvivalSummaryData
+			= SurvivalSummaryData(survivalData.plus(other.survivalData))
 
 	companion object {
 		fun from(csv: String) = SurvivalSummaryData(SurvivalData.from(csv))
@@ -85,24 +104,36 @@ data class SmellTypeData(val type: String,
 }
 
 class LifespanData(values: List<Int>) : StatisticsData(values) {
+
+	operator fun plus(other: LifespanData) = LifespanData(other.values + values)
+
 	companion object {
 		fun from(csv: String) = LifespanData(StatisticsData.from(csv))
 	}
 }
 
 class ChangesData(values: List<Int>) : StatisticsData(values) {
+
+	operator fun plus(other: ChangesData) = ChangesData(other.values + values)
+
 	companion object {
 		fun from(csv: String) = ChangesData(StatisticsData.from(csv))
 	}
 }
 
 class RelocationsData(values: List<Int>) : StatisticsData(values) {
+
+	operator fun plus(other: RelocationsData) = RelocationsData(other.values + values)
+
 	companion object {
 		fun from(csv: String) = RelocationsData(StatisticsData.from(csv))
 	}
 }
 
 class RevivalsData(values: List<Int>) : StatisticsData(values) {
+
+	operator fun plus(other: RevivalsData) = RevivalsData(other.values + values)
+
 	companion object {
 		fun from(csv: String) = RevivalsData(StatisticsData.from(csv))
 	}
@@ -117,7 +148,6 @@ abstract class StatisticsData(val values: List<Int>) : Printable {
 	val deviation: Double get() = Math.sqrt(values.map { Math.pow(it.toDouble() - mean, 2.0) }.sum())
 
 	override fun toString(): String = values.joinToString(COMMA)
-
 	override fun asPrintable(): String = "sum=$sum, max=$max, min=$min, mean=$mean, deviation=$deviation"
 
 	override fun equals(other: Any?): Boolean {
@@ -139,6 +169,7 @@ abstract class StatisticsData(val values: List<Int>) : Printable {
 
 	companion object {
 		fun from(csv: String) = csv.split(COMMA).map { it.toInt() }
+
 	}
 
 }
@@ -153,6 +184,11 @@ data class SurvivalData(val all: Int, val alive: Int, val dead: Int) : Printable
 	override fun asPrintable(): String = "all=$all, alive=$alive, dead=$dead, " +
 			"%alive=$aliveRatio, %dead=$deadRatio, deadForOneAlive=$deadAliveRatio"
 
+	operator fun plus(other: SurvivalData): SurvivalData = run {
+		val (allO, aliveO, deadO) = other
+		SurvivalData(all + allO, alive + aliveO, dead + deadO)
+	}
+
 	companion object {
 		fun from(csv: String): SurvivalData {
 			fun i(s: String) = s.toInt()
@@ -160,6 +196,7 @@ data class SurvivalData(val all: Int, val alive: Int, val dead: Int) : Printable
 			require(a.size == 6) { "Survival data expects six ints." }
 			return SurvivalData(i(a[0]), i(a[1]), i(a[2]))
 		}
+
 	}
 
 }

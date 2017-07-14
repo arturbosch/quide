@@ -8,8 +8,16 @@ import java.io.File
 
 fun main(args: Array<String>) {
 	val userHome = System.getProperty("user.home") ?: throw IllegalStateException()
-	val file = File("$userHome/reports/quide.evaluation.txt")
-	val content = file.readText()
-	val container = ContainerEvaluationData.from(content)
-	println(container.asPrintable())
+	val root = File("$userHome/reports")
+
+	val evaluationFiles = root.walkTopDown()
+			.filter { it.isFile }
+			.filter { it.toString().endsWith("evaluation.txt") }
+			.toList()
+
+	val reducedEvaluationContainer = evaluationFiles.map { it.readText() }
+			.map { ContainerEvaluationData.from(it) }
+			.reduce { acc, other -> acc + other }
+
+	println(reducedEvaluationContainer.asPrintable())
 }
