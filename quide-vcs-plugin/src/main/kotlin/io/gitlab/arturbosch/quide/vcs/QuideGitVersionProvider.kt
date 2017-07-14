@@ -42,6 +42,7 @@ class QuideGitVersionProvider(var root: Path? = null,
 		quide.getProperty(QuideConstants.VCS_RANGE_UNTIL)?.let {
 			until = LocalDateTime.from(format.parse(it)).toDate()
 		}
+		logger.info("VCS configured to $relative.")
 	}
 
 	private val commits: List<VcsCommit> by lazy {
