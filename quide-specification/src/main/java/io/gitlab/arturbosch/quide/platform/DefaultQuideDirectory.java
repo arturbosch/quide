@@ -35,7 +35,7 @@ public class DefaultQuideDirectory implements QuideDirectory {
 			} else {
 				loadProperties(propertiesPath);
 				loadAdditionalProperties();
-				LOGGER.info("Properties loaded.");
+				LOGGER.info("Loaded quide.properties.");
 			}
 		} catch (IOException e) {
 			throw new UncheckedIOException("Error loading quide properties", e);
@@ -61,6 +61,7 @@ public class DefaultQuideDirectory implements QuideDirectory {
 			Properties props = new Properties();
 			props.load(is);
 			properties.putAll((Map) props);
+			LOGGER.info("Loaded extra properties from '" + propertiesPath + "'.");
 		} catch (IOException e) {
 			throw new UncheckedIOException("Error loading quide properties in " + propertiesPath, e);
 		}
