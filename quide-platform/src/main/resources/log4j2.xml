@@ -9,17 +9,19 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${patternLayout}"/>
         </Console>
-        <File name="File" fileName="${fileName}" filePattern="${fileNamePattern}" immediateFlush="false">
+        <RollingFile name="File" fileName="${fileName}" filePattern="${fileNamePattern}" immediateFlush="false">
             <PatternLayout pattern="${patternLayout}"/>
-        </File>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="2000"/>
+        </RollingFile>
     </Appenders>
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="Rolling"/>
         </Root>
-        <!--<Logger name="io.gitlab.arturbosch" level="error">-->
-        <!--<AppenderRef ref="File"/>-->
-        <!--</Logger>-->
     </Loggers>
 </Configuration>
