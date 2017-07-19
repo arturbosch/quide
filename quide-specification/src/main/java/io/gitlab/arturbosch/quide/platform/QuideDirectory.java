@@ -26,7 +26,11 @@ public interface QuideDirectory {
 	}
 
 	default Path resolve(String subPath) {
-		return checkDir(home().resolve(subPath));
+		if (subPath.contains(".")) {
+			return checkDir(home()).resolve(subPath);
+		} else {
+			return checkDir(home().resolve(subPath));
+		}
 	}
 
 	default Path home() {

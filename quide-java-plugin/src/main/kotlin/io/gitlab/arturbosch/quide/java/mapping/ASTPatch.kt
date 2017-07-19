@@ -9,7 +9,6 @@ import difflib.Delta
 import io.gitlab.arturbosch.jpal.internal.Printer
 import io.gitlab.arturbosch.kutils.peek
 import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
-import io.gitlab.arturbosch.quide.vcs.Patch
 import io.gitlab.arturbosch.smartsmells.smells.ClassSpecific
 import io.gitlab.arturbosch.smartsmells.smells.CycleSpecific
 import io.gitlab.arturbosch.smartsmells.smells.ElementTarget
@@ -27,7 +26,7 @@ import org.apache.logging.log4j.LogManager
 /**
  * @author Artur Bosch
  */
-class ASTPatch(val chunks: List<ASTChunk>, val unit: CompilationUnit) : Patch<JavaCodeSmell> {
+class ASTPatch(val chunks: List<ASTChunk>, val unit: CompilationUnit) : JavaCodeSmellPatch {
 
 	private val logger = LogManager.getLogger()
 
@@ -47,8 +46,8 @@ class ASTPatch(val chunks: List<ASTChunk>, val unit: CompilationUnit) : Patch<Ja
 				else -> smell
 			}
 		} catch (e: RuntimeException) {
-			logger.warn("Recover from failing mapping for $smell", e)
-			logger.warn(unit.toString())
+			logger.warn("${e.javaClass.simpleName}: Recover from failing mapping for $smell " +
+					"in file ${unit.storage.map { it.path.toString() }.orElse("<path-unspecified>")}.")
 			smell.markDirty()
 			return smell
 		}

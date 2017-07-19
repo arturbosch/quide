@@ -19,10 +19,8 @@ class VersionCrawler(private val projectPath: Path,
 
 	private val logger: Logger = LoggerFactory.getLogger(javaClass.simpleName)
 
-	fun run(): SmellResult {
-		return generateNewCompilationUnits().apply {
-			logger.info("Successful executed detectors with ${smellSets.map { "${it.key} - ${it.value.size} " }}")
-		}
+	fun run(): SmellResult = generateNewCompilationUnits().apply {
+		logger.info("Successful executed detectors with ${smellSets.map { "${it.key} - ${it.value.size} " }}")
 	}
 
 	private fun generateNewCompilationUnits(): SmellResult {

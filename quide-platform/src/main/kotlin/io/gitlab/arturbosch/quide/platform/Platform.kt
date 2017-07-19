@@ -59,18 +59,18 @@ class MultiPlatform(private val versionProvider: VersionProvider) {
 }
 
 class BasePlatform(private val analysis: Analysis,
-				   private val pluginLoader: PluginLoader,
+				   pluginLoader: PluginLoader,
 				   private val multiPlatform: MultiPlatform? = null) : ControlFlow {
 
 	private val logger by logFactory()
 
-	private val _plugins = lazy { pluginLoader.load() }
+	private val _plugins = pluginLoader.load()
 
 	private val cpuCores: Int = Math.min(plugins().size, cores)
 
 	private val isDebugMode = QuideConstants.DEBUG.asProperty()?.toBoolean() ?: false
 
-	override fun plugins(): List<Plugin> = _plugins.value
+	override fun plugins(): List<Plugin> = _plugins
 
 	fun analyze() {
 		if (cpuCores < 1) {
@@ -81,13 +81,14 @@ class BasePlatform(private val analysis: Analysis,
 	}
 
 	override fun run(context: AnalysisContext) {
+		if (isDebugMode) logger.info("Debug is active.")
 		multiPlatform?.registerVersionProvider(plugins())
 		beforeAnalysis(context)
 		withExecutor(withNamedThreadPoolExecutor(QUIDE + "-", cpuCores)) {
 			multiPlatform?.analyze(plugins()) { runPlugins() } ?: runPlugins()
 		}
-		afterAnalysis()
 		if (isDebugMode) debugOutput()
+		afterAnalysis()
 	}
 
 	private fun ExecutorService.runPlugins() {
@@ -114,6 +115,9 @@ class BasePlatform(private val analysis: Analysis,
 				Files.write(HomeFolder.resolve("alltestrun.txt"), it.all().smellsToBytes())
 				Files.write(HomeFolder.resolve("alivetestrun.txt"), it.alive().smellsToBytes())
 				Files.write(HomeFolder.resolve("deadtestrun.txt"), it.dead().smellsToBytes())
+				it.all().filter { it.startVersion() == null }.forEach {
+					logger.info("UPS - $it")
+				}
 			}
 		}
 	}

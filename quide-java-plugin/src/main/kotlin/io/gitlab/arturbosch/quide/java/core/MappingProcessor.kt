@@ -15,7 +15,7 @@ class MappingProcessor : Processor {
 
 	override fun <U : UserData> execute(data: U) {
 		val pluginData = data as JavaPluginData
-		if (pluginData.isEvolutionaryAnalysis()) {
+		if (pluginData.isEvolutionaryAnalysis) {
 			mapping.execute(data)
 		}
 	}

@@ -37,7 +37,7 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 
 	override fun compareAlgorithm(): SmellCompareStrategy<JavaCodeSmell> = compare
 
-	override fun diffTool(): DiffTool<ASTPatch> = diff
+	override fun diffTool(): DiffTool<JavaCodeSmellPatch> = diff
 
 	override fun map(versionable: Versionable,
 					 before: SmellContainer<JavaCodeSmell>,

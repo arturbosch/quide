@@ -44,10 +44,7 @@ public interface SmellMapping<T extends CodeSmell> extends Executable {
 	default SmellContainer<T> mapFirstVersion(Versionable versionable, SmellContainer<T> container) {
 		Validate.notNull(versionable);
 		Validate.notNull(container);
-		container.all().forEach(codeSmell -> {
-			codeSmell.setStartVersion(versionable);
-			codeSmell.setEndVersion(versionable);
-		});
+		container.all().forEach(codeSmell -> codeSmell.applyVersion(versionable));
 		return container;
 	}
 
