@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService
 /**
  * @author Artur Bosch
  */
-class QuidePlatform(analysis: Analysis,
+class QuidePlatform(private val analysis: Analysis,
 					vcsLoader: VCSLoader,
 					pluginLoader: PluginLoader) {
 
@@ -30,7 +30,7 @@ class QuidePlatform(analysis: Analysis,
 	}
 
 	fun analyze() {
-		logger.info("Starting $QUIDE ...")
+		logger.info("Starting $QUIDE on ${analysis.projectPath()}")
 		executablePlatform.analyze()
 	}
 }
