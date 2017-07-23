@@ -6,6 +6,7 @@ import io.gitlab.arturbosch.quide.platform.QuideConstants
 import org.slf4j.LoggerFactory
 import org.vcsreader.VcsCommit
 import org.vcsreader.VcsProject
+import org.vcsreader.lang.TimeRange
 import org.vcsreader.vcs.git.GitVcsRoot
 import java.nio.file.Path
 import java.time.LocalDate
@@ -50,18 +51,17 @@ class QuideGitVersionProvider(var root: Path? = null,
 		val gitVcsRoot = GitVcsRoot(root.toString(), null)
 		val vcsProject = VcsProject(gitVcsRoot)
 		logger.info("Checking out commits...")
-		val logResult = vcsProject.log(since, until)
+		val logResult = vcsProject.log(TimeRange(since, until))
 		val commits = logResult.commits()
 		assert(commits.size - 1 > -1) { "There were no commits to analyze!!!" }
-		logResult.vcsErrors().forEach(::println)
-		logResult.exceptions().forEach(::println)
+		logResult.exceptions().forEach { logger.error(it.message) }
 		commits
 	}
 
 	override fun nextVersion(): Optional<Versionable> {
 		if (index <= commits.size - 1) {
 			val commit = commits[index]
-			val version = QuideVersion(versionId = index + 1, commit = commit, projectPath = root!!, relativePath = relative!!)
+			val version = QuideVersion(index + 1, commit, root!!, relative!!)
 			index++
 			return Optional.of(version)
 		}

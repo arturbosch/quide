@@ -28,7 +28,7 @@ class GitPipe(val options: CrawlerOptions) : Pipe {
 	}
 
 	private fun handleProject(project: GitVcsRoot) {
-		val filePath = project.localPath.asPath()
+		val filePath = project.repoFolder().asPath()
 		val fileName = filePath.fileName.toString()
 
 		Try {

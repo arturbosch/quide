@@ -1,6 +1,7 @@
 package io.gitlab.arturbosch.quide.crawler.pipe
 
 import io.gitlab.arturbosch.quide.crawler.Console
+import io.gitlab.arturbosch.quide.vcs.extractVcsErrors
 import org.vcsreader.vcs.git.GitVcsRoot
 
 /**
@@ -9,9 +10,9 @@ import org.vcsreader.vcs.git.GitVcsRoot
 object Clone {
 
 	fun git(fileName: String, project: GitVcsRoot) {
-		val cloneResult = project.cloneToLocal()
+		val cloneResult = project.cloneIt()
 		if (!cloneResult.isSuccessful) {
-			throw PipeError(cloneResult.vcsErrors().joinToString())
+			throw PipeError(extractVcsErrors(cloneResult.exceptions()).joinToString())
 		}
 		Console.write("Finished cloning $fileName...")
 	}

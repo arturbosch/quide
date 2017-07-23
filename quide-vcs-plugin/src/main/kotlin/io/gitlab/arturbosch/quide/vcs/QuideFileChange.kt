@@ -9,10 +9,10 @@ import java.nio.file.Path
 data class QuideFileChange(private val path: Path, private val vcsChange: VcsChange) : FileChange {
 
 	private val type: FileChange.Type = when (vcsChange.type) {
-		VcsChange.Type.ADDED -> FileChange.Type.ADDITION
-		VcsChange.Type.DELETED -> FileChange.Type.REMOVAL
-		VcsChange.Type.MODIFIED -> FileChange.Type.MODIFICATION
-		VcsChange.Type.MOVED -> FileChange.Type.RELOCATION
+		VcsChange.Type.Added -> FileChange.Type.ADDITION
+		VcsChange.Type.Deleted -> FileChange.Type.REMOVAL
+		VcsChange.Type.Modified -> FileChange.Type.MODIFICATION
+		VcsChange.Type.Moved -> FileChange.Type.RELOCATION
 		else -> throw UnsupportedOperationException("No other types are supported!")
 	}
 
