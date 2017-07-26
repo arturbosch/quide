@@ -19,11 +19,13 @@ internal class ElementsInRangeFilter(chunk: Chunk<*>) : TreeVisitor() {
 	val posToElement: MutableList<Node> = mutableListOf()
 
 	override fun process(node: Node) {
-		if (!node.range.isPresent) return // we need to compare positions
+		val maybeRange = node.range
+		if (!maybeRange.isPresent) return // we need to compare positions
+		val range = maybeRange.get()
 		if (node is CompilationUnit) return // Filter CU's if class change is searched
 
 		// Best and fastest way if lines are same
-		if (node.begin.get().line == start && node.end.get().line == end) {
+		if (range.begin.line == start && range.end.line == end) {
 			posToElement.add(node)
 			return
 		}
@@ -33,7 +35,7 @@ internal class ElementsInRangeFilter(chunk: Chunk<*>) : TreeVisitor() {
 			return
 		}
 
-		if (node.begin.get().line >= start && node.toString(Printer.NO_COMMENTS).contains(text)) {
+		if (range.begin.line >= start && Printer.toString(node).contains(text)) {
 			posToElement.add(node)
 		}
 
