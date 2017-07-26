@@ -17,6 +17,8 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 
 	private val compare = ASTCompareStrategy()
 	private val diff = ASTDiffTool()
+	override fun compareAlgorithm(): SmellCompareStrategy<JavaCodeSmell> = compare
+	override fun diffTool(): DiffTool<JavaCodeSmellPatch> = diff
 
 	override fun <U : UserData> execute(data: U) {
 		val currentVersion = data.currentVersion()
@@ -35,26 +37,20 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 		data.put(UserData.CURRENT_CONTAINER, mappedContainer)
 	}
 
-	override fun compareAlgorithm(): SmellCompareStrategy<JavaCodeSmell> = compare
-
-	override fun diffTool(): DiffTool<JavaCodeSmellPatch> = diff
-
 	override fun map(versionable: Versionable,
 					 before: SmellContainer<JavaCodeSmell>,
 					 after: SmellContainer<JavaCodeSmell>): SmellContainer<JavaCodeSmell> {
 
-		val changes = versionable.fileChanges()
+		val changes = versionable.fileChanges().groupBy { it.type() }
 		// all living smells get new end version before modifying them
 		before.alive().forEach { it.setEndVersion(versionable) }
 		// modified smells need to get mapped
 		val mapper = ModificationMapper(this, after, before, versionable)
-		val modifications = changes.filter { it.isOfType(FileChange.Type.MODIFICATION) }
-		mapper.mapSmells(modifications)
-		val relocations = changes.filter { it.isOfType(FileChange.Type.RELOCATION) }
-		mapper.mapSmells(relocations)
+		changes[FileChange.Type.MODIFICATION]?.let { mapper.mapSmells(it) }
+		changes[FileChange.Type.RELOCATION]?.let { mapper.mapSmells(it) }
 		// deleted smells are set to alive=false
-		handleDeleted(versionable, before, changes)
-		before.all().addAll(handleAdditions(versionable, after, changes))
+		changes[FileChange.Type.REMOVAL]?.let { handleDeleted(versionable, before, it) }
+		changes[FileChange.Type.REMOVAL]?.let { handleAdditions(versionable, before, after, it) }
 
 		return before
 	}
@@ -136,26 +132,25 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 
 	private fun handleDeleted(versionable: Versionable,
 							  before: SmellContainer<JavaCodeSmell>,
-							  changes: MutableList<FileChange>): List<JavaCodeSmell> {
-		val deletedPaths = changes.filter { it.isOfType(FileChange.Type.REMOVAL) }
+							  changes: List<FileChange>) {
+		val deletedSmells = changes.asSequence()
 				.map { it.oldFile() }
 				.map { it.path() }
-		val deletedSmells = deletedPaths
-				.map { before.findBySourcePath(it).filter { it.isAlive } }
+				.map { before.findBySourcePath(it).asSequence().filter { it.isAlive } }
 				.flatMap { it }
 		deletedSmells.forEach { it.killedIn(versionable) }
-		return deletedSmells
 	}
 
 	private fun handleAdditions(versionable: Versionable,
+								before: SmellContainer<JavaCodeSmell>,
 								after: SmellContainer<JavaCodeSmell>,
-								changes: MutableList<FileChange>): List<JavaCodeSmell> {
-		val newPaths = changes.filter { it.isOfType(FileChange.Type.ADDITION) }
+								changes: List<FileChange>) {
+		val newSmells = changes.asSequence()
 				.map { it.newFile() }
 				.map { it.path() }
-		val newSmells = newPaths.map { after.findBySourcePath(it) }
-				.flatMap { it }
+				.map { after.findBySourcePath(it) }
+				.flatMap { it.asSequence() }
 		newSmells.forEach { it.applyVersion(versionable) }
-		return newSmells
+		before.all().addAll(newSmells)
 	}
 }
