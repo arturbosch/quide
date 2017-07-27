@@ -80,7 +80,7 @@ class ASTPatch(val chunks: List<ASTChunk>, val unit: CompilationUnit) : JavaCode
 					chunks.filter { it.containsSmell(smell) }
 							.flatMap { it.revisedNodes }
 							.peek { println(it) }
-							.map { it to Strings.distance(smell.signature(), it.toString(Printer.NO_COMMENTS)) }
+							.map { it to Strings.distance(smell.signature(), Printer.toString(it)) }
 							.minBy { it.second }
 							?.let { return this.updateInternal(smell.copy(it.first)) }
 				}

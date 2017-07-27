@@ -33,7 +33,7 @@ fun <N : Node> Node.nodesByType(clazz: Class<N>): List<N> {
 	return nodes
 }
 
-fun Node.toSignature(): String = toString(Printer.NO_COMMENTS)
+fun Node.toSignature(): String = Printer.toString(this)
 fun ClassOrInterfaceDeclaration.toSignature(): String = ClassHelper.createFullSignature(this)
 
 fun ASTChunk.containsSmell(smell: DetectionResult): Boolean {
