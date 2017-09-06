@@ -75,14 +75,14 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 				val smellsInNewFile = after.findBySourcePath(newFile.path())
 				// Smell Equality? -> nothing to do as end version is already set
 				// just add mapped smell in separate list to distinct from really new smells
-				fun mapUnchangedSmells(beforeSmells: MutableList<JavaCodeSmell>,
-									   afterSmells: MutableList<JavaCodeSmell>,
+				fun mapUnchangedSmells(beforeSmells: List<JavaCodeSmell>,
+									   afterSmells: List<JavaCodeSmell>,
 									   compareMethod: (JavaCodeSmell, JavaCodeSmell) -> Boolean =
 									   { it, findSmell -> astMapping.compareSmells(it, findSmell) }):
-						Pair<MutableList<JavaCodeSmell>, MutableList<JavaCodeSmell>> {
+						Pair<List<JavaCodeSmell>, List<JavaCodeSmell>> {
 
 					val unmappedSmells = mutableListOf<JavaCodeSmell>()
-					val mappedSmells = mutableListOf <JavaCodeSmell>()
+					val mappedSmells = mutableListOf<JavaCodeSmell>()
 					beforeSmells.forEach { findSmell ->
 						afterSmells.find { compareMethod(it, findSmell) }?.let {
 							// when found, we need the new smell specific information like
@@ -100,27 +100,27 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 
 				val (unmappedSmells, mappedSmells) = mapUnchangedSmells(smellsInOldFile, smellsInNewFile)
 				// We try to search for modified smells with the help of an AST
-				val notMappedSmellsInNewFile = smellsInNewFile.minus(mappedSmells).toMutableList()
-				val patchedSmells = unmappedSmells.asSequence()
+				val notMappedSmellsInNewFile = smellsInNewFile.minus(mappedSmells)
+				val patchedSmells = unmappedSmells
 						.filter { it.isAlive } // do not need to try patch dead smells which may be got resurrected
 						.map { astMapping.updateSmell(it, fileChange) } // ^^ they were not in last version, so no diff can be created
-						.toMutableList() // un-patched to patched to preserve state if patched is not mappable
+				// un-patched to patched to preserve state if patched is not mappable
 				// Smells marked as dirty changed to much to be mappable/tell that they are the same
 				val dirtySmells = patchedSmells.filter { it.isDirty }
 				dirtySmells.forEach { it.killedIn(versionable) }
-				val patchedCleanSmells = patchedSmells.minus(dirtySmells).toMutableList()
+				val patchedCleanSmells = patchedSmells.minus(dirtySmells)
 				val (removedSmells, astMappedSmells) = mapUnchangedSmells(patchedCleanSmells, notMappedSmellsInNewFile)
 				astMappedSmells.forEach { it.addWeight(1) } // modified smells get extra weight
 				// Remaining not found smells in the AST were deleted
 				removedSmells.forEach { it.killedIn(versionable) }
 				// As they are truly new smells in modified file -> add to container
-				var newSmells = notMappedSmellsInNewFile.minus(astMappedSmells).toMutableList()
+				var newSmells = notMappedSmellsInNewFile.minus(astMappedSmells)
 				if (newSmells.isNotEmpty() && fileChange.isOfType(FileChange.Type.RELOCATION)) {
 					// resurrected smells which are now relocated are not found by compareString method
 					val relocatedDeadSmellsInOldFile = before.dead()
 					val resurrectedSmells = mapUnchangedSmells(relocatedDeadSmellsInOldFile, newSmells)
 					{ it, findSmell -> astMapping.compare.matchesRelocated(it, findSmell) }.second
-					newSmells = newSmells.minus(resurrectedSmells).toMutableList()
+					newSmells = newSmells.minus(resurrectedSmells)
 				}
 				newSmells.forEach {
 					it.applyVersion(versionable)

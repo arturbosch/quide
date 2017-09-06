@@ -39,7 +39,7 @@ class JavaCodeSmell(val type: Smell, var smell: DetectionResult) : BaseCodeSmell
 		return signatureWithoutPath() == second.signatureWithoutPath()
 	}
 
-	fun JavaCodeSmell.signatureWithoutPath(): String {
+	private fun signatureWithoutPath(): String {
 		val wholeSplit = compareString.split("$")
 		return wholeSplit[0] + "$" + wholeSplit.subList(2, wholeSplit.size).joinToString("$")
 	}

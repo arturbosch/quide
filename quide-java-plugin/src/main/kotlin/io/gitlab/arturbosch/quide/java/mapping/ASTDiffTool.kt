@@ -27,7 +27,7 @@ class ASTDiffTool : DiffTool<JavaCodeSmellPatch> {
 						  private val newUnit: CompilationUnit,
 						  diffPatch: difflib.Patch<String>) {
 
-		val chunks = diffPatch.deltas
+		private val chunks = diffPatch.deltas
 				.map { ASTChunk(it.type, it.original.astElements(oldUnit), it.revised.astElements(newUnit)) }
 
 		private fun <T> Chunk<T>.astElements(unit: CompilationUnit): List<Node> {

@@ -31,6 +31,10 @@ data class QuideFileChange(private val path: Path, private val vcsChange: VcsCha
 	override fun newFile(): SourceFile = newFile
 
 	@Suppress("UNCHECKED_CAST")
-	override fun <P : Patch<*>?> patch(diff: DiffTool<P>): P
-			= patch as P ?: super.patch(diff).apply { patch = this }
+	override fun <P : Patch<*>> patch(diff: DiffTool<P>): P {
+		if (patch == null) {
+			patch = super.patch(diff)
+		}
+		return patch as P
+	}
 }

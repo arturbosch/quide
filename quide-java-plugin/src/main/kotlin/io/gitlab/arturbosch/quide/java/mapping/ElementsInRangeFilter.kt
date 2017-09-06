@@ -12,9 +12,9 @@ import io.gitlab.arturbosch.jpal.internal.Printer
  */
 internal class ElementsInRangeFilter(chunk: Chunk<*>) : TreeVisitor() {
 
-	val start = chunk.position + 1
-	val end = start + chunk.lines.size
-	val text = chunk.lines.joinToString("\n").trim()
+	private val start = chunk.position + 1
+	private val end = start + chunk.lines.size
+	private val text = chunk.lines.joinToString("\n").trim()
 
 	val posToElement: MutableList<Node> = mutableListOf()
 
