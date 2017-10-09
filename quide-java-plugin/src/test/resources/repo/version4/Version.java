@@ -1,3 +1,5 @@
+package repo;
+
 @SuppressWarnings("ALL")
 class Version {
 

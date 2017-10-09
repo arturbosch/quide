@@ -9,7 +9,6 @@ configurations {
 dependencies {
 	compileOnly project(":quide-specification")
 	testCompile project(":quide-specification")
-	testRuntime "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
 }
 
 sourceSets {
