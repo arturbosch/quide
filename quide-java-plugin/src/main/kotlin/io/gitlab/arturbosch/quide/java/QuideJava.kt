@@ -14,6 +14,7 @@ import java.util.Optional
 
 const val FACADE: String = "FACADE"
 const val UPDATABLE_FACADE: String = "UPDATABLE_FACADE"
+const val UPDATABLE_STORAGE: String = "UPDATABLE_STORAGE"
 const val JAVA = ".java"
 
 const val PATHS_FILTERS_JAVA = "path.filters.java"

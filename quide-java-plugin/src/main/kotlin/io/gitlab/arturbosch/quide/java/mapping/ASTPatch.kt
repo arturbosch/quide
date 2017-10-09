@@ -26,7 +26,8 @@ import org.apache.logging.log4j.LogManager
 /**
  * @author Artur Bosch
  */
-class ASTPatch(val chunks: List<ASTChunk>, val unit: CompilationUnit) : JavaCodeSmellPatch {
+class ASTPatch(private val chunks: List<ASTChunk>,
+			   private val unit: CompilationUnit) : JavaCodeSmellPatch {
 
 	private val logger = LogManager.getLogger()
 
@@ -126,8 +127,7 @@ class ASTPatch(val chunks: List<ASTChunk>, val unit: CompilationUnit) : JavaCode
 	}
 
 	private fun FieldSpecific.searchForField(): FieldDeclaration? {
-		val directMappedMatches = chunks.map { it.nodeByFieldSignature(signature()) }
-				.filterNotNull()
+		val directMappedMatches = chunks.mapNotNull { it.nodeByFieldSignature(signature()) }
 		// we need to consider insertions as a text diff is not able to provide exact information
 		// about moved+renamed code. Text diff will tell us about a change AND an addition
 		val matchingInserts = chunks.filter { it.type == Delta.TYPE.INSERT }

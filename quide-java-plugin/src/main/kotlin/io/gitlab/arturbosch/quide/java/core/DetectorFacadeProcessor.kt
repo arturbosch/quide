@@ -1,5 +1,9 @@
 package io.gitlab.arturbosch.quide.java.core
 
+import com.github.javaparser.ParserConfiguration
+import io.gitlab.arturbosch.jpal.core.JPAL
+import io.gitlab.arturbosch.jpal.core.JavaCompilationParser
+import io.gitlab.arturbosch.jpal.core.UpdatableCompilationStorage
 import io.gitlab.arturbosch.kutils.exists
 import io.gitlab.arturbosch.kutils.isFile
 import io.gitlab.arturbosch.quide.java.FACADE
@@ -7,6 +11,7 @@ import io.gitlab.arturbosch.quide.java.JavaPluginData
 import io.gitlab.arturbosch.quide.java.PATHS_FILTERS_JAVA
 import io.gitlab.arturbosch.quide.java.PLUGIN_JAVA_CONFIG
 import io.gitlab.arturbosch.quide.java.UPDATABLE_FACADE
+import io.gitlab.arturbosch.quide.java.UPDATABLE_STORAGE
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.QuideConstants
@@ -34,10 +39,20 @@ class DetectorFacadeProcessor : Processor {
 		val filters = loadFiltersFromProperties(quide)
 		val facade = buildFacade(configPath, filters)
 		if (pluginData.isEvolutionaryAnalysis) {
-			data.put(UPDATABLE_FACADE, UpdatableDetectorFacade(facade))
+			val storage = JPAL.builder()
+					.updatable()
+					.withFilters(facade.filters)
+					.withParser(createJavaParser())
+					.build() as UpdatableCompilationStorage
+			data.put(UPDATABLE_STORAGE, storage)
+			data.put(UPDATABLE_FACADE, UpdatableDetectorFacade(facade, storage))
 		}
 		data.put(FACADE, facade)
 	}
+
+	private fun createJavaParser() = JavaCompilationParser(ParserConfiguration()
+			.setStoreTokens(true)
+			.setAttributeComments(false))
 
 	private fun buildFacade(configPath: Path, filters: List<String>): DetectorFacade {
 		if (configPath.exists() && configPath.isFile()) {

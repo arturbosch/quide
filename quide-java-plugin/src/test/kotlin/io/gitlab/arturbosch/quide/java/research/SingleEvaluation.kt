@@ -8,7 +8,7 @@ import java.io.File
 fun main(args: Array<String>) {
 	val name = args[0]
 	val userHome = System.getProperty("user.home") ?: throw IllegalStateException()
-	val root = File("$userHome/reports").resolve(name)
+	val root = File("$userHome/master/reports/").resolve(name)
 	val evaluationData = ContainerEvaluationData.from(root.readText())
 	println(evaluationData.asPrintable())
 }
