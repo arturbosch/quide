@@ -30,7 +30,7 @@ class DataObjectsTest {
 	fun convertStatisticData() {
 		val actual = LifespanData(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
 		val content = actual.toString()
-		val expected = LifespanData.from(content)
+		val expected = LifespanData.from(100, content)
 
 		Assertions.assertThat(expected).isEqualTo(actual)
 		Assertions.assertThat(expected.max).isEqualTo(actual.max)

@@ -17,8 +17,8 @@ class EvaluateContainerProcessor : ConditionalProcessor {
 	override fun <U : UserData> isActive(data: U) = data.isEvolutionaryAnalysis
 
 	override fun <U : UserData> doIfActive(data: U) {
-		data.withOutputPath { output, _, container ->
-			val result = evaluateToCSV(container)
+		data.withOutputPath { output, version, container ->
+			val result = evaluateToCSV(container, version.versionNumber())
 			val project = data.projectPath().fileName.toString()
 			val file = output.resolve("$project.evaluation.txt")
 			file.write(result)
