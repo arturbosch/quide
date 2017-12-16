@@ -31,7 +31,7 @@ class DetektTool : CodeSmellDetector<DetektSmellContainer> {
 		}
 
 		val filters = loadFiltersFromProperties(quide).map(::PathFilter)
-		val settings = ProcessingSettings(projectPath, config, filters, true, false, emptyList(), emptyList())
+		val settings = ProcessingSettings(projectPath, config, filters, true, false, emptyList())
 		val detektion = DetektFacade.instance(settings).run()
 		return DetektSmellContainer(detektion.findings
 				.flatMap { it.value }

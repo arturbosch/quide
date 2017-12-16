@@ -6,4 +6,5 @@ configurations {
 
 dependencies {
 	compileOnly project(":quide-specification")
+	testCompile project(":quide-specification")
 }

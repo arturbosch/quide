@@ -53,10 +53,10 @@ class VersionCrawler(private val projectPath: Path,
 		val size = additions.size + modifications.size + relocations.size
 		logger.info("Running detectors with $size compilation info's.")
 		facade.remove(deletions)
-		facade.addOrUpdate(additions)
-		facade.addOrUpdate(modifications)
+		facade.addOrUpdateWithContent(additions)
+		facade.addOrUpdateWithContent(modifications)
 		facade.relocateWithContent(relocations)
-		return facade.run()
+		return facade.executeOnUpdated()
 	}
 
 }

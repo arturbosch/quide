@@ -10,12 +10,10 @@ import java.nio.file.Path
  */
 object Analyze {
 
-	private val facade = MetricFacade.builder()
-			.withFilters(listOf(".*/src/test/.*"))
-			.fullStackFacade()
+	private val facade = MetricFacade()
 
 	fun start(path: Path) {
-		val result = facade.run(path)
+		val result = facade.run(path, listOf(".*/src/test/.*"))
 		val averages = MetricFacade.averageAndDeviation(result)
 		val resultString = averages.joinToString("\n") { "${it.type}=${it.asNumber()}" }
 		Console.write("Results for ${path.fileName}:\n\t" + resultString)

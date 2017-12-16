@@ -23,8 +23,10 @@ import io.gitlab.arturbosch.smartsmells.api.JarLoader
 import io.gitlab.arturbosch.smartsmells.api.UpdatableDetectorFacade
 import io.gitlab.arturbosch.smartsmells.config.DetectorConfig
 import io.gitlab.arturbosch.smartsmells.config.dsl.DetectorConfigDslRunner
+import io.gitlab.arturbosch.smartsmells.metrics.FileMetricProcessor
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.regex.Pattern
 
 /**
  * @author Artur Bosch
@@ -41,8 +43,9 @@ class DetectorFacadeProcessor : Processor {
 		if (pluginData.isEvolutionaryAnalysis) {
 			val storage = JPAL.builder()
 					.updatable()
-					.withFilters(facade.filters)
+					.withFilters(filters.map { Pattern.compile(it) })
 					.withParser(createJavaParser())
+					.withProcessor(FileMetricProcessor())
 					.build() as UpdatableCompilationStorage
 			data.put(UPDATABLE_STORAGE, storage)
 			data.put(UPDATABLE_FACADE, UpdatableDetectorFacade(facade, storage))

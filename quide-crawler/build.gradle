@@ -11,6 +11,6 @@ configurations {
 dependencies {
 	compile project(":quide-platform")
 	compile project(":quide-vcs-plugin")
-	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:$smartsmellsVersion"
+	compile "io.gitlab.arturbosch.smartsmells:jquality:$smartsmellsVersion"
 	compile "com.beust:jcommander:$jcommanderVersion"
 }

@@ -12,7 +12,7 @@ dependencies {
 	compile 'org.nield:kotlin-statistics:1.0.0'
 	compileOnly project(":quide-specification")
 	compile project(":codesmell-evolution-format")
-	compile "io.gitlab.arturbosch.smartsmells:SmartSmells:$smartsmellsVersion"
+	compile "io.gitlab.arturbosch.smartsmells:jquality:$smartsmellsVersion"
 	testCompile "io.gitlab.arturbosch:kutils:$kutilsVersion"
 }
 

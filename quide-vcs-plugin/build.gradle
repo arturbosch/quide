@@ -5,5 +5,6 @@ configurations {
 
 dependencies {
 	compileOnly project(":quide-specification")
+	testCompile project(":quide-specification")
 	compile 'org.vcsreader:vcsreader:1.1.0'
 }
