@@ -13,7 +13,7 @@ class EvaluateContainerToCSVTest {
 	@Test
 	fun containerToEvaluationCSV() {
 		val container = "repo/version1/Version.java".lint()
-		container.codeSmells.forEach {
+		container.all().forEach {
 			it.setStartVersion(TestVersion(1))
 			it.setEndVersion(TestVersion(5))
 		}

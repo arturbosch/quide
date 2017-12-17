@@ -104,7 +104,7 @@ class BasePlatform(private val analysis: Analysis,
 
 	private fun debugOutput() {
 
-		fun List<CodeSmell>.smellsToBytes() = map { it.toString() }.sorted().joinToString("\n").toByteArray()
+		fun Collection<CodeSmell>.smellsToBytes() = map { it.toString() }.sorted().joinToString("\n").toByteArray()
 
 		plugins().forEach {
 			it.userData().currentContainer<SmellContainer<CodeSmell>, CodeSmell>().ifPresent {

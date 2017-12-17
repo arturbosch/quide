@@ -17,11 +17,13 @@ class DetektCodeSmell(private val smell: Finding) : BaseCodeSmell() {
 }
 
 class DetektSmellContainer(private val smells: List<DetektCodeSmell>) : SmellContainer<DetektCodeSmell> {
-	override fun all(): MutableList<DetektCodeSmell> {
-		return smells.toMutableList()
+
+	private val _smells = smells.toMutableSet()
+	override fun all(): MutableSet<DetektCodeSmell> {
+		return _smells
 	}
 
 	override fun findBySourcePath(path: String): MutableList<DetektCodeSmell> {
-		return smells.filter { it.isLocatedAt(path) }.toMutableList()
+		return _smells.filter { it.isLocatedAt(path) }.toMutableList()
 	}
 }

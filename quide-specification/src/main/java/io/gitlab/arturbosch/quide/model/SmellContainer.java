@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.quide.validation.Validate;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -16,7 +17,7 @@ public interface SmellContainer<T extends CodeSmell> {
 	/**
 	 * @return a list of all containing smells
 	 */
-	List<T> all();
+	Set<T> all();
 
 	/**
 	 * @param path the path used as a filter

@@ -150,7 +150,8 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 				.map { it.path() }
 				.map { after.findBySourcePath(it) }
 				.flatMap { it.asSequence() }
+				.toList()
 		newSmells.forEach { it.applyVersion(versionable) }
-		before.all().addAll(newSmells)
+		before.addSmells(newSmells)
 	}
 }

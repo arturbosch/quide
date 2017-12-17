@@ -44,5 +44,19 @@ class JavaCodeSmell(val type: Smell, var smell: DetectionResult) : BaseCodeSmell
 		return wholeSplit[0] + "$" + wholeSplit.subList(2, wholeSplit.size).joinToString("$")
 	}
 
-}
+	override fun equals(other: Any?): Boolean {
+		if (this === other) return true
+		if (javaClass != other?.javaClass) return false
 
+		other as JavaCodeSmell
+
+		if (compareString != other.compareString) return false
+
+		return true
+	}
+
+	override fun hashCode(): Int {
+		return compareString.hashCode()
+	}
+
+}

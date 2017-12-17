@@ -7,12 +7,15 @@ import io.gitlab.arturbosch.smartsmells.api.SmellResult
  * @author Artur Bosch
  */
 class JavaSmellContainer(val smells: SmellResult) : SmellContainer<JavaCodeSmell> {
-	val codeSmells: MutableList<JavaCodeSmell> = smells.smellSets
-			?.map { entrySet -> entrySet.value.filterNotNull().map { JavaCodeSmell(entrySet.key, it) } }
-			?.flatMap { it }
-			?.toMutableList() ?: mutableListOf()
 
-	override fun all(): MutableList<JavaCodeSmell> {
+	val codeSmells: MutableSet<JavaCodeSmell> = smells.smellSets
+			?.map { entrySet ->
+				entrySet.value.filterNotNull().map { JavaCodeSmell(entrySet.key, it) }
+			}
+			?.flatMap { it }
+			?.toMutableSet() ?: mutableSetOf()
+
+	override fun all(): MutableSet<JavaCodeSmell> {
 		return codeSmells
 	}
 }

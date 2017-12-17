@@ -35,6 +35,6 @@ class KotlinPrintTestProcessor : Processor {
 
 class KotlinTestCodeSmellDetector : Detector<SmellContainer<CodeSmell>> {
 	override fun execute(context: AnalysisContext): SmellContainer<CodeSmell> {
-		return SmellContainer { mutableListOf<CodeSmell>() }
+		return SmellContainer { mutableSetOf<CodeSmell>() }
 	}
 }

@@ -13,8 +13,8 @@ import java.time.ZonedDateTime
  */
 
 object DefaultContainer : SmellContainer<CodeSmell> {
-	override fun all(): MutableList<CodeSmell> {
-		return mutableListOf()
+	override fun all(): MutableSet<CodeSmell> {
+		return mutableSetOf()
 	}
 
 	override fun findBySourcePath(path: String?): MutableList<CodeSmell> {
@@ -30,6 +30,7 @@ class DefaultVersion(val version: Int = generator++) : Versionable {
 	companion object {
 		private var generator = 0
 	}
+
 	override fun versionNumber(): Int {
 		return version
 	}

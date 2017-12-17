@@ -111,9 +111,10 @@ class TestRevision implements Revision {
 class TestContainer implements SmellContainer<TestSmell> {
 	private List<TestSmell> smells =
 			[new TestSmell("LongMethod", "high"), new TestSmell("GodClass", "medium"), new TestSmell("DeadCode", "low")]
+					.toSet()
 
 	@Override
-	List<TestSmell> all() {
+	Set<TestSmell> all() {
 		return smells
 	}
 

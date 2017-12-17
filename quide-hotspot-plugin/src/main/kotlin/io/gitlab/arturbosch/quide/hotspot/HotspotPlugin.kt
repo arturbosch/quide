@@ -30,5 +30,5 @@ object HotspotDetector : CodeSmellDetector<NoopContainer> {
 }
 
 object NoopContainer : SmellContainer<CodeSmell> {
-	override fun all(): MutableList<CodeSmell> = mutableListOf()
+	override fun all(): MutableSet<CodeSmell> = mutableSetOf()
 }

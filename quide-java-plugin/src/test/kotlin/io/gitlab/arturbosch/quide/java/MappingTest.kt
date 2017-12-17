@@ -49,7 +49,7 @@ class MappingTest {
 		val samePathForAllVersion = "repo/version/Version.java".asResourceStringPath()
 
 		private fun JavaSmellContainer.replacePath(): JavaSmellContainer {
-			return this.apply { codeSmells.forEach { it.overridePathTestOnly(samePathForAllVersion) } }
+			return this.apply { all().forEach { it.overridePathTestOnly(samePathForAllVersion) } }
 		}
 
 		private fun nextVersion(): Versionable {
