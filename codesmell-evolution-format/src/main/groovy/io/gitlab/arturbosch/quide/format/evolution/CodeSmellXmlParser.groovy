@@ -24,6 +24,7 @@ class CodeSmellXmlParser implements CodeSmellParser {
 				'end': smell.endVersion().versionNumber(),
 				'alive': smell.alive,
 				'consistent': smell.consistent,
+				'introducing': smell.introducedOnFirstCheckin,
 				'weight': smell.weight(),
 				'path': smell.sourcePath(),
 				'killed': smell.killedInVersions().keySet(),

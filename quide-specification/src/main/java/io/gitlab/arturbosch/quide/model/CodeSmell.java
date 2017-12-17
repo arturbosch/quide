@@ -110,4 +110,13 @@ public interface CodeSmell extends Printable {
 	 */
 	Set<String> relocations();
 
+	/**
+	 * Marks this code smell as being present on the first commit of a file.
+	 */
+	void setIntroducedOnFirstCheckin();
+
+	/**
+	 * @return true if the code smell was introduced on first file appearance
+	 */
+	boolean isIntroducedOnFirstCheckin();
 }

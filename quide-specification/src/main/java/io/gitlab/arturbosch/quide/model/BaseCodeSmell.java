@@ -21,6 +21,7 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	protected int weight = 0;
 	protected boolean alive = true;
 	protected boolean dirty = false;
+	protected boolean introducedOnFirstCommit = false;
 	protected HashMap<Integer, Versionable> revivedInVersions = new HashMap<>();
 	protected HashMap<Integer, Versionable> killedInVersions = new HashMap<>();
 	protected Set<String> relocations = new HashSet<>();
@@ -124,6 +125,16 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	@Override
 	public String sourcePath() {
 		return sourcePath;
+	}
+
+	@Override
+	public void setIntroducedOnFirstCheckin() {
+		introducedOnFirstCommit = true;
+	}
+
+	@Override
+	public boolean isIntroducedOnFirstCheckin() {
+		return introducedOnFirstCommit;
 	}
 
 	@Override

@@ -50,7 +50,7 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 		changes[FileChange.Type.RELOCATION]?.let { mapper.mapSmells(it) }
 		// deleted smells are set to alive=false
 		changes[FileChange.Type.REMOVAL]?.let { handleDeleted(versionable, before, it) }
-		changes[FileChange.Type.REMOVAL]?.let { handleAdditions(versionable, before, after, it) }
+		changes[FileChange.Type.ADDITION]?.let { handleAdditions(versionable, before, after, it) }
 
 		return before
 	}
@@ -151,7 +151,10 @@ class ASTMapping : SmellMapping<JavaCodeSmell> {
 				.map { after.findBySourcePath(it) }
 				.flatMap { it.asSequence() }
 				.toList()
-		newSmells.forEach { it.applyVersion(versionable) }
+		newSmells.forEach {
+			it.applyVersion(versionable)
+			it.setIntroducedOnFirstCheckin()
+		}
 		before.addSmells(newSmells)
 	}
 }
