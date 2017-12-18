@@ -30,7 +30,7 @@ allprojects {
 	}
 
 	apply plugin: 'java'
-	apply plugin: 'maven'
+	apply plugin: 'maven-publish'
 	apply plugin: 'org.junit.platform.gradle.plugin'
 
 	def projectName = it.name
@@ -51,17 +51,8 @@ allprojects {
 		apply plugin: 'com.github.johnrengelman.shadow'
 	}
 
-	uploadArchives {
-		repositories {
-			mavenDeployer {
-				repository(url: uri('../repo'))
-			}
-		}
-	}
-
 	if (projectName.startsWith("quide")) {
 
-		apply plugin: 'maven-publish'
 		apply plugin: 'com.jfrog.bintray'
 
 		bintray {
