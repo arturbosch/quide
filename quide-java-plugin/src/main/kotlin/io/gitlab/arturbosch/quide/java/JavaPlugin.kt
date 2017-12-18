@@ -9,6 +9,7 @@ import io.gitlab.arturbosch.quide.java.core.MappingProcessor
 import io.gitlab.arturbosch.quide.java.core.ResultXmlProcessor
 import io.gitlab.arturbosch.quide.java.core.SmartSmellsTool
 import io.gitlab.arturbosch.quide.java.research.EvaluateContainerProcessor
+import io.gitlab.arturbosch.quide.java.research.ProjectNumbersProcessor
 import io.gitlab.arturbosch.quide.platform.Plugin
 import io.gitlab.arturbosch.quide.platform.Processor
 import io.gitlab.arturbosch.quide.platform.UserData
@@ -33,7 +34,8 @@ class JavaPlugin : Plugin {
 			ResultXmlProcessor(),
 			ResultPrintProcessor(),
 			AfterAnalysisContainerToXmlProcessor(),
-			EvaluateContainerProcessor())
+			EvaluateContainerProcessor(),
+			ProjectNumbersProcessor())
 
 	override fun detector(): CodeSmellDetector<JavaSmellContainer> = tool
 

@@ -8,14 +8,12 @@ import io.gitlab.arturbosch.kutils.exists
 import io.gitlab.arturbosch.kutils.isFile
 import io.gitlab.arturbosch.quide.java.FACADE
 import io.gitlab.arturbosch.quide.java.JavaPluginData
-import io.gitlab.arturbosch.quide.java.PATHS_FILTERS_JAVA
 import io.gitlab.arturbosch.quide.java.PLUGIN_JAVA_CONFIG
 import io.gitlab.arturbosch.quide.java.UPDATABLE_FACADE
 import io.gitlab.arturbosch.quide.java.UPDATABLE_STORAGE
+import io.gitlab.arturbosch.quide.java.loadFiltersFromProperties
 import io.gitlab.arturbosch.quide.platform.ControlFlow
 import io.gitlab.arturbosch.quide.platform.Processor
-import io.gitlab.arturbosch.quide.platform.QuideConstants
-import io.gitlab.arturbosch.quide.platform.QuideDirectory
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.smartsmells.api.DetectorFacade
 import io.gitlab.arturbosch.smartsmells.api.DetectorLoader
@@ -77,12 +75,6 @@ class DetectorFacadeProcessor : Processor {
 		}
 		ControlFlow.LOGGER.info("No configuration found, using the full stack facade...")
 		return DetectorFacade.builder().withFilters(filters).fullStackFacade()
-	}
-
-	private fun loadFiltersFromProperties(quideDirectory: QuideDirectory): List<String> {
-		val globalFilters = quideDirectory.getPropertyOrDefault(QuideConstants.PATHS_FILTERS_GLOBAL, "").trim()
-		val javaFilters = quideDirectory.getPropertyOrDefault(PATHS_FILTERS_JAVA, "").trim()
-		return globalFilters.split(',').plus(javaFilters.split(',')).filterNot(String::isNullOrBlank)
 	}
 
 	override fun injectionPoint(): ControlFlow.InjectionPoint {

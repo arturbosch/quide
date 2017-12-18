@@ -3,6 +3,8 @@ package io.gitlab.arturbosch.quide.java
 import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
 import io.gitlab.arturbosch.quide.java.core.JavaSmellContainer
 import io.gitlab.arturbosch.quide.platform.ControlFlow
+import io.gitlab.arturbosch.quide.platform.QuideConstants
+import io.gitlab.arturbosch.quide.platform.QuideDirectory
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import java.nio.file.Path
@@ -36,4 +38,10 @@ fun UserData.withOutputPath(block: (Path, Versionable, JavaSmellContainer) -> Un
 					"and version=${currentVersion.isPresent}")
 		}
 	}
+}
+
+fun loadFiltersFromProperties(quideDirectory: QuideDirectory): List<String> {
+	val globalFilters = quideDirectory.getPropertyOrDefault(QuideConstants.PATHS_FILTERS_GLOBAL, "").trim()
+	val javaFilters = quideDirectory.getPropertyOrDefault(PATHS_FILTERS_JAVA, "").trim()
+	return globalFilters.split(',').plus(javaFilters.split(',')).filterNot(String::isNullOrBlank)
 }
