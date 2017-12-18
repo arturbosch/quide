@@ -2,6 +2,7 @@ package io.gitlab.arturbosch.quide.hotspot
 
 import io.gitlab.arturbosch.quide.platform.UserData
 import io.gitlab.arturbosch.quide.platform.processors.EvolutionaryProcessor
+import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.HashMap
@@ -11,33 +12,26 @@ import java.util.HashMap
  */
 class HotspotReporter : EvolutionaryProcessor {
 
-	private val packages = HashMap<String, Int>()
-
 	override fun <U : UserData> doIfActive(data: U) {
 		val projectPath = data.projectPath()
 		val paths = (data as HotspotData).paths
 
-		splitToPackageStructure(projectPath, paths)
-		val packages = distinctSubPackages()
-
-		val result = HotspotResult(projectPath.toString(), packages)
-		HotspotData.put(HOTSPOT_RESULT, result)
+		val fileReport = HotspotReport(paths.map { HotSpot(it.key, it.value) })
+		val packageReport = packageData(projectPath, paths)
 
 		println("\nHotspot report: \n")
-		println(result.textReport())
+		println(packageReport.textReport())
+		data.outputPath().ifPresent {
+			val packagePath = it.resolve(projectPath.fileName.toString() + ".hotspot-packages.txt")
+			val filePath = it.resolve(projectPath.fileName.toString() + ".hotspot-files.txt")
+			fileReport.save(filePath)
+			packageReport.save(packagePath)
+		}
 		println()
 	}
 
-	private fun distinctSubPackages(): List<Package> {
-		val packageKeys = packages.keys
-		return packages.filterKeys { key -> packageKeys.find { key != it && it.contains(key) } == null }
-				.toSortedMap()
-				.map { Package(it.key, it.value) }
-				.sortedBy { it.usage }
-				.reversed()
-	}
-
-	private fun splitToPackageStructure(projectPath: Path, paths: HashMap<String, Int>) {
+	private fun packageData(projectPath: Path, paths: HashMap<String, Int>): HotspotReport {
+		val packages = HashMap<String, Int>()
 		paths.forEach { path, activity ->
 			val relative = projectPath.relativize(Paths.get(path))
 			var parent = relative.parent
@@ -46,13 +40,25 @@ class HotspotReporter : EvolutionaryProcessor {
 				parent = parent.parent
 			}
 		}
+
+		val packageKeys = packages.keys
+		val hotspots = packages
+				.filterKeys { key -> packageKeys.find { key != it && it.contains(key) } == null }
+				.map { HotSpot(it.key, it.value) }
+
+		return HotspotReport(hotspots)
 	}
 }
 
-data class Package(val path: String, val usage: Int)
+data class HotSpot(val path: String, val usage: Int)
 
-data class HotspotResult(val project: String, val packages: List<Package>) {
-	fun textReport(): String = packages.joinToString("\n") { "${it.path} - ${it.usage}" }
+data class HotspotReport(val hotSpots: List<HotSpot>) {
+	private val report = hotSpots.sortedBy { it.usage }
+			.asReversed()
+			.joinToString("\n") { "${it.path},${it.usage}" }
+
+	fun textReport(): String = report
+	fun save(path: Path) {
+		Files.write(path, textReport().toByteArray())
+	}
 }
-
-val HOTSPOT_RESULT = "hotspot.result"

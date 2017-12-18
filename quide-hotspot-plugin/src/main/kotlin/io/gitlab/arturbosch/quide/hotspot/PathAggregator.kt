@@ -12,9 +12,9 @@ import io.gitlab.arturbosch.quide.vcs.Versionable
 class PathAggregator : EvolutionaryProcessor {
 
 	override fun <U : UserData> doIfActive(data: U) {
-		data.currentVersion().orElse(null)?.let {
+		data.currentVersion().ifPresent {
 			reportModifiedPaths(data as HotspotData, it)
-		} ?: throw IllegalStateException("Expected a version to analyze!")
+		}
 	}
 
 	private fun reportModifiedPaths(data: HotspotData, version: Versionable) {
@@ -29,9 +29,7 @@ class PathAggregator : EvolutionaryProcessor {
 					val newValue = oldValue?.plus(1) ?: 1
 					paths.put(it.newFile().path(), newValue)
 				}
-				else -> {
-					// java enum can be null - fix/ignore
-				}
+				else -> Unit
 			}
 		}
 	}
