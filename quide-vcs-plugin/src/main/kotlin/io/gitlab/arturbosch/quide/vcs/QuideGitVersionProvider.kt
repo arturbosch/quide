@@ -24,7 +24,7 @@ class QuideGitVersionProvider(var root: Path? = null,
 
 	private var index: Int = 0
 	private val format = DateTimeFormatter.ISO_LOCAL_DATE_TIME
-	private var since = LocalDate.of(2005, 1, 1).toDate()
+	private var since = LocalDate.of(1995, 1, 1).toDate()
 	private var until = LocalDate.now().toDate()
 
 	override fun initialize(context: AnalysisContext) {
