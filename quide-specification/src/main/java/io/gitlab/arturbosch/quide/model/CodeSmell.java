@@ -3,7 +3,6 @@ package io.gitlab.arturbosch.quide.model;
 import io.gitlab.arturbosch.quide.validation.Validate;
 import io.gitlab.arturbosch.quide.vcs.Versionable;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -13,35 +12,6 @@ import java.util.Set;
  * @author Artur Bosch
  */
 public interface CodeSmell extends Printable {
-
-	default boolean isLocatedAt(Path path) {
-		Validate.notNull(path);
-		return path.toAbsolutePath().normalize().toString().equals(sourcePath());
-	}
-
-	default boolean isLocatedAt(String path) {
-		Validate.notNull(path);
-		return path.equals(sourcePath());
-	}
-
-	default void applyVersion(Versionable versionable) {
-		Validate.notNull(versionable);
-		setStartVersion(versionable);
-		setEndVersion(versionable);
-	}
-
-	default void killedIn(Versionable versionable) {
-		Validate.notNull(versionable);
-		killedInVersions().put(versionable.versionNumber(), versionable);
-		setAlive(false);
-		setConsistent(false);
-	}
-
-	default void revivedIn(Versionable versionable) {
-		Validate.notNull(versionable);
-		revivedInVersions().put(versionable.versionNumber(), versionable);
-		setAlive(true);
-	}
 
 	Versionable startVersion();
 
@@ -119,4 +89,28 @@ public interface CodeSmell extends Printable {
 	 * @return true if the code smell was introduced on first file appearance
 	 */
 	boolean isIntroducedOnFirstCheckin();
+
+	default boolean isLocatedAt(String path) {
+		Validate.notNull(path);
+		return path.equals(sourcePath());
+	}
+
+	default void applyVersion(Versionable versionable) {
+		Validate.notNull(versionable);
+		setStartVersion(versionable);
+		setEndVersion(versionable);
+	}
+
+	default void killedIn(Versionable versionable) {
+		Validate.notNull(versionable);
+		killedInVersions().put(versionable.versionNumber(), LightweightVersion.from(versionable));
+		setAlive(false);
+		setConsistent(false);
+	}
+
+	default void revivedIn(Versionable versionable) {
+		Validate.notNull(versionable);
+		revivedInVersions().put(versionable.versionNumber(), LightweightVersion.from(versionable));
+		setAlive(true);
+	}
 }

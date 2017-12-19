@@ -88,7 +88,7 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	@Override
 	public void setStartVersion(Versionable versionable) {
 		Validate.notNull(versionable);
-		startVersion = versionable;
+		startVersion = LightweightVersion.from(versionable);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public abstract class BaseCodeSmell implements CodeSmell {
 	@Override
 	public void setEndVersion(Versionable versionable) {
 		Validate.notNull(versionable);
-		endVersion = versionable;
+		endVersion = LightweightVersion.from(versionable);
 	}
 
 	@Override
