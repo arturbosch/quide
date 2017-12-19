@@ -6,7 +6,6 @@ import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.nodeTypes.NodeWithCondition
 import com.github.javaparser.ast.stmt.Statement
 import difflib.Delta
-import io.gitlab.arturbosch.jpal.internal.Printer
 import io.gitlab.arturbosch.kutils.peek
 import io.gitlab.arturbosch.quide.java.core.JavaCodeSmell
 import io.gitlab.arturbosch.smartsmells.smells.ClassSpecific
@@ -81,7 +80,7 @@ class ASTPatch(private val chunks: List<ASTChunk>,
 					chunks.filter { it.containsSmell(smell) }
 							.flatMap { it.revisedNodes }
 							.peek { println(it) }
-							.map { it to Strings.distance(smell.signature(), Printer.toString(it)) }
+							.map { it to Strings.distance(smell.signature(), it.toMappableString()) }
 							.minBy { it.second }
 							?.let { return this.updateInternal(smell.copy(it.first)) }
 				}

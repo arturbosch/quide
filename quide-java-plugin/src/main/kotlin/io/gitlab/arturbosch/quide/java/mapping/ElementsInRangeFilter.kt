@@ -5,7 +5,6 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.visitor.TreeVisitor
 import difflib.Chunk
-import io.gitlab.arturbosch.jpal.internal.Printer
 
 /**
  * @author Artur Bosch
@@ -35,7 +34,7 @@ internal class ElementsInRangeFilter(chunk: Chunk<*>) : TreeVisitor() {
 			return
 		}
 
-		if (range.begin.line >= start && Printer.toString(node).contains(text)) {
+		if (range.begin.line >= start && node.toMappableString().contains(text)) {
 			posToElement.add(node)
 		}
 
