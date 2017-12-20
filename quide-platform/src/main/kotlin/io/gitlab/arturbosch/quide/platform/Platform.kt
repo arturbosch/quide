@@ -11,6 +11,7 @@ import io.gitlab.arturbosch.quide.vcs.VersionProvider
 import io.gitlab.arturbosch.quide.vcs.Versionable
 import java.nio.file.Files
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.ForkJoinPool
 
 /**
  * @author Artur Bosch
@@ -58,6 +59,8 @@ class MultiPlatform(private val versionProvider: VersionProvider) {
 	}
 }
 
+private const val WORKER_POOL: String = "platform.worker.pool"
+
 class BasePlatform(private val analysis: Analysis,
 				   pluginLoader: PluginLoader,
 				   private val multiPlatform: MultiPlatform? = null) : ControlFlow {
@@ -70,15 +73,18 @@ class BasePlatform(private val analysis: Analysis,
 
 	private val isDebugMode = QuideConstants.DEBUG.asProperty()?.toBoolean() ?: false
 
-	override fun plugins(): List<Plugin> = _plugins
+	private val workerPool = ForkJoinPool.commonPool()
 
 	fun analyze() {
 		if (cpuCores < 1) {
 			logger.info("No plugins available...shutting down!")
 			return
 		}
+		plugins().forEach { it.userData().put(WORKER_POOL, workerPool) }
 		run(analysis)
 	}
+
+	override fun plugins(): List<Plugin> = _plugins
 
 	override fun run(context: AnalysisContext) {
 		if (isDebugMode) logger.info("Debug is active.")
