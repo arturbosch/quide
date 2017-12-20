@@ -2,9 +2,10 @@ package io.gitlab.arturbosch.quide.java.mapping
 
 import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.Node
-import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.body.CallableDeclaration
 import com.github.javaparser.ast.visitor.TreeVisitor
 import difflib.Chunk
+import io.gitlab.arturbosch.quide.java.mapping.util.toDeclarationString
 
 /**
  * @author Artur Bosch
@@ -40,7 +41,7 @@ internal class ElementsInRangeFilter(chunk: Chunk<*>) : TreeVisitor() {
 
 	}
 
-	private fun isWithinMethod(node: Node) = (node.begin.get().line >= start && node is MethodDeclaration
-			&& text.contains(node.declarationAsString))
+	private fun isWithinMethod(node: Node) = (node.begin.get().line >= start && node is CallableDeclaration<*>
+			&& text.contains(node.toDeclarationString()))
 
 }
