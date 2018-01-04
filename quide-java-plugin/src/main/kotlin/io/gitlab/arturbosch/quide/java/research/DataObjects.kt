@@ -150,7 +150,7 @@ class LifespanData(val version: Int = 100, val values: List<Double>) : Printable
 					"${f.format(deviation)} \\\\\\hline"
 
 	companion object {
-		fun from(revision: Int, csv: String) = LifespanData(StatisticsData.from(csv), revision)
+		fun from(revision: Int, csv: String) = LifespanData(revision, csv.split(COMMA).map { it.toDouble() })
 	}
 }
 
@@ -279,5 +279,9 @@ val typeLU = mapOf(
 		"NESTED_BLOCK_DEPTH" to "NestedBlockDepth",
 		"LARGE_CLASS" to "LargeClass",
 		"SHOTGUN_SURGERY" to "ShotgunSurgery",
-		"GOD_CLASS" to "GodClass"
+		"GOD_CLASS" to "GodClass",
+		"CLASS_DATA_SHOULD_BE_PRIVATE" to "ClassDataShouldBePrivate",
+		"BRAIN_METHOD" to "BrainMethod",
+		"TRADITION_BREAKER" to "TraditionBreaker",
+		"REFUSED_PARENT_BEQUEST" to "RefusedParentBequest"
 )
