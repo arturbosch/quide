@@ -1,7 +1,5 @@
 
 .gradle/
 build/
-.idea/modules/quide_main.iml
-.idea/modules/quide_test.iml
+*.iml
 /.idea/
-SmartSmells_2017-01-01T20:44:12.983.quide

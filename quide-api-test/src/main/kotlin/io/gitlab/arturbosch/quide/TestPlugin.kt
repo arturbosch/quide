@@ -1,5 +1,8 @@
-package io.gitlab.arturbosch.quide.api
+package io.gitlab.arturbosch.quide
 
+import io.gitlab.arturbosch.quide.api.AnalysisContext
+import io.gitlab.arturbosch.quide.api.Detector
+import io.gitlab.arturbosch.quide.api.Plugin
 import io.gitlab.arturbosch.quide.api.processors.Processor
 import io.gitlab.arturbosch.quide.model.CodeSmell
 import io.gitlab.arturbosch.quide.model.SmellContainer

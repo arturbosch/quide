@@ -1,5 +1,7 @@
-package io.gitlab.arturbosch.quide.api
+package io.gitlab.arturbosch.quide
 
+import io.gitlab.arturbosch.quide.api.AnalysisContext
+import io.gitlab.arturbosch.quide.api.Plugin
 import io.gitlab.arturbosch.quide.api.core.PropertiesAware
 import io.gitlab.arturbosch.quide.api.core.QuideDir
 import io.gitlab.arturbosch.quide.api.core.StorageAware
@@ -28,18 +30,18 @@ class TestContext(plugin: Plugin) : AbstractAnalysisContext(
 object TestQuideDir : QuideDirectory()
 object TestStorage : Storage()
 
-abstract class Storage(protected val storage: HashMap<String, Any> = HashMap()) : StorageAware {
+abstract class Storage(private val storage: HashMap<String, Any> = HashMap()) : StorageAware {
 
 	@Suppress("UNCHECKED_CAST")
-	override operator fun <T> get(key: String): T? = storage[key] as T?
+	override operator fun <T> get(key: String): T? = storage[key] as? T?
 
 	override fun <T : Any> put(key: String, value: T) {
-		storage.put(key, value)
+		storage[key] = value
 	}
 
 }
 
-abstract class QuideDirectory(protected val properties: MutableMap<String, String> = HashMap()) : QuideDir {
+abstract class QuideDirectory(private val properties: MutableMap<String, String> = HashMap()) : QuideDir {
 
 	companion object {
 		const val USER_HOME = "user.home"
@@ -56,19 +58,12 @@ abstract class QuideDirectory(protected val properties: MutableMap<String, Strin
 		return checkDir(home.resolve(subPath))
 	}
 
-	override fun property(key: String): String? {
-		return properties[key]
-	}
-
-	override fun propertyOrDefault(key: String, defaultValue: String): String {
-		return properties[key] ?: defaultValue
-	}
+	override fun property(key: String): String? = properties[key]
+	override fun propertyOrDefault(key: String, defaultValue: String): String = properties[key] ?: defaultValue
 
 	private fun checkDir(path: File): File {
-		if (!path.exists()) {
-			if (!path.mkdirs()) {
-				throw IOException("Error creating directories for " + path)
-			}
+		if (!path.exists() && !path.mkdirs()) {
+			throw IOException("Error creating directories for " + path)
 		}
 		return path
 	}

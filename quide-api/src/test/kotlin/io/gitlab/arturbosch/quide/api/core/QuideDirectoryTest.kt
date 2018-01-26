@@ -1,6 +1,6 @@
 package io.gitlab.arturbosch.quide.api.core
 
-import io.gitlab.arturbosch.quide.api.QuideDirectory
+import io.gitlab.arturbosch.quide.TestQuideDir
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
@@ -13,7 +13,7 @@ internal class QuideDirectoryTest : Spek({
 
 	describe("navigation inside the quide directory") {
 
-		val quide = object : QuideDirectory() {}
+		val quide = TestQuideDir
 
 		it("provides core paths inside quide") {
 			assertThat(quide.home.exists()).isTrue()

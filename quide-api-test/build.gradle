@@ -7,8 +7,10 @@ configurations {
 }
 
 dependencies {
-	compileOnly project(":quide-specification")
-	testImplementation project(":quide-api-test")
+	implementation project(":quide-api")
+	implementation project(":quide-specification")
+	testImplementation project(":quide-api")
+	testImplementation project(":quide-specification")
 }
 
 sourceSets {

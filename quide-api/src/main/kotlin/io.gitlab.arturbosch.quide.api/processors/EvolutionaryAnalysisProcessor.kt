@@ -7,8 +7,5 @@ import io.gitlab.arturbosch.quide.api.AnalysisContext
  */
 interface EvolutionaryAnalysisProcessor : ConditionalProcessor {
 
-	override fun isActive(context: AnalysisContext): Boolean {
-		return context.isEvolutionaryAnalysis
-	}
-
+	override fun isActive(context: AnalysisContext): Boolean = context.isEvolutionaryAnalysis
 }

@@ -1,4 +1,4 @@
-package io.gitlab.arturbosch.quide.api
+package io.gitlab.arturbosch.quide
 
 import io.gitlab.arturbosch.quide.api.filesystem.FilePredicate
 import io.gitlab.arturbosch.quide.api.filesystem.FileSystem
@@ -18,15 +18,16 @@ object TestFileSystem : FileSystem, ResourceAware {
 	override val projectDir = File(resource("baseDir").toURI())
 	override val workDir = File(resource("workDir").toURI())
 
-	private val _allFiles = projectDir.walkTopDown().map {
-		when {
-			it.isDirectory -> TestInputDir(projectDir, it)
-			it.isFile -> TestInputFile(projectDir, it)
-			else -> null
-		}
-	}.filterNotNull().toList()
+	private val allFiles = projectDir.walkTopDown()
+			.map(TestFileSystem::toFileOrDir)
+			.filterNotNull()
+			.asSequence()
 
-	private val allFiles: Sequence<InputPath> = _allFiles.asSequence()
+	private fun toFileOrDir(it: File): InputPath? = when {
+		it.isDirectory -> TestInputDir(projectDir, it)
+		it.isFile -> TestInputFile(projectDir, it)
+		else -> null
+	}
 
 	override fun inputFile(file: File): InputFile? = inputFiles { it.file == file }.firstOrNull()
 

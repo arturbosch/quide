@@ -10,6 +10,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" filepath="$PROJECT_DIR$/.idea/modules/codesmell-evolution-format/codesmell-evolution-format_test.iml" group="codesmell-evolution-format" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide.iml" filepath="$PROJECT_DIR$/.idea/modules/quide.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api.iml" group="quide-api" />
+      <module fileurl="file://$PROJECT_DIR$/quide-api-test/quide-api-test.iml" filepath="$PROJECT_DIR$/quide-api-test/quide-api-test.iml" group="quide-api-test" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api-test/quide-api-test_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api-test/quide-api-test_main.iml" group="quide-api-test" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api-test/quide-api-test_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api-test/quide-api-test_test.iml" group="quide-api-test" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api/quide-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api/quide-api_main.iml" group="quide-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api/quide-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api/quide-api_test.iml" group="quide-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" group="quide-crawler" />
