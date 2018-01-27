@@ -7,3 +7,5 @@ interface PropertiesAware {
 	fun property(key: String): String?
 	fun propertyOrDefault(key: String, defaultValue: String): String
 }
+
+const val PATHS_FILTERS_GLOBAL = "input.paths.filters.global"

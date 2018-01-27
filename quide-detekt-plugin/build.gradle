@@ -1,11 +1,13 @@
 configurations {
 	compileOnly.extendsFrom log
 	compileOnly.extendsFrom kotlinConf
-	testCompile.extendsFrom spock
+	testCompile.extendsFrom kotlinTest
+	testCompile.extendsFrom spekTest
+	testRuntime.extendsFrom junitPlatform
 }
 
 dependencies {
-	compileOnly project(":quide-specification")
-	testCompile project(":quide-specification")
+	compileOnly project(":quide-api")
+	testImplementation project(":quide-api-test")
 	compile "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
 }
