@@ -1,12 +1,11 @@
 package io.gitlab.arturbosch.quide.api.processors
 
-import io.gitlab.arturbosch.quide.api.AnalysisContext
+import io.gitlab.arturbosch.quide.api.Executable
 
 /**
  * @author Artur Bosch
  */
-interface Processor {
-	fun execute(context: AnalysisContext)
+interface Processor : Executable {
 	fun injectionPoint(): InjectionPoint = InjectionPoint.AfterAnalysis
 	fun priority(): Int = 0
 }

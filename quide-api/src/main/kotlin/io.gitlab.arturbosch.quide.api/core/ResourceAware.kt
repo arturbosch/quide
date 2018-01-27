@@ -1,4 +1,4 @@
-package io.gitlab.arturbosch.quide.api.utils
+package io.gitlab.arturbosch.quide.api.core
 
 import java.io.InputStream
 import java.net.URL
@@ -12,6 +12,7 @@ interface ResourceAware {
 
 	fun resourceStream(name: String): InputStream = javaClass.getResourceAsStream(name.asResourceName())
 			?: throw IllegalArgumentException("There is no resource with name $name!")
+
+	private fun String.asResourceName() = if (startsWith("/")) this else "/$this"
 }
 
-private fun String.asResourceName() = if (startsWith("/")) this else "/$this"

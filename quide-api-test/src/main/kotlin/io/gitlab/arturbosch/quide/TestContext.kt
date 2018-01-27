@@ -7,7 +7,7 @@ import io.gitlab.arturbosch.quide.api.core.QuideDir
 import io.gitlab.arturbosch.quide.api.core.StorageAware
 import io.gitlab.arturbosch.quide.api.core.VersionAware
 import io.gitlab.arturbosch.quide.api.filesystem.FileSystem
-import io.gitlab.arturbosch.quide.api.utils.ResourceAware
+import io.gitlab.arturbosch.quide.api.core.ResourceAware
 import java.io.File
 import java.io.IOException
 import java.util.HashMap

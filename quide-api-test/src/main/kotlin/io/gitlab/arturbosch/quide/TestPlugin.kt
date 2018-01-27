@@ -4,8 +4,6 @@ import io.gitlab.arturbosch.quide.api.AnalysisContext
 import io.gitlab.arturbosch.quide.api.Detector
 import io.gitlab.arturbosch.quide.api.Plugin
 import io.gitlab.arturbosch.quide.api.processors.Processor
-import io.gitlab.arturbosch.quide.model.CodeSmell
-import io.gitlab.arturbosch.quide.model.SmellContainer
 
 /**
  * @author Artur Bosch
@@ -36,8 +34,6 @@ class KotlinPrintTestProcessor : Processor {
 
 }
 
-class KotlinTestCodeSmellDetector : Detector<SmellContainer<CodeSmell>> {
-	override fun execute(context: AnalysisContext): SmellContainer<CodeSmell> {
-		return SmellContainer { mutableSetOf<CodeSmell>() }
-	}
+class KotlinTestCodeSmellDetector : Detector {
+	override fun execute(context: AnalysisContext) {}
 }

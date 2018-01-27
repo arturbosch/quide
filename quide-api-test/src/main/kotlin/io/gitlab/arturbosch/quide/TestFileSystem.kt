@@ -5,7 +5,7 @@ import io.gitlab.arturbosch.quide.api.filesystem.FileSystem
 import io.gitlab.arturbosch.quide.api.filesystem.InputDir
 import io.gitlab.arturbosch.quide.api.filesystem.InputFile
 import io.gitlab.arturbosch.quide.api.filesystem.InputPath
-import io.gitlab.arturbosch.quide.api.utils.ResourceAware
+import io.gitlab.arturbosch.quide.api.core.ResourceAware
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Path

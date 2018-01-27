@@ -1,8 +1,6 @@
 package io.gitlab.arturbosch.quide.api
 
 import io.gitlab.arturbosch.quide.api.processors.Processor
-import io.gitlab.arturbosch.quide.model.CodeSmell
-import io.gitlab.arturbosch.quide.model.SmellContainer
 
 /**
  * @author Artur Bosch
@@ -14,12 +12,12 @@ interface Plugin : Nameable {
 
 	class Context {
 
-		var detectorInstance: Detector<*>? = null
+		var detectorInstance: Detector? = null
 			private set
 		val registeredProcessors get() = _registeredProcessors.toSet()
 		private val _registeredProcessors: MutableSet<Processor> = mutableSetOf()
 
-		fun <T : CodeSmell, C : SmellContainer<T>> register(detector: Detector<C>) {
+		fun register(detector: Detector) {
 			if (detectorInstance != null) {
 				throw IllegalArgumentException("A detector was already registered for this plugin!")
 			}
