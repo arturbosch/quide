@@ -1,16 +1,15 @@
 configurations {
 	compileOnly.extendsFrom log
 	compileOnly.extendsFrom kotlinConf
+	testCompile.extendsFrom log
 	testCompile.extendsFrom kotlinTest
 	testCompile.extendsFrom spekTest
 	testRuntime.extendsFrom junitPlatform
 }
 
 dependencies {
-	implementation project(":quide-api")
-	implementation project(":quide-specification")
-	testImplementation project(":quide-api")
-	testImplementation project(":quide-specification")
+	compile project(":quide-api")
+	compile project(":quide-specification")
 }
 
 sourceSets {
