@@ -9,5 +9,5 @@ configurations {
 
 dependencies {
 	compile project(":quide-api")
-	testCompile project(":quide-api-test")
+	testCompile project(":quide-test-api")
 }

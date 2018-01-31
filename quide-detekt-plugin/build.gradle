@@ -9,5 +9,5 @@ configurations {
 dependencies {
 	compile "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
 	compileOnly project(":quide-api")
-	testCompile project(":quide-api-test")
+	testCompile project(":quide-test-api")
 }

@@ -11,6 +11,6 @@ configurations {
 dependencies {
 	compile project(":quide-specification")
 	compile project(":quide-core")
-	testCompile project(":quide-api-test")
+	testCompile project(":quide-test-api")
 	compile "com.beust:jcommander:$jcommanderVersion"
 }

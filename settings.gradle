@@ -11,6 +11,6 @@ include 'quide-groovy-plugin'
 include 'quide-crawler'
 include 'quide-hotspot-plugin'
 include 'quide-api'
-include 'quide-api-test'
+include 'quide-test-api'
 include 'quide-core'
 
