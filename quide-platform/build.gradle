@@ -1,16 +1,16 @@
 mainClassName = 'io.gitlab.arturbosch.quide.platform.MainKt'
 
-apply plugin: 'groovy'
-
 configurations {
 	compile.extendsFrom kotlinConf
 	compile.extendsFrom log
-	testCompile.extendsFrom spock
+	testCompile.extendsFrom kotlinTest
+	testCompile.extendsFrom spekTest
+	testRuntime.extendsFrom junitPlatform
 }
 
 dependencies {
 	compile project(":quide-specification")
-	compile project(":quide-api")
-	compile project(":quide-api-test")
+	compile project(":quide-core")
+	testCompile project(":quide-api-test")
 	compile "com.beust:jcommander:$jcommanderVersion"
 }
