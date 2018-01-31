@@ -1,6 +1,6 @@
 package io.gitlab.arturbosch.quide.shell
 
-import io.gitlab.arturbosch.quide.platform.logFactory
+import io.gitlab.arturbosch.quide.api.utils.logFactory
 import io.gitlab.arturbosch.quide.shell.loaders.CommandLoader
 import java.util.LinkedHashMap
 
@@ -17,13 +17,13 @@ class Commander(vararg loaders: CommandLoader) {
 	}
 
 	fun choose(line: String) {
-		if (line.isNullOrBlank()) return
+		if (line.isBlank()) return
 		commands.keys.find { line.startsWith(it) }
 				?.let { println(commands[it]?.run(line.substring(it.length))) }
 				?: throw QuideShellException("No matching command found!")
 	}
 
-	fun <K, V> Map<K, V>.mergeReduce(other: Map<K, V>, reduce: (V, V) -> V = { _, b -> b }): Map<K, V> {
+	private fun <K, V> Map<K, V>.mergeReduce(other: Map<K, V>, reduce: (V, V) -> V = { _, b -> b }): Map<K, V> {
 		val result = LinkedHashMap<K, V>(this.size + other.size)
 		result.putAll(this)
 		other.forEach { e -> result[e.key] = result[e.key]?.let { reduce(e.value, it) } ?: e.value }

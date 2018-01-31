@@ -1,8 +1,5 @@
 package io.gitlab.arturbosch.quide.shell
 
-import io.gitlab.arturbosch.quide.platform.BasePlatform
-import io.gitlab.arturbosch.quide.platform.BasePluginDetector
-import io.gitlab.arturbosch.quide.platform.BasePluginLoader
 import java.nio.file.Path
 
 /**
@@ -18,6 +15,4 @@ object QuideState {
 			prompt = DEFAULT_PROMPT + "@" + value?.fileName + ">"
 			field = value
 		}
-
-	val platform = BasePlatform(ConfigurableAnalysis, BasePluginLoader(BasePluginDetector))
 }

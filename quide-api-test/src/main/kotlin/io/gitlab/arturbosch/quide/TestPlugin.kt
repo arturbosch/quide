@@ -18,7 +18,6 @@ object TestPlugin : Plugin {
 			register(KotlinTestProcessor(), KotlinPrintTestProcessor())
 		}
 	}
-
 }
 
 class KotlinTestProcessor : Processor {

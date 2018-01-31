@@ -3,7 +3,7 @@ package io.gitlab.arturbosch.quide.shell
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
-import io.gitlab.arturbosch.quide.platform.ExistingPathConverter
+import io.gitlab.arturbosch.quide.platform.cli.ExistingPathConverter
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -12,18 +12,18 @@ import java.nio.file.Path
  */
 
 object ShellOpts {
-	@Parameter(names = arrayOf("--project", "-p"),
+	@Parameter(names = ["--project", "-p"],
 			description = "Specify a project quide should operate on 'run'.",
 			converter = ExistingPathConverter::class)
 	var input: Path? = null
-	@Parameter(names = arrayOf("--help", "-h"), help = true, description = "Prints the help message.")
+	@Parameter(names = ["--help", "-h"], help = true, description = "Prints the help message.")
 	var help = false
 }
 
 private val jCommander = JCommander()
 
 fun parseArguments(args: Array<String>) {
-	jCommander.setProgramName("quide-shell")
+	jCommander.programName = "quide-shell"
 	jCommander.addObject(ShellOpts)
 
 	try {

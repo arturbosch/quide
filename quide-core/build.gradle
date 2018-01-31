@@ -1,0 +1,13 @@
+configurations {
+	compileOnly.extendsFrom log
+	compileOnly.extendsFrom kotlinConf
+	testCompile.extendsFrom log
+	testCompile.extendsFrom kotlinTest
+	testCompile.extendsFrom spekTest
+	testRuntime.extendsFrom junitPlatform
+}
+
+dependencies {
+	compile project(":quide-api")
+	testCompile project(":quide-api-test")
+}

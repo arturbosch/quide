@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.quide.api.core.PropertiesAware
 import io.gitlab.arturbosch.quide.api.core.QuideDir
 import io.gitlab.arturbosch.quide.api.core.StorageAware
 import io.gitlab.arturbosch.quide.api.core.VersionAware
-import io.gitlab.arturbosch.quide.api.filesystem.FileSystem
+import io.gitlab.arturbosch.quide.api.fs.FileSystem
 import io.gitlab.arturbosch.quide.api.core.ResourceAware
 
 /**

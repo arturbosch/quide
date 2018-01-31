@@ -7,6 +7,7 @@ import java.net.URL
  * @author Artur Bosch
  */
 interface ResourceAware {
+
 	fun resource(name: String): URL = javaClass.getResource(name.asResourceName())
 			?: throw IllegalArgumentException("There is no resource with name $name!")
 

@@ -15,6 +15,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api-test/quide-api-test_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api-test/quide-api-test_test.iml" group="quide-api-test" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api/quide-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api/quide-api_main.iml" group="quide-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-api/quide-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-api/quide-api_test.iml" group="quide-api" />
+      <module fileurl="file://$PROJECT_DIR$/quide-core/quide-core.iml" filepath="$PROJECT_DIR$/quide-core/quide-core.iml" group="quide-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-core/quide-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-core/quide-core_main.iml" group="quide-core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-core/quide-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-core/quide-core_test.iml" group="quide-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler.iml" group="quide-crawler" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_main.iml" group="quide-crawler" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" filepath="$PROJECT_DIR$/.idea/modules/quide-crawler/quide-crawler_test.iml" group="quide-crawler" />

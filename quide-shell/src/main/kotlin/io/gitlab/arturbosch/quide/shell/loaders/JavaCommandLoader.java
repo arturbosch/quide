@@ -30,7 +30,7 @@ public class JavaCommandLoader implements CommandLoader {
 	@Override
 	public Map<String, Command> load() {
 		try {
-			Path root = HomeFolder.INSTANCE.resolve("shell/commands");
+			Path root = HomeFolder.INSTANCE.resolve("shell/commands").toPath();
 			List<Path> scripts = Files.walk(root)
 					.filter(path -> Files.isRegularFile(path))
 					.filter(path -> path.getFileName().toString().endsWith(".java"))

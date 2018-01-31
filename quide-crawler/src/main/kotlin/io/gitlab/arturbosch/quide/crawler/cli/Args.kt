@@ -3,8 +3,8 @@ package io.gitlab.arturbosch.quide.crawler.cli
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
-import io.gitlab.arturbosch.quide.platform.DirectoryPathConverter
-import io.gitlab.arturbosch.quide.platform.ExistingPathConverter
+import io.gitlab.arturbosch.quide.platform.cli.DirectoryPathConverter
+import io.gitlab.arturbosch.quide.platform.cli.ExistingPathConverter
 import java.nio.file.Path
 
 /**

@@ -9,3 +9,4 @@ interface PropertiesAware {
 }
 
 const val PATHS_FILTERS_GLOBAL = "input.paths.filters.global"
+const val PLATFORM_ADDITIONAL_PROPERTIES = "platform.additional.properties"
