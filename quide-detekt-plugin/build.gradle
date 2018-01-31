@@ -7,7 +7,7 @@ configurations {
 }
 
 dependencies {
-	implementation "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
+	compile "io.gitlab.arturbosch.detekt:detekt-cli:$detektVersion"
 	compileOnly project(":quide-api")
 	testCompile project(":quide-api-test")
 }
