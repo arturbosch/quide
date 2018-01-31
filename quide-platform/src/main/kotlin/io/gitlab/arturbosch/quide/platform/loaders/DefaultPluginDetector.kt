@@ -1,10 +1,10 @@
 package io.gitlab.arturbosch.quide.platform.loaders
 
 import io.gitlab.arturbosch.kutils.toList
-import io.gitlab.arturbosch.quide.api.utils.logFactory
 import io.gitlab.arturbosch.quide.platform.HomeFolder
 import io.gitlab.arturbosch.quide.platform.QuideConstants
 import io.gitlab.arturbosch.quide.platform.asProperty
+import mu.KLogging
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
@@ -12,9 +12,7 @@ import java.nio.file.Path
 /**
  * @author Artur Bosch
  */
-object DefaultPluginDetector : PluginDetector {
-
-	private val logger by logFactory()
+object DefaultPluginDetector : KLogging(), PluginDetector {
 
 	private val lazyPlugins = lazy {
 		Files.list(HomeFolder.pluginsDir.toPath())

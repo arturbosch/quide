@@ -1,15 +1,13 @@
 package io.gitlab.arturbosch.quide.shell
 
-import io.gitlab.arturbosch.quide.api.utils.logFactory
 import io.gitlab.arturbosch.quide.shell.loaders.CommandLoader
+import mu.KLogging
 import java.util.LinkedHashMap
 
 /**
  * @author Artur Bosch
  */
-class Commander(vararg loaders: CommandLoader) {
-
-	private val logger by logFactory()
+class Commander(vararg loaders: CommandLoader) : KLogging() {
 
 	private val commands: Map<String, Command> = loaders.map { it.load() }
 			.reduce { map, map2 -> map.mergeReduce(map2) }.apply {

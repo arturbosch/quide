@@ -10,14 +10,14 @@ import io.gitlab.arturbosch.quide.api.AnalysisContext
 import io.gitlab.arturbosch.quide.api.Detector
 import io.gitlab.arturbosch.quide.api.core.PATHS_FILTERS_GLOBAL
 import io.gitlab.arturbosch.quide.api.core.QuideDir
-import io.gitlab.arturbosch.quide.api.utils.LoggingProvider
+import mu.KLogging
 
 /**
  * @author Artur Bosch
  */
 class DetektTool : Detector {
 
-	companion object : LoggingProvider()
+	companion object : KLogging()
 
 	override val name: String = "Detekt"
 
@@ -26,10 +26,10 @@ class DetektTool : Detector {
 		val quide = context.quideDirectory
 		val configPath = context.property(PLUGIN_KOTLIN_CONFIG)
 		val config = configPath?.let {
-			val configFile = quide.resolve(configPath)
+			val configFile = quide.configurationsDir.resolve(configPath)
 			YamlConfig.load(configFile.toPath())
 		} ?: Config.empty.apply {
-			log.warn("The detekt configuration property '$PLUGIN_KOTLIN_CONFIG' was not provided!")
+			logger.warn("The detekt configuration property '$PLUGIN_KOTLIN_CONFIG' was not provided!")
 		}
 
 		val filters = loadFiltersFromProperties(quide).map(::PathFilter)

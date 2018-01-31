@@ -2,7 +2,7 @@ package io.gitlab.arturbosch.quide.core
 
 import io.gitlab.arturbosch.quide.api.core.PLATFORM_ADDITIONAL_PROPERTIES
 import io.gitlab.arturbosch.quide.api.core.QuideDir
-import io.gitlab.arturbosch.quide.api.utils.LoggingProvider
+import mu.KLogging
 import java.io.File
 import java.io.IOException
 import java.util.HashMap
@@ -15,7 +15,7 @@ open class QuideDirectory(
 		private val homeDir: File,
 		protected val properties: MutableMap<String, String> = HashMap()) : QuideDir {
 
-	companion object : LoggingProvider() {
+	companion object : KLogging() {
 		const val PLUGINS_DIR_NAME = "plugins"
 		const val CONFIGURATIONS_DIR_NAME = "configurations"
 	}
@@ -25,12 +25,12 @@ open class QuideDirectory(
 		if (!propertiesPath.exists()) {
 			javaClass.getResourceAsStream("/quide.properties").use { `in` ->
 				`in`.copyTo(propertiesPath.outputStream())
-				log.info("Created default properties set.")
+				logger.info("Created default properties set.")
 			}
 		} else {
 			loadProperties(propertiesPath)
 			loadAdditionalProperties()
-			log.info("Loaded quide.properties.")
+			logger.info("Loaded quide.properties.")
 		}
 	}
 
@@ -39,7 +39,7 @@ open class QuideDirectory(
 	override val configurationsDir: File get() = checkDir(resolve(CONFIGURATIONS_DIR_NAME))
 
 	final override fun resolve(subPath: String): File {
-		return checkDir(home.resolve(subPath))
+		return home.resolve(subPath)
 	}
 
 	override fun property(key: String): String? = properties[key]?.let { if (it.isEmpty()) null else it }
@@ -67,7 +67,7 @@ open class QuideDirectory(
 			props.load(`is`)
 			@Suppress("UNCHECKED_CAST")
 			properties.putAll(props as Map<String, String>)
-			log.info("Loaded extra properties from '$propertiesPath'.")
+			logger.info("Loaded extra properties from '$propertiesPath'.")
 		}
 	}
 

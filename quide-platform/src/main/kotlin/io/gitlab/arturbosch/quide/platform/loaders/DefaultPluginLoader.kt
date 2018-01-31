@@ -1,7 +1,7 @@
 package io.gitlab.arturbosch.quide.platform.loaders
 
 import io.gitlab.arturbosch.quide.api.Plugin
-import io.gitlab.arturbosch.quide.api.utils.logFactory
+import mu.KLogging
 import java.net.URLClassLoader
 import java.util.ServiceLoader
 
@@ -9,9 +9,7 @@ import java.util.ServiceLoader
  * @author Artur Bosch
  */
 class DefaultPluginLoader(
-		private val pluginDetector: PluginDetector) : PluginLoader {
-
-	private val logger by logFactory()
+		private val pluginDetector: PluginDetector) : KLogging(), PluginLoader {
 
 	override fun load(): List<Plugin> {
 		val urls = pluginDetector.jars
