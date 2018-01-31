@@ -5,7 +5,6 @@ import io.gitlab.arturbosch.quide.api.core.QuideDir
 import io.gitlab.arturbosch.quide.api.utils.LoggingProvider
 import java.io.File
 import java.io.IOException
-import java.io.UncheckedIOException
 import java.util.HashMap
 import java.util.Properties
 
@@ -23,21 +22,16 @@ open class QuideDirectory(
 
 	init {
 		val propertiesPath = homeDir.resolve("quide.properties")
-		try {
-			if (!propertiesPath.exists()) {
-				javaClass.getResourceAsStream("/quide.properties").use { `in` ->
-					`in`.copyTo(propertiesPath.outputStream())
-					log.info("Created default properties set.")
-				}
-			} else {
-				loadProperties(propertiesPath)
-				loadAdditionalProperties()
-				log.info("Loaded quide.properties.")
+		if (!propertiesPath.exists()) {
+			javaClass.getResourceAsStream("/quide.properties").use { `in` ->
+				`in`.copyTo(propertiesPath.outputStream())
+				log.info("Created default properties set.")
 			}
-		} catch (e: IOException) {
-			throw UncheckedIOException("Error loading quide properties", e)
+		} else {
+			loadProperties(propertiesPath)
+			loadAdditionalProperties()
+			log.info("Loaded quide.properties.")
 		}
-
 	}
 
 	override val home: File get() = checkDir(homeDir)
